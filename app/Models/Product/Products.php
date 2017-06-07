@@ -12,7 +12,7 @@ class Products extends Model
 
     public function saledays()
     {
-        return $this->belongsToMany(Saledays::class,'products_saleday','product_id','saleday_id');
+        return $this->belongsToMany(Saledays::class,'products_saleday','product_id','saleday');
     }
 
     public function pickuptimes()

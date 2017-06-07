@@ -8,7 +8,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Models\Metro\Metro;
+use App\Models\Metro\Metro as MetroModel;
+use App\Models\Metro\StationRelation as StationRelationModel;
 
 class MetroController extends Controller
 {
@@ -60,6 +61,22 @@ class MetroController extends Controller
         });
     }
 
+    public function destroy($id)
+    {
+        if ($this->form()->destroy($id)) {
+            StationRelationModel::where('metro_id',$id)->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::lang.delete_succeeded'),
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::lang.delete_failed'),
+            ]);
+        }
+    }
+
     /**
      * Make a grid builder.
      *
@@ -67,7 +84,7 @@ class MetroController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Metro::class, function (Grid $grid) {
+        return Admin::grid(MetroModel::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
             $grid->name('线路名称')->editable();;
@@ -83,7 +100,7 @@ class MetroController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Metro::class, function (Form $form) {
+        return Admin::form(MetroModel::class, function (Form $form) {
 
             $form->display('id', 'ID');
             $form->text('name', '线路名称');

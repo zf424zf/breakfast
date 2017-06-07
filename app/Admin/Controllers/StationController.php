@@ -11,6 +11,7 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Models\Metro\Station;
 use App\Models\Metro\Metro as MetroModel;
 use App\Models\Metro\StationRelation as StationRelationModel;
+use App\Models\Metro\PlaceRelation as PlaceRelationModel;
 
 class StationController extends Controller
 {
@@ -66,6 +67,7 @@ class StationController extends Controller
     {
         if ($this->form()->destroy($id)) {
             StationRelationModel::where('station_id',$id)->delete();
+            PlaceRelationModel::where('station_id',$id)->delete();
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),

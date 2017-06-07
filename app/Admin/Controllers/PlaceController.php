@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Metro\Metro;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -82,13 +83,12 @@ class PlaceController extends Controller
         return Admin::grid(PlaceModel::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->name('取餐地点')->editable();;
+            $grid->name('取餐地点')->editable();
             $grid->stations('地铁站')->display(function ($stations) {
                 return implode(',', array_column($stations, 'name'));
             });
-            $grid->column('location','地图位置')->openMap(function () {
-                list($lat, $lng) = explode(',', $this->location);
-                return [$lat, $lng];
+            $grid->column('','地图位置')->openMap(function () {
+                return [$this->lat, $this->lng];
             }, '地图位置');
             $grid->address('地址');
         });
@@ -101,17 +101,12 @@ class PlaceController extends Controller
      */
     protected function form()
     {
-        $arrays = StationModel::get()->toArray();
-        $stations = [];
-        foreach ($arrays as $array) {
-            $stations[$array['id']] = $array['name'];
-        }
-        return Admin::form(PlaceModel::class, function (Form $form) use ($stations) {
+        return Admin::form(PlaceModel::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->text('name', '取餐地点')->rules('required');
-            $form->text('location', '地图坐标')->rules('required')->help('坐标拾取地址: <a href="http://lbs.qq.com/tool/getpoint/index.html" target="_blank">http://lbs.qq.com/tool/getpoint/index.html</a>');
             $form->text('address', '详细地址')->rules('required');
-            $form->checkbox('stations', '地铁站')->options($stations);
+            $form->multipleSelect('stations','地铁站')->options(StationModel::all()->pluck('name','id'));
+            $form->map('lat','lng', '地图位置')->rules('required');
         });
     }
 }

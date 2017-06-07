@@ -110,15 +110,10 @@ class StationController extends Controller
      */
     protected function form()
     {
-        $metros = MetroModel::get()->toArray();
-        $lines = [];
-        foreach ($metros as $metro){
-            $lines[$metro['id']] = $metro['name'];
-        }
-        return Admin::form(Station::class, function (Form $form) use ($lines) {
+        return Admin::form(Station::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->text('name', '站点名称')->rules('required');
-            $form->checkbox('metros','地铁线路')->options($lines)->rules('required');
+            $form->checkbox('metros','地铁线路')->options(MetroModel::all()->pluck('name','id'))->rules('required');
         });
     }
 }

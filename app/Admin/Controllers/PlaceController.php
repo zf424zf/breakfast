@@ -8,7 +8,9 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
-use App\Models\Metro\Place;
+use App\Models\Metro\Place as PlaceModel;
+use App\Models\Metro\Station as StationModel;
+use App\Models\Metro\PlaceRelation as PlaceRelationModel;
 
 class PlaceController extends Controller
 {
@@ -60,6 +62,22 @@ class PlaceController extends Controller
         });
     }
 
+    public function destroy($id)
+    {
+        if ($this->form()->destroy($id)) {
+            PlaceRelationModel::where('place_id',$id)->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::lang.delete_succeeded'),
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::lang.delete_failed'),
+            ]);
+        }
+    }
+
     /**
      * Make a grid builder.
      *
@@ -67,11 +85,14 @@ class PlaceController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Place::class, function (Grid $grid) {
+        return Admin::grid(PlaceModel::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
             $grid->name('取餐地点')->editable();;
             $grid->created_at('创建时间');
+            $grid->stations('地铁站')->display(function ($stations) {
+                return implode(',', array_column($stations, 'name'));
+            });
             //$grid->updated_at();
         });
     }
@@ -83,12 +104,18 @@ class PlaceController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Place::class, function (Form $form) {
+        $arrays = StationModel::get()->toArray();
+        $stations = [];
+        foreach ($arrays as $array) {
+            $stations[$array['id']] = $array['name'];
+        }
+        return Admin::form(PlaceModel::class, function (Form $form) use ($stations) {
 
             $form->display('id', 'ID');
             $form->text('name', '取餐地点');
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->checkbox('stations', '地铁站')->options($stations);
+            //$form->display('created_at', 'Created At');
+            //$form->display('updated_at', 'Updated At');
         });
     }
 }

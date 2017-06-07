@@ -9,6 +9,8 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Models\Metro\Station;
+use App\Models\Metro\Metro as MetroModel;
+use App\Models\Metro\StationRelation as StationRelationModel;
 
 class StationController extends Controller
 {
@@ -60,6 +62,22 @@ class StationController extends Controller
         });
     }
 
+    public function destroy($id)
+    {
+        if ($this->form()->destroy($id)) {
+            StationRelationModel::where('station_id',$id)->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::lang.delete_succeeded'),
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::lang.delete_failed'),
+            ]);
+        }
+    }
+
     /**
      * Make a grid builder.
      *
@@ -72,6 +90,9 @@ class StationController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('站点名称')->editable();;
             $grid->created_at('创建时间');
+            $grid->metros('地铁线路')->display(function ($metros){
+                return implode(',',array_column($metros,'name'));
+            });
             //$grid->updated_at();
         });
     }
@@ -83,12 +104,17 @@ class StationController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Station::class, function (Form $form) {
-
+        $metros = MetroModel::get()->toArray();
+        $lines = [];
+        foreach ($metros as $metro){
+            $lines[$metro['id']] = $metro['name'];
+        }
+        return Admin::form(Station::class, function (Form $form) use ($lines) {
             $form->display('id', 'ID');
             $form->text('name', '站点名称');
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->checkbox('metros','地铁线路')->options($lines);
+            //$form->display('created_at', 'Created At');
+            //$form->display('updated_at', 'Updated At');
         });
     }
 }

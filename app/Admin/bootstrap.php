@@ -1,5 +1,7 @@
 <?php
-
+use App\Admin\Extensions\Column\OpenMap;
+use Encore\Admin\Form;
+use Encore\Admin\Grid\Column;
 /**
  * Laravel-admin - admin builder based on Laravel.
  * @author z-song <https://github.com/z-song>
@@ -19,3 +21,4 @@
  */
 
 //Encore\Admin\Form::forget(['map', 'editor']);
+Column::extend('openMap', OpenMap::class);

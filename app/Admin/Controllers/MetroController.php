@@ -89,6 +89,9 @@ class MetroController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('线路名称')->editable();;
             $grid->created_at('创建时间');
+            $grid->stations('地铁站')->display(function ($stations){
+                return implode(',',array_column($stations,'name'));
+            });
             //$grid->updated_at();
         });
     }
@@ -103,9 +106,7 @@ class MetroController extends Controller
         return Admin::form(MetroModel::class, function (Form $form) {
 
             $form->display('id', 'ID');
-            $form->text('name', '线路名称');
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
+            $form->text('name', '线路名称')->rules('required');
         });
     }
 }

@@ -14,7 +14,7 @@ class Station extends Model
 
     public function places()
     {
-        return $this->belongsToMany(Place::class,'metro_place_relation', 'place_id','station_id');
+        return $this->belongsToMany(Place::class,'metro_place_relation', 'station_id','place_id');
     }
 
 }

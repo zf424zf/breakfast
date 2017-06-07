@@ -91,10 +91,14 @@ class StationController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name('站点名称')->editable();;
-            $grid->created_at('创建时间');
+
             $grid->metros('地铁线路')->display(function ($metros){
                 return implode(',',array_column($metros,'name'));
             });
+            $grid->places('取餐点')->display(function ($places){
+                return implode(',',array_column($places,'name'));
+            });
+            $grid->created_at('创建时间');
             //$grid->updated_at();
         });
     }
@@ -113,10 +117,8 @@ class StationController extends Controller
         }
         return Admin::form(Station::class, function (Form $form) use ($lines) {
             $form->display('id', 'ID');
-            $form->text('name', '站点名称');
-            $form->checkbox('metros','地铁线路')->options($lines);
-            //$form->display('created_at', 'Created At');
-            //$form->display('updated_at', 'Updated At');
+            $form->text('name', '站点名称')->rules('required');
+            $form->checkbox('metros','地铁线路')->options($lines)->rules('required');
         });
     }
 }

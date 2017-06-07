@@ -59,7 +59,7 @@ class PlaceController extends Controller
     public function destroy($id)
     {
         if ($this->form()->destroy($id)) {
-            PlaceRelationModel::where('place_id',$id)->delete();
+            PlaceRelationModel::where('place_id', $id)->delete();
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),
@@ -86,7 +86,11 @@ class PlaceController extends Controller
             $grid->stations('地铁站')->display(function ($stations) {
                 return implode(',', array_column($stations, 'name'));
             });
-            $grid->created_at('创建时间');
+            $grid->column('location','地图位置')->openMap(function () {
+                list($lat, $lng) = explode(',', $this->location);
+                return [$lat, $lng];
+            }, '地图位置');
+            $grid->address('地址');
         });
     }
 
@@ -104,7 +108,9 @@ class PlaceController extends Controller
         }
         return Admin::form(PlaceModel::class, function (Form $form) use ($stations) {
             $form->display('id', 'ID');
-            $form->text('name', '取餐地点');
+            $form->text('name', '取餐地点')->rules('required');
+            $form->text('location', '地图坐标')->rules('required')->help('坐标拾取地址: <a href="http://lbs.qq.com/tool/getpoint/index.html" target="_blank">http://lbs.qq.com/tool/getpoint/index.html</a>');
+            $form->text('address', '详细地址')->rules('required');
             $form->checkbox('stations', '地铁站')->options($stations);
         });
     }

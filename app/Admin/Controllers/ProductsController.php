@@ -11,6 +11,8 @@ use Encore\Admin\Controllers\ModelForm;
 use App\Models\Product\Products as ProductsModel;
 use App\Models\Saleday as Saledays;
 use App\Models\Product\Saleday;
+use App\Models\Metro\Place as PlaceModel;
+use App\Models\PickupTime as Pickuptimes;
 
 class ProductsController extends Controller
 {
@@ -60,7 +62,7 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         if ($this->form()->destroy($id)) {
-            Saleday::where('product_id',$id)->delete();
+            Saleday::where('product_id', $id)->delete();
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),
@@ -72,6 +74,7 @@ class ProductsController extends Controller
             ]);
         }
     }
+
     /**
      * Make a grid builder.
      *
@@ -104,7 +107,16 @@ class ProductsController extends Controller
             $form->display('id', 'ID');
             $form->text('name', '商品名称')->rules('required');
             $form->image('img', '封面图')->rules('required');
-            $form->checkbox('saledays','销售日期')->options(Saledays::all()->pluck('name','weekday'));
+            $form->checkbox('saledays', '销售日期')->options(Saledays::all()->pluck('name', 'weekday'))->default([1,2,3,4,5,6,7]);
+            $picks = Pickuptimes::all()->toArray();
+            $picktimes = [];
+            foreach ($picks as $key => $pick) {
+                $picktimes[$pick['id']] = $pick['start'] . '-' . $pick['end'];
+            }
+            $form->checkbox('pickuptimes', '销售时段')->options($picktimes)->default(1);
+            $form->multipleSelect('places', '销售地点')->options(PlaceModel::all()->pluck('name', 'id'));
+            $form->currency('origin_price', '原价')->rules('required')->symbol('￥');
+            $form->currency('coupon_price', '优惠价')->rules('required')->symbol('￥');
             $form->number('stock', '库存')->rules('required')->default(0);
             $form->number('recommend', '推荐指数')->rules('required')->default(5);
             $form->text('calori', '卡路里');
@@ -113,7 +125,7 @@ class ProductsController extends Controller
                 'on'  => ['value' => 1, 'text' => '上架', 'color' => 'success'],
                 'off' => ['value' => 2, 'text' => '下架', 'color' => 'danger'],
             ];
-            $form->switch('status','状态')->states($states)->default(1);
+            $form->switch('status', '状态')->states($states)->default(1);
             //$form->checkbox('stations', '地铁站')->options($stations);
 
         });

@@ -15,4 +15,6 @@ Route::group([
     $router->resource('place', 'PlaceController');
     $router->resource('products', 'ProductsController');
     $router->resource('pickuptime', 'PickuptimeController');
+    $router->resource('category', 'CategoryController');
+    $router->resource('post', 'PostController');
 });

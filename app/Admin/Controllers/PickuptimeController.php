@@ -77,7 +77,7 @@ class PickuptimeController extends Controller
     protected function form()
     {
         return Admin::form(PickTimeModel::class, function (Form $form) {
-            $form->timeRange('start','end', '选择时间')->rules('required')->help('格式  时:分:秒')->options(['format'=>'HH:mm']);
+            $form->timeRange('start','end', '选择时间')->rules('required')->help('格式  时:分')->options(['format'=>'HH:mm']);
         });
     }
 }

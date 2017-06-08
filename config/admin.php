@@ -30,7 +30,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'  => 'Admin',
+    'title'  => 'Breakfast Admin',
 
     /*
      * Laravel-admin auth setting.

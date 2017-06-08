@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'      => 'Admin',
+    'name'      => 'Breakfast',
 
     /*
      * Logo in admin panel header.
      */
-    'logo'      => '<b>Laravel</b> admin',
+    'logo'      => '<b>Breakfast</b> admin',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>Ba</b>',
 
     /*
      * Laravel-admin url prefix.
@@ -103,7 +103,7 @@ return [
     |               | skin-green                              |
     |---------------------------------------------------------|
      */
-    'skin'    => 'skin-blue',
+    'skin'    => 'skin-purple',
 
     /*
     |---------------------------------------------------------|
@@ -114,7 +114,7 @@ return [
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
      */
-    'layout'  => ['sidebar-mini'],
+    'layout'  => ['sidebar-mini','sidebar-collapse'],
 
     /*
      * Version displayed in footer.

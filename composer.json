@@ -28,7 +28,8 @@
             "Encore\\Admin\\": "app/Encore/src/"
         },
         "files": [
-            "app/Encore/src/helpers.php"
+            "app/Encore/src/helpers.php",
+            "app/Util/helpers.php"
         ]
     },
     "autoload-dev": {

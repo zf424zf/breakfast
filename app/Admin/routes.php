@@ -17,4 +17,5 @@ Route::group([
     $router->resource('pickuptime', 'PickuptimeController');
     $router->resource('category', 'CategoryController');
     $router->resource('post', 'PostController');
+    $router->resource('setting', 'SettingController');
 });

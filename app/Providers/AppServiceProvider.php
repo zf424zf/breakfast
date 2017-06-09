@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Http\Service\Settings as SettingsService;
+use App\Http\Services\Settings as SettingsService;
+use App\Http\Services\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {
         app()->singleton('setting', function ($app) {
             return new SettingsService;
+        });
+        app()->singleton('user', function ($app) {
+            return new User;
         });
     }
 

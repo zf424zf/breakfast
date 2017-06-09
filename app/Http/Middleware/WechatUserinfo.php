@@ -15,6 +15,8 @@ class WechatUserinfo
 
     const SCOPE = 'snsapi_userinfo';
 
+    const SESSION_KEY = 'wechat.user';
+
     /**
      * Handle an incoming request.
      *
@@ -26,9 +28,9 @@ class WechatUserinfo
      */
     public function handle($request, Closure $next)
     {
-        if (!session('wechat.user')) {
+        if (!session(self::SESSION_KEY)) {
             if ($request->has('state') && $request->has('code')) {
-                session(['wechat.user' => app('wechat')->oauth->user()->getOriginal()]);
+                session([self::SESSION_KEY => app('wechat')->oauth->user()->getOriginal()]);
                 return redirect()->to($this->getTargetUrl());
             }
             return app('wechat')->oauth->scopes([self::SCOPE])->redirect($request->fullUrl());

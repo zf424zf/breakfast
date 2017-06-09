@@ -52,6 +52,7 @@ class User
                 if (!$user) {
                     $userData = [
                         'openid'    => $wechatUserinfo['openid'],
+                        'nickname'  => $wechatUserinfo['nickname'],
                         'profile'   => $wechatUserinfo
                     ];
                     $user = new UsersModel($userData);

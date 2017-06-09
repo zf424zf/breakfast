@@ -18,4 +18,5 @@ Route::group([
     $router->resource('category', 'CategoryController');
     $router->resource('post', 'PostController');
     $router->resource('setting', 'SettingController');
+    $router->resource('users', 'UsersController');
 });

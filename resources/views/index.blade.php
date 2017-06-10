@@ -27,7 +27,7 @@
                 <!--入口工具栏开始-->
                 <div class="row no-gutter">
                     <div class="col-50">
-                        <a class="tab-item active" href="{{url('location')}}">
+                        <a class="tab-item active" href="{{url('metro')}}">
                             <img src="../static/images/book.png" alt=""/>我要订餐
                         </a>
                     </div>

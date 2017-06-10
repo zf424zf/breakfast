@@ -12,4 +12,5 @@
 */
 
 Route::get('/', 'IndexController@index');
-Route::get('location', 'LocationController@index');
+Route::get('metro', 'LocationController@index');
+Route::get('cart', 'CartController@index');

@@ -65,7 +65,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 
 /*日历*/
 .calendar{position:relative;width: 100%}
-.calendar .calendar-month{width: 100%;font-size:12rem;height:22rem;line-height:22rem;color:#efefef;text-align: center;z-index: 9 }
+.calendar .calendar-month{width: 100%;font-size:6rem;height:15rem;line-height:15rem;color: #f8f8f8;text-align: center;z-index: 9 }
 .calendar .calendar-month.f-small{font-size: 5rem;}
 .calendar .calendar-date{position:absolute;top:0;width:100%;z-index: 99}
 .calendar .calendar-date ul{width: 100%;overflow: hidden}

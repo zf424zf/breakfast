@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>地图定位</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- basic css&js -->
+
+	<link rel="stylesheet" href="../static/dist/css/sm.min.css">
+	<link rel="stylesheet" href="../static/dist/css/sm-extend.min.css">
+	<link rel="stylesheet" href="../static/assets/css/style.css">
+
+	<script src="../static/assets/js/zepto.min.js"></script>
+
+</head>
+<body>
+<div class="page-group">
+	<div class="page page-gray">
+		<!--头部开始-->
+		<header class="bar bar-nav">
+			<a href="#" class="icon icon-left pull-left back_btn" onclick="history.back(-1)"></a>
+			<h1 class="title">一起吃早餐</h1>
+		</header>
+		<!--头部结束-->
+		<!--地图定位开始-->
+		<div class="content">
+            <div class="search-box">
+                <div class="address">上海</div>
+                <div class="searchbar">
+                    <a class="searchbar-cancel">取消</a>
+                    <div class="search-input">
+                        <label class="icon icon-search" for="search"></label>
+                        <input type="search" id='search' placeholder='请输入地址'/>
+                    </div>
+                </div>
+            </div>
+            <div class="map-box">
+                <div class="top">
+                    <a href="#">人民广场站 <span class="icon icon-down"></span></a>
+                </div>
+                <div class="img"><img src="../static/images/map.jpg" alt=""/></div>
+                <ul>
+                    <li>
+                        <h4><span>1</span>人民广场站1号店</h4>
+                        <p>西藏南路北京路北</p>
+                    </li>
+                    <li>
+                        <h4><span>2</span>人民广场站2号店</h4>
+                        <p>福州路云南路南30米</p>
+                    </li>
+                </ul>
+            </div>
+
+		</div>
+		<!--地图定位结束-->
+	</div>
+</div>
+<script src="../static/dist/js/sm.min.js"></script>
+<script src="../static/dist/js/sm-extend.min.js"></script>
+
+</body>
+</html>

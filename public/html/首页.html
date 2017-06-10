@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- basic css&js -->
+	<link rel="stylesheet" href="../static/dist/css/sm.min.css">
+	<link rel="stylesheet" href="../static/dist/css/sm-extend.min.css">
+	<link rel="stylesheet" href="../static/assets/css/style.css">
+
+	<script src="../static/assets/js/zepto.min.js"></script>
+
+</head>
+<body>
+<div class="page-group">
+	<div class="page page-index">
+		<!--头部开始-->
+		<header class="bar bar-nav">
+			<h1 class="title">一起吃早餐</h1>
+		</header>
+		<!--头部结束-->
+		<!--首页开始-->
+		<div class="content">
+			<!--幻灯片开始-->
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="../static/images/banner1.jpg" alt="" style='width: 100%'></div>
+					<div class="swiper-slide"><img src="../static/images/banner2.jpg" alt="" style='width: 100%'></div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			<!--幻灯片结束-->
+			<!--入口工具栏开始-->
+			<div class="row no-gutter">
+				<div class="col-50">
+					<a class="tab-item external active" href="#"><img src="../static/images/book.png" alt=""/>我要订餐</a>
+				</div>
+				<div class="col-50">
+					<a class="tab-item external" href="#"><img src="../static/images/order.png" alt=""/>我的订单</a>
+				</div>
+			</div>
+			<!--入口工具栏结束-->
+			<!--健康饮食开始-->
+			<div class="list-block media-list">
+				<h4>健康饮食</h4>
+				<ul>
+					<li>
+						<a href="#" class="item-content">
+							<div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">一日之季在于晨</div>
+								</div>
+								<div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="item-content">
+							<div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">一日之季在于晨</div>
+								</div>
+								<div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="item-content">
+							<div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">一日之季在于晨</div>
+								</div>
+								<div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!--健康饮食结束-->
+		</div>
+
+		<!--底部悬浮开始-->
+		<nav class="bar bar-tab bar-footer">
+			<a class="icon-home1 tab-item external active" href="#">首页</a>
+			<a class="icon-order tab-item external" href="#">订单</a>
+			<a class="icon-more tab-item external" href="#">更多</a>
+		</nav>
+		<!--底部悬浮结束-->
+		<!--首页结束-->
+	</div>
+
+</div>
+<script src="../static/dist/js/sm.min.js"></script>
+<script src="../static/dist/js/sm-extend.min.js"></script>
+<script type="text/javascript">
+	/*幻灯片*/
+	$(function() {
+		$(".swiper-container").swiper({
+					autoplay:5000,
+					loop:true
+				}
+		);
+	});
+</script>
+
+</body>
+</html>

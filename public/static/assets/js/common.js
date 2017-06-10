@@ -10,6 +10,9 @@ $(function () {
         $(".location-list p").siblings("dl").css("display", "none");
         $(this).siblings("dl").css("display", "block");
     })
+    $(document).on("pageInit", "#choose-station", function(e, id, page) {
+
+    });
 
     /*早餐详情*/
     $(".food-alert").on("click",function(){
@@ -29,4 +32,5 @@ $(function () {
         $(".cover").css("display","none");
         $(".food-list").css("display","none");
     })
+    $.init();
 });

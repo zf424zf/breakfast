@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Metro\Metro as MetroModel;
 
 class MetroController extends Controller
 {
@@ -18,6 +19,7 @@ class MetroController extends Controller
 
     public function index()
     {
-        return view('metro');
+        $metros = MetroModel::with('stations')->get()->toArray();
+        return view('metro', ['metros' => $metros]);
     }
 }

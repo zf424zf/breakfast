@@ -5,10 +5,10 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page">
+        <div class="page" id="choose-station">
             <!--头部开始-->
             <header class="bar bar-nav">
-                <a href="#" class="icon icon-left pull-left back_btn"></a>
+                <a href="#" class="icon icon-left pull-left back_btn back"></a>
                 <h1 class="title">{{setting('title')}}</h1>
             </header>
             <!--头部结束-->
@@ -31,107 +31,16 @@
                     </div>
                     <div class="cont">
                         <ul>
+                            @foreach($metros as $metro)
                             <li>
-                                <p>一号线 <span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
+                                <p @if($loop->first) class="active" @endif>{{$metro['name']}} <span class="icon icon-right"></span></p>
+                                <dl @if($loop->first) style="display: block" @endif>
+                                    @foreach($metro['stations'] as $station)
+                                    <dd>{{$station['name']}}</dd>
+                                    @endforeach
                                 </dl>
                             </li>
-                            <li>
-                                <p class="active">二号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd class="active">南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>三号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>四号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>五号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>六号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>七号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>八号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <p>九号线<span class="icon icon-right"></span></p>
-                                <dl>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                    <dd>江苏路站</dd>
-                                    <dd>静安寺站</dd>
-                                    <dd>南京西路站</dd>
-                                    <dd>人民广场站</dd>
-                                    <dd>南京东路站</dd>
-                                    <dd>陆家嘴站</dd>
-                                </dl>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

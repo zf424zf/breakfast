@@ -15,6 +15,7 @@
     <script src="../static/assets/js/zepto.min.js"></script>
     <script src="../static/dist/js/sm.min.js"></script>
     <script src="../static/dist/js/sm-extend.min.js"></script>
+    <script src="../static/assets/js/common.js"></script>
     @yield('resource')
 </head>
 <body>

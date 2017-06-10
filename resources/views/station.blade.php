@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page page-gray">
+        <div class="page page-gray" id="choose-place">
             <!--头部开始-->
             <header class="bar bar-nav">
                 <a href="#" class="icon icon-left pull-left back_btn" onclick="history.back(-1)"></a>
@@ -28,11 +28,13 @@
                     <div class="top">
                         <a href="#">{{$station['name']}} <span class="icon icon-down"></span></a>
                     </div>
-                    <div class="img" id="place-map">
+                    @foreach($station['places'] as $place)
+                    <div class="map" id="map-{{$place['id']}}" data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}">
                     </div>
+                    @endforeach
                     <ul>
                         @foreach($station['places'] as $place)
-                        <li data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}">
+                        <li data-id="{{$place['id']}}">
                             <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
                             <p>{{$place['address']}}</p>
                         </li>

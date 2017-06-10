@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Metro\Metro as MetroModel;
+use App\Models\Metro\Place as PlaceModel;
+use App\Models\Metro\Station as StationModel;
 
 class MetroController extends Controller
 {
@@ -21,5 +23,11 @@ class MetroController extends Controller
     {
         $metros = MetroModel::with('stations')->get()->toArray();
         return view('metro', ['metros' => $metros]);
+    }
+
+    public function station($stationId)
+    {
+        $station = StationModel::where('id', $stationId)->with('places')->first()->toArray();
+        return view('station', ['station' => $station]);
     }
 }

@@ -29,8 +29,7 @@
                         <a href="#">{{$station['name']}} <span class="icon icon-down"></span></a>
                     </div>
                     @foreach($station['places'] as $place)
-                    <div class="map" id="map-{{$place['id']}}" data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}">
-                    </div>
+
                     @endforeach
                     <ul>
                         @foreach($station['places'] as $place)
@@ -38,6 +37,7 @@
                             <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
                             <p>{{$place['address']}}</p>
                         </li>
+                        <li class="map" id="map-{{$place['id']}}" data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}"></li>
                         @endforeach
                     </ul>
                 </div>

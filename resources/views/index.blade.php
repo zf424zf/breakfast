@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page page-index">
+        <div class="page page-index" id="index">
             <!--头部开始-->
             <header class="bar bar-nav">
                 <h1 class="title">{{setting('title')}}</h1>

@@ -8,7 +8,7 @@
         <div class="page page-index">
             <!--头部开始-->
             <header class="bar bar-nav">
-                <h1 class="title">一起吃早餐</h1>
+                <h1 class="title">{{setting('title')}}</h1>
             </header>
             <!--头部结束-->
             <!--首页开始-->
@@ -27,11 +27,14 @@
                 <!--入口工具栏开始-->
                 <div class="row no-gutter">
                     <div class="col-50">
-                        <a class="tab-item external active" href="#"><img src="../static/images/book.png"
-                                                                          alt=""/>我要订餐</a>
+                        <a class="tab-item external active" href="#">
+                            <img src="../static/images/book.png" alt=""/>我要订餐
+                        </a>
                     </div>
                     <div class="col-50">
-                        <a class="tab-item external" href="#"><img src="../static/images/order.png" alt=""/>我的订单</a>
+                        <a class="tab-item external" href="#">
+                            <img src="../static/images/order.png" alt=""/>我的订单
+                        </a>
                     </div>
                 </div>
                 <!--入口工具栏结束-->
@@ -78,12 +81,8 @@
             </div>
 
             <!--底部悬浮开始-->
-            <nav class="bar bar-tab bar-footer">
-                <a class="icon-home1 tab-item external active" href="#">首页</a>
-                <a class="icon-order tab-item external" href="#">订单</a>
-                <a class="icon-more tab-item external" href="#">更多</a>
-            </nav>
-            <!--底部悬浮结束-->
+        @include('nav')
+        <!--底部悬浮结束-->
             <!--首页结束-->
         </div>
 

@@ -59,3 +59,13 @@ if (!function_exists('chinese_month')) {
     }
 
 }
+
+if (!function_exists('cdn')) {
+
+    function cdn($file)
+    {
+        $source = rtrim(env('CDN_URL', '/static/'), '/') . '/' . trim($file, '/');
+        return $source . '?' . env('APP_VERSION', time());
+    }
+
+}

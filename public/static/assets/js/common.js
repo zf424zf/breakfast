@@ -9,6 +9,24 @@ $(function () {
         $(this).addClass("active");
         $(".location-list p").siblings("dl").css("display", "none");
         $(this).siblings("dl").css("display", "block");
+    });
+    $(document).on('click','.map-box li',function () {
+        var lat = $(this).data('lat');
+        var lng = $(this).data('lng');
+
+        var center = new qq.maps.LatLng(lat, lng);
+
+        var container = document.getElementById("place-map");
+        var map = new qq.maps.Map(container, {
+            center: center,
+            zoom: 17
+        });
+
+        var marker = new qq.maps.Marker({
+            position: center,
+            draggable: true,
+            map: map
+        });
     })
     $(document).on("pageInit", "#choose-station", function(e, id, page) {
 

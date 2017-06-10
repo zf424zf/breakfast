@@ -28,10 +28,11 @@
                     <div class="top">
                         <a href="#">{{$station['name']}} <span class="icon icon-down"></span></a>
                     </div>
-                    <div class="img"><img src="../static/images/map.jpg" alt=""/></div>
+                    <div class="img" id="place-map">
+                    </div>
                     <ul>
                         @foreach($station['places'] as $place)
-                        <li>
+                        <li data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}">
                             <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
                             <p>{{$place['address']}}</p>
                         </li>

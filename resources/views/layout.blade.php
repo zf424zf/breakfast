@@ -16,6 +16,7 @@
     <script src="{{cdn('dist/js/sm.min.js')}}"></script>
     <script src="{{cdn('dist/js/sm-extend.min.js')}}"></script>
     <script src="{{cdn('assets/js/common.js')}}"></script>
+    <script src="http://map.qq.com/api/js?v=2.exp"></script>
     @yield('resource')
 </head>
 <body>

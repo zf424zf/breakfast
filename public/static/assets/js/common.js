@@ -22,9 +22,7 @@ $(function () {
     })
     $(document).on("pageInit", "#choose-place", function (e, id, page) {
         $('.map').each(function () {
-            var lat = $(this).data('lat');
-            var lng = $(this).data('lng');
-            var center = new qq.maps.LatLng(lat, lng);
+            var center = new qq.maps.LatLng($(this).data('lat'), $(this).data('lng'));
             var container = document.getElementById($(this).attr('id'));
             var map = new qq.maps.Map(container, {
                 center: center,
@@ -36,7 +34,7 @@ $(function () {
                 map: map
             });
         })
-        $('.map-box li').eq(0).trigger('click');
+        //$('.map-box li').eq(0).trigger('click');
     });
 
     /*早餐详情*/

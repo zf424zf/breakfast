@@ -46,14 +46,14 @@ return [
      */
     'upload'  => [
 
-        'disk' => 'public',
+        'disk' => 'oss',
 
         'directory'  => [
             'image'  => 'image',
             'file'   => 'file',
         ],
 
-        'host' => 'http://breakfast.dev/storage/',
+        'host' => '//img.oiily.com/',
     ],
 
     /*

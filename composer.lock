@@ -4,8 +4,99 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4d8f35de7f91d69e73fc87e9a5a016a",
+    "content-hash": "60fb3fccb91ebdede7ea5f7203b01c42",
     "packages": [
+        {
+            "name": "aliyuncs/oss-sdk-php",
+            "version": "v2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
+                "reference": "74e427241d748af5bf0c2fa9d0b614b56bd46f9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/aliyun/aliyun-oss-php-sdk/74e427241d748af5bf0c2fa9d0b614b56bd46f9b.zip",
+                "reference": "74e427241d748af5bf0c2fa9d0b614b56bd46f9b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OSS\\": "src/OSS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aliyuncs",
+                    "homepage": "http://www.aliyun.com"
+                }
+            ],
+            "description": "Aliyun OSS SDK for PHP",
+            "homepage": "http://www.aliyun.com/product/oss/",
+            "time": "2016-06-17T01:57:24+00:00"
+        },
+        {
+            "name": "aobozhang/aliyun-oss-adapter",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aobozhang/aliyun-oss-adapter.git",
+                "reference": "c6d783a7486250c5c4a30c51b953a4977e1894c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/aobozhang/aliyun-oss-adapter/c6d783a7486250c5c4a30c51b953a4977e1894c8.zip",
+                "reference": "c6d783a7486250c5c4a30c51b953a4977e1894c8",
+                "shasum": ""
+            },
+            "require": {
+                "aliyuncs/oss-sdk-php": "~2.0.4",
+                "league/flysystem": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "suggest": {
+                "laravel/framework": "5.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aobo\\OSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aobo",
+                    "email": "aobozhang@gmail.com",
+                    "homepage": "https://github.com/aobozhang",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Use Aliyun oss as Storage for Laravel 5.0+",
+            "homepage": "https://github.com/aobozhang",
+            "keywords": [
+                "aliyun",
+                "laravel",
+                "oss",
+                "storage"
+            ],
+            "time": "2015-12-28T09:09:00+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -2071,16 +2162,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/e79d363049d1c2128f133a2667e4f4190904f7f4.zip",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "url": "https://files.phpcomposer.com/files/symfony/polyfill-mbstring/f29dca382a6485c3cbe6379f0c61230167681937.zip",
+                "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
                 "shasum": ""
             },
             "require": {
@@ -2092,7 +2183,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -2126,7 +2217,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/process",

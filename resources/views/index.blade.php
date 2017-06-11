@@ -42,39 +42,19 @@
                 <div class="list-block media-list">
                     <h4>健康饮食</h4>
                     <ul>
-                        <li>
-                            <a href="#" class="item-content">
-                                <div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
-                                <div class="item-inner">
-                                    <div class="item-title-row">
-                                        <div class="item-title">一日之季在于晨</div>
+                        @foreach($posts as $post)
+                            <li>
+                                <a href="{{url('post/'.$post['id'])}}" class="item-content">
+                                    <div class="item-media"><img src="{{img_url($post['cover'],80,80)}}" width="80" height="80"/></div>
+                                    <div class="item-inner">
+                                        <div class="item-title-row">
+                                            <div class="item-title">{{$post['subject']}}</div>
+                                        </div>
+                                        <div class="item-text">{{str_limit($post['summary'],200)}}</div>
                                     </div>
-                                    <div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="item-content">
-                                <div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
-                                <div class="item-inner">
-                                    <div class="item-title-row">
-                                        <div class="item-title">一日之季在于晨</div>
-                                    </div>
-                                    <div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="item-content">
-                                <div class="item-media"><img src="../static/images/pic.jpg" width="80"/></div>
-                                <div class="item-inner">
-                                    <div class="item-title-row">
-                                        <div class="item-title">一日之季在于晨</div>
-                                    </div>
-                                    <div class="item-text">早餐是一天之中最重要的,早餐是一天之中最重要的，早餐是一天之中最重要的</div>
-                                </div>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!--健康饮食结束-->

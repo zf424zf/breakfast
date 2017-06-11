@@ -55,6 +55,17 @@ return [
             'visibility' => 'public',
         ],
 
+        'oss' => [
+            'driver'     => 'oss',
+            'access_id'  => 'LTAInkhrnw6J3bl7',
+            'access_key' => '6nyazgzdIpl92cW2Wq1IlZhIoK7Df3',
+            'bucket'     => env('OSS_BUCKET'),
+            'endpoint'   => 'oss-cn-hangzhou.aliyuncs.com',
+            'maxsize'    => 2,//单位M
+            'domain'     => '//' . env('OSS_DOMAIN') . '/',
+            'mimes'      => 'png,jpg,jpeg,gif,bmp,svg,webp,rar,zip,tar,gz,7z,bz2,doc,docx,xls,xlsx,ppt,pptx,pdf,txt,xml'
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),

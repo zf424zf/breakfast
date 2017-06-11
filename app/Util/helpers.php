@@ -69,3 +69,25 @@ if (!function_exists('cdn')) {
     }
 
 }
+
+if (!function_exists('img_url')) {
+
+    function img_url($urls, $width = null, $height = null)
+    {
+        is_array($urls) || $urls = [$urls];
+        $append = [];
+        if ($width || $height) {
+            $append[] = 'x-oss-process=image/resize';
+            $append[] = 'm_fill';
+            $append[] = 'Q_100';
+        }
+        if ($width) $append[] = 'w_' . $width;
+        if ($height) $append[] = 'h_' . $height;
+        $thumb = [];
+        foreach ($urls as $url) {
+            $thumb[] = config('admin.upload.host') . $url . '?' . implode(',', $append);
+        }
+        return count($thumb) == 1 ? current($thumb) : $thumb;
+    }
+
+}

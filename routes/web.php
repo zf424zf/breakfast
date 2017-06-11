@@ -14,5 +14,6 @@
 Route::get('/', 'IndexController@index');
 Route::get('metro', 'MetroController@index');
 Route::get('cart', 'CartController@index');
+Route::get('order', 'OrderController@index');
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');
 Route::get('post/{id}', 'PostController@show')->where('id', '\+?[1-9]\d*');

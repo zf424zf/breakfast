@@ -65,12 +65,12 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .search-box .searchbar .searchbar-cancel{height: 2rem;line-height: 2rem;}
 
 /*日历*/
-.calendar{width: 91vw; margin: 0 auto;height:52vw;}
+.calendar{width: 91vw; margin: 0 auto 1rem auto;height:52vw;}
 .calendar .calendar-month{width: 100%;font-size:6rem;height:100%;line-height:15rem;color: #f8f8f8;text-align: center;z-index: 9 }
 .calendar .calendar-month.f-small{font-size: 5rem;}
 .calendar .calendar-date{position:absolute;top:2.6rem;width:100%;  z-index: 99}
 .calendar .calendar-date ul{width: 100vw;overflow: hidden}
-.calendar .calendar-date ul li{float: left;width:13vw;height:13vw;line-height:13vw;text-align: center;font-size: 1.2em;}
+.calendar .calendar-date ul li{float: left;width:11vw;height:11vw;line-height:11vw;text-align: center;font-size: 1em;margin: 1vw;}
 .calendar .calendar-date ul li.cur{background: #fb9234;color: #fff;border-radius: 100%}
 .calendar .calendar-date ul li.orange{border: 1px solid #fb9234;border-radius: 100%;}
 .calendar .calendar-date ul li.blue{border: 1px solid #00a0e9;border-radius: 100%;}
@@ -197,14 +197,14 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .color-lump .bar-footer .button-fill{line-height: 3rem;background: #fb9234;}
 
 /*我的订单*/
-.order-cont{padding-bottom: 10rem;}
+.order-cont{padding-bottom: 2rem;}
 .order-cont h4{font-size:1.2rem;font-weight:normal;height:2.6rem;line-height:2.6rem;background: #f1f1f1;text-align: center}
 .order-cont .card{margin: 0;border-radius: 0;}
-.order-cont .card-content{margin: 0 .75rem;border-top:1px solid #f3f3f3;}
+.order-cont .card-content{margin: 0 .75rem;}
 .order-cont .card-content .card-content-top{overflow: hidden;height:2.5rem;line-height:2.5rem;border-bottom: 1px solid #f3f3f3;}
 .order-cont .card-content .card-content-top p span{color: #fb9234;margin-left: 1rem;}
 .order-cont .card-content .card-content-top a.button{border: 1px solid #fb9234;color: #fb9234;padding:0 .5rem;height: 1.9rem;line-height: 1.9rem;border-radius: .2rem;margin-top: .3rem;}
-.order-cont .list-block .item-content{padding:.5rem 0;padding-left: 0;border-bottom: 1px solid #f3f3f3;font-size: 1.1rem;color: #333}
+.order-cont .list-block .item-content{padding:.5rem 0;padding-left: 0;font-size: 1.1rem;color: #333}
 .order-cont .list-block .item-content.last{border-bottom: 0;}
 .order-cont .list-block .item-content .item-title-row{margin-bottom: .8rem;}
 .order-cont .card-footer{border-top:1px solid #f3f3f3;}

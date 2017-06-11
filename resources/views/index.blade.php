@@ -16,9 +16,11 @@
                 <!--幻灯片开始-->
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="../static/images/banner1.jpg" alt="" style='width: 100%'>
+                        <div class="swiper-slide">
+                            <img src="../static/images/banner1.jpg" alt="" style='width: 100%'>
                         </div>
-                        <div class="swiper-slide"><img src="../static/images/banner2.jpg" alt="" style='width: 100%'>
+                        <div class="swiper-slide">
+                            <img src="../static/images/banner2.jpg" alt="" style='width: 100%'>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -28,12 +30,12 @@
                 <div class="row no-gutter">
                     <div class="col-50">
                         <a class="tab-item active" href="{{url('metro')}}">
-                            <img src="../static/images/book.png" alt=""/>我要订餐
+                            <img src="{{cdn('images/book.png')}}" alt=""/>我要订餐
                         </a>
                     </div>
                     <div class="col-50">
                         <a class="tab-item" href="#">
-                            <img src="../static/images/order.png" alt=""/>我的订单
+                            <img src="{{cdn('images/order.png')}}" alt=""/>我的订单
                         </a>
                     </div>
                 </div>

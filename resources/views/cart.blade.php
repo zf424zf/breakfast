@@ -15,7 +15,7 @@
             <!--订餐地址选择开始-->
             <div class="content">
                 <div class="location-box">
-                    <div class="location"><img src="../static/images/location.png" alt=""/><span>请选择取货地点</span></div>
+                    <div class="location"><img src="{{cdn('images/location.png')}}" alt=""/><span>请选择取货地点</span></div>
                 </div>
                 <div class="calendar">
                     <div class="calendar-month">{{chinese_month()}}</div>
@@ -128,7 +128,7 @@
             <!--底部悬浮开始-->
             <nav class="bar bar-tab bar-pay cart-pay">
                 <div class="pull-left">
-                    <div class="cart-box"><i>3</i> <img src="../static/images/cart.png" alt=""/></div>
+                    <div class="cart-box"><i>3</i> <img src="{{cdn('images/cart.png')}}" alt=""/></div>
                     <div class="cart-price">
                         ￥27.5<span>已优惠0元</span>
                     </div>
@@ -140,7 +140,7 @@
         <div class="cover"></div>
         <!--早餐详情-->
         <div class="food-detail">
-            <div class="close-btn"><img src="../static/images/close.png" alt=""/></div>
+            <div class="close-btn"><img src="{{cdn('images/close.png')}}" alt=""/></div>
             <img src="../static/images/pic.jpg" alt=""/>
             <div class="txt">
                 <h4>培根西红柿三明治</h4>

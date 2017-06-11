@@ -72,6 +72,9 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .calendar .calendar-date ul{width: 100vw;overflow: hidden}
 .calendar .calendar-date ul li{float: left;width:13vw;height:13vw;line-height:13vw;text-align: center;font-size: 1.2em;}
 .calendar .calendar-date ul li.cur{background: #fb9234;color: #fff;border-radius: 100%}
+.calendar .calendar-date ul li.orange{border: 1px solid #fb9234;border-radius: 100%;}
+.calendar .calendar-date ul li.blue{border: 1px solid #00a0e9;border-radius: 100%;}
+.calendar .calendar-date ul li.dot{background: url("../../images/dot.png") no-repeat;background-size: 100% 100%;}
 .calendar .calendar-date ul li.f-gray{color: #ccc;}
 .calendar .calendar-date ul.week li{font-size: .95rem;color: #999;}
 .calendar-info{height: 2.2rem;line-height: 2.2rem;padding: 0 .75rem;font-size: 1.1rem;border-top:1px solid #f3f3f3;}
@@ -271,6 +274,11 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .food-list .item-content .item-after .pull-right{margin-right: .75rem;}
 .food-list .item-content .food-cart span{float:left;display: block;line-height: 1.5rem;margin: 0 .5rem;color: #fb9234}
 
+/*资讯详情*/
+.news-cont{padding: .5rem .75rem;padding-bottom: 10rem;}
+.news-cont h4{font-size: 1.2rem;color: #333;text-align: center;font-weight: normal;line-height: 2rem;}
+.news-cont img{width: 100%;margin: .5rem 0;}
+.news-cont p{line-height: 2rem;}
 
 /*404&页面建设中*/
 .content_box{width:80%;text-align:center;margin:2rem auto;}

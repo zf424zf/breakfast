@@ -105,11 +105,11 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .page-index .row .col-50{text-align: center;border-right: 1px solid #f2f2f2;}
 .page-index .row .col-50 img{width: 2.5rem;vertical-align: middle;margin-right: .5rem;}
 .page-index .row .col-50 a{font-size: 1.2rem;color: #333;}
-.page-index .list-block{margin-bottom: 10rem;}
+.page-index .list-block{margin-bottom: 6rem;}
 .page-index .list-block h4{padding: .8rem .75rem;background: #f1f1f1;font-size: 1.2rem;color: #333;font-weight: normal}
-.page-index .list-block .item-content{border-bottom: 1px solid #f2f2f2;padding: .75rem;}
+.page-index .list-block .item-content{border-bottom: 1px solid #f2f2f2;padding: .75rem; }
 .page-index .list-block .item-title-row{font-size: 1.2rem;color: #333;}
-.page-index .list-block .item-text{color: #999;height: 3rem;line-height: 1.5rem;}
+.page-index .list-block .item-text{color: #999;height: 4.5rem;line-height: 1.5rem;-webkit-line-clamp:3 ;}
 
 /*订餐地址选择*/
 .pick-up-cont .top{background: #f1f1f1;}
@@ -275,14 +275,15 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .food-list .item-content .food-cart span{float:left;display: block;line-height: 1.5rem;margin: 0 .5rem;color: #fb9234}
 
 /*资讯详情*/
-.news-cont{padding: .5rem .75rem;padding-bottom: 10rem;}
-.news-cont h4{font-size: 1.2rem;color: #333;text-align: center;font-weight: normal;line-height: 2rem;}
+.news-cont{padding: .5rem .75rem;padding-bottom: 2rem;}
+.news-cont h4{font-size: 1.2rem;color: #333;text-align: center;font-weight: bold;line-height: 4rem;}
 .news-cont img{width: 100%;margin: .5rem 0;}
 .news-cont p{line-height: 2rem;}
 
 /*404&页面建设中*/
 .content_box{width:80%;text-align:center;margin:2rem auto;}
-.content_box img{width:100%}
+.content_box .news-content{overflow: hidden;}
+.content_box .news-content img{width:100%}
 .content_box .btn{color:#333;font-size:1.2rem;border-radius:8px;border:2px solid #999;}
 
 /*无数据状态*/

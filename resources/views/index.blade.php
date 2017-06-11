@@ -45,7 +45,9 @@
                         @foreach($posts as $post)
                             <li>
                                 <a href="{{url('post/'.$post['id'])}}" class="item-content">
-                                    <div class="item-media"><img src="{{img_url($post['cover'],80,80)}}" width="80" height="80"/></div>
+                                    @if($post['cover'])
+                                    <div class="item-media"><img src="{{img_url($post['cover'],160,160)}}" width="80" height="80"/></div>
+                                    @endif
                                     <div class="item-inner">
                                         <div class="item-title-row">
                                             <div class="item-title">{{$post['subject']}}</div>

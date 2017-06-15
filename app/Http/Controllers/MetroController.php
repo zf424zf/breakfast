@@ -27,7 +27,7 @@ class MetroController extends Controller
 
     public function station($stationId)
     {
-        $station = StationModel::where('id', $stationId)->with('places')->first()->toArray();
+        $station = StationModel::where('id', $stationId)->with('places')->first();
         return view('station', ['station' => $station]);
     }
 }

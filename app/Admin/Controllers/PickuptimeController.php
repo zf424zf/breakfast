@@ -78,6 +78,7 @@ class PickuptimeController extends Controller
     {
         return Admin::form(PickTimeModel::class, function (Form $form) {
             $form->timeRange('start','end', '选择时间')->rules('required')->help('格式  时:分')->options(['format'=>'HH:mm']);
+            $form->timeRange('early_start','early_end', '早鸟时间段')->rules('required')->help('格式  时:分,在此时间段内将享受早鸟价格')->options(['format'=>'HH:mm']);
         });
     }
 }

@@ -70,8 +70,9 @@ class SettingController extends Controller
         return Admin::grid(SettingsModel::class, function (Grid $grid) {
             $grid->id('ID')->sortable();
             $grid->key('配置');
-            $grid->value('值')->editable();;
             $grid->description('说明');
+            $grid->value('值')->editable();;
+
         });
     }
 

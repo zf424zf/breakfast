@@ -26,13 +26,16 @@
                 </div>
                 <div class="map-box">
                     <div class="top">
-                        <a href="#">{{$station['name']}} <span class="icon icon-down"></span></a>
+                        <select id="station-select" name="station-select">
+                            <option value="">人民广场站</option>
+                            <option value="">人民广场站2</option>
+                            <option value="">人民广场站22</option>
+                            <option value="">人民广场站233</option>
+                            <option value="">人民广场站2444</option>
+                        </select>
                     </div>
-                    @foreach($station['places'] as $place)
-
-                    @endforeach
                     <ul>
-                        @foreach($station['places'] as $place)
+                        @foreach($station->places as $place)
                         <li data-id="{{$place['id']}}">
                             <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
                             <p>{{$place['address']}}</p>

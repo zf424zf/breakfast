@@ -8,7 +8,7 @@
         <div class="page page-address">
             <!--头部开始-->
             <header class="bar bar-nav">
-                <a href="#" class="icon icon-left pull-left back_btn" onclick="history.back(-1)"></a>
+                <a href="#" class="icon icon-left pull-left back"></a>
                 <h1 class="title">我要下单</h1>
             </header>
             <!--头部结束-->

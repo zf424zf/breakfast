@@ -117,6 +117,7 @@ class ProductsController extends Controller
             $form->multipleSelect('places', '销售地点')->options(PlaceModel::all()->pluck('name', 'id'));
             $form->currency('origin_price', '原价')->rules('required')->symbol('￥');
             $form->currency('coupon_price', '优惠价')->rules('required')->symbol('￥');
+            $form->currency('early_price', '早鸟价')->rules('required')->symbol('￥');
             $form->number('stock', '库存')->rules('required')->default(0);
             $form->number('recommend', '推荐指数')->rules('required')->default(5);
             $form->text('calori', '卡路里');

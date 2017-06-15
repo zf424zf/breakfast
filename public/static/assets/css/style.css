@@ -136,6 +136,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 
 /*地图定位*/
 .map-box .top{padding: 0 .75rem;height: 2.5rem;line-height: 2.5rem;background: #fff;}
+.map-box .top select{border: none;height: 2.5em;line-height: 2.5em;padding-right: 1vw;}
 .map-box .top a{font-size: 1.1rem;color: #666;}
 .map-box .map{width: 100%; height: 250px;display: none}
 .map-box ul{margin-bottom: 10rem;}

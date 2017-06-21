@@ -14,11 +14,21 @@ $(function () {
             }
         );
     });
-    $(document).on('click', '.map-box li', function () {
-        $('.map').hide();
-        $('#map-' + $(this).data('id')).show();
-        $('.map-box li').removeClass('current');
-        $(this).addClass('current');
+    $(document).on('click', '.map-box .detail', function () {
+        if ($(this).closest('li').hasClass('current')) {
+            $('.map').hide();
+            $('.map-box li').removeClass('current');
+        } else {
+            $('.map').hide();
+            $('#map-' + $(this).data('id')).show();
+            $('.map-box li').removeClass('current');
+            $(this).closest('li').addClass('current');
+        }
+
+    })
+    $(document).on('change', '#station-select', function () {
+        var query = $(this).data('metro') ? '?metro_id=' + $(this).data('metro') : '';
+        $.router.load('/station/' + $(this).val() + query, true)
     })
     $(document).on("pageInit", "#choose-place", function (e, id, page) {
         $('.map').each(function () {

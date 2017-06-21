@@ -36,7 +36,7 @@
                                 <p @if($loop->first) class="active" @endif>{{$metro['name']}} <span class="icon icon-right"></span></p>
                                 <dl @if($loop->first) style="display: block" @endif>
                                     @foreach($metro['stations'] as $station)
-                                    <dd><a href="{{url('station/'.$station['id'])}}">{{$station['name']}}</a></dd>
+                                    <dd><a href="{{url('station/'.$station['id'])}}?metro_id={{$metro['id']}}">{{$station['name']}}</a></dd>
                                     @endforeach
                                 </dl>
                             </li>

@@ -26,19 +26,26 @@
                 </div>
                 <div class="map-box">
                     <div class="top">
-                        <select id="station-select" name="station-select">
-                            <option value="">人民广场站</option>
-                            <option value="">人民广场站2</option>
-                            <option value="">人民广场站22</option>
-                            <option value="">人民广场站233</option>
-                            <option value="">人民广场站2444</option>
+                        <select id="station-select" name="station-select" data-metro="{{$stations['id'] or ''}}">
+                            @if($stations)
+                                @foreach($stations['stations'] as $s)
+                                <option value="{{$s['id']}}" @if($s['id'] == $station->id) selected @endif>{{$s['name']}}</option>
+                                @endforeach
+                            @else
+                                <option value="{{$station->id}}">{{$station->name}}</option>
+                            @endif
                         </select>
                     </div>
                     <ul>
                         @foreach($station->places as $place)
-                        <li data-id="{{$place['id']}}">
-                            <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
-                            <p>{{$place['address']}}</p>
+                        <li>
+                            <div class="detail" data-id="{{$place['id']}}">
+                                <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
+                                <p>{{$place['address']}}</p>
+                            </div>
+                            <div class="choose">
+                                <a href="#" class="button button-fill button-orange">在这里取餐</a>
+                            </div>
                         </li>
                         <li class="map" id="map-{{$place['id']}}" data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}"></li>
                         @endforeach

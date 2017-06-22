@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page page-address">
+        <div class="page page-address" id="cart">
             <!--头部开始-->
             <header class="bar bar-nav">
                 <a href="#" class="icon icon-left pull-left back"></a>
@@ -34,12 +34,21 @@
                         </ul>
                         <ul>
                             @foreach($dates as $d)
-
-                                <li @if($d['date'] == date('Ymd',$date)) class="cur" @elseif($d['date'] < date('Ymd',$date)) class="f-gray" @endif>
+                                <?php
+                                    $class = '';
+                                    if($d['date'] == $date){
+                                        $class = 'cur';
+                                    }elseif($d['date'] < date('Ymd')){
+                                        $class = 'f-gray';
+                                    }elseif(array_sum($d['selected'])){
+                                        $class = 'dot';
+                                    }
+                                ?>
+                                <li class="{{$class}}">
                                     @if($d['date'] < date('Ymd'))
                                         {{$d['show']}}
                                     @else
-                                        <a href="{{url()->current()}}?date={{$d['date']}}">{{$d['show']}}</a>
+                                        <a href="{{url()->current()}}?date={{$d['date']}}" data-no-cache="true">{{$d['show']}}</a>
                                     @endif
                                 </li>
                             @endforeach
@@ -63,9 +72,9 @@
                     </div>
                     <div class="bottom">
                         <div class="list-block media-list cart-list">
-                            <ul>
+                            <ul id="cart-list">
                                 @foreach($products as $product)
-                                <li class="item-content">
+                                <li class="item-content" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
                                     <div class="item-media">
                                         <a href="#" class="food-alert">
                                             <img src="{{img_url($product['img'],80,80)}}" width="80"/>
@@ -81,6 +90,8 @@
                                                 ￥{{$product['coupon_price']}} <span>{{$product['origin_price']}}</span>
                                             </div>
                                             <div class="pull-right food-cart">
+                                                <a href="javascript:;" class="food-reduce"></a>
+                                                <span class="food-count">1</span>
                                                 <a href="javascript:;" class="food-add"></a>
                                             </div>
                                         </div>
@@ -143,7 +154,7 @@
                                     ￥10.50
                                 </div>
                                 <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-minus"></a>
+                                    <a href="javascript:;" class="food-reduce"></a>
                                     <span>2</span>
                                     <a href="javascript:;" class="food-add"></a>
                                 </div>
@@ -158,7 +169,7 @@
                                     ￥10.50
                                 </div>
                                 <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-minus"></a>
+                                    <a href="javascript:;" class="food-reduce"></a>
                                     <span>1</span>
                                     <a href="javascript:;" class="food-add"></a>
                                 </div>
@@ -178,7 +189,7 @@
                                     ￥10.50
                                 </div>
                                 <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-minus"></a>
+                                    <a href="javascript:;" class="food-reduce"></a>
                                     <span>2</span>
                                     <a href="javascript:;" class="food-add"></a>
                                 </div>
@@ -193,7 +204,7 @@
                                     ￥10.50
                                 </div>
                                 <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-minus"></a>
+                                    <a href="javascript:;" class="food-reduce"></a>
                                     <span>1</span>
                                     <a href="javascript:;" class="food-add"></a>
                                 </div>

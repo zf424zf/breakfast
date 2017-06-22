@@ -14,6 +14,9 @@ use App\Models\Product\Products as ProductModel;
 
 class CartController extends Controller
 {
+
+    const SESSION_KEY = 'cart';
+
     public function __construct()
     {
         //$this->middleware('wechat.userinfo', ['except' => '']);
@@ -24,18 +27,53 @@ class CartController extends Controller
         $todayIndex = date('w');
         $start = strtotime("-{$todayIndex} day");
         $dates = [];
+        $carts = session(self::SESSION_KEY);
         for ($i = 0; $i < 21; $i++) {
             $timestamp = $start + ($i * 86400);
             $dates[] = [
-                'show' => date('d', $timestamp),
-                'date' => date('Ymd', $timestamp),
+                'show'     => date('d', $timestamp),
+                'date'     => date('Ymd', $timestamp),
+                'selected' => array_get($carts, date('Ymd', $timestamp), []),
             ];
         }
         $place = $placeId ? PlaceModel::find($placeId) : null;
         //获取周
-        $date = strtotime(request('date', date('Ymd')));
+        $date = date('Ymd', strtotime(request('date', date('Ymd'))));
+        if (!$date) {
+            abort(404);
+        }
         $pickuptimes = PickupTimeModel::all()->toArray();
         $products = ProductModel::available()->get()->toArray();
-        return view('cart', ['dates' => $dates, 'place' => $place, 'date' => $date, 'pickuptimes' => $pickuptimes, 'products' => $products]);
+        $cart = isset($carts[$date]) ? $carts[$date] : [];
+        return view('cart', [
+            'dates'       => $dates,
+            'place'       => $place,
+            'date'        => $date,
+            'pickuptimes' => $pickuptimes,
+            'products'    => $products,
+            'cart'        => $cart,
+        ]);
+    }
+
+    public function add()
+    {
+        if (!request('date') || request('count') === null || !request('product_id')) {
+            return [
+                'error'   => 1,
+                'message' => '参数错误',
+            ];
+        }
+        $data = session(self::SESSION_KEY, []);
+        if (request('count')) {
+            $data[request('date')][request('product_id')] = request('count');
+        } else {
+            unset($data[request('date')][request('product_id')]);
+        }
+
+        session([self::SESSION_KEY => $data]);
+        return [
+            'error'   => 0,
+            'message' => 'ok',
+        ];
     }
 }

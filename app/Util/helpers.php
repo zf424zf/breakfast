@@ -31,6 +31,32 @@ if (!function_exists('setting')) {
     }
 }
 
+if (!function_exists('chinese_week')) {
+    /**
+     * @param $timestamp
+     * @return mixed
+     * 根据时间戳获取语意化的星期
+     */
+    function chinese_week($timestamp = null)
+    {
+        $timestamp = is_null($timestamp) ? time() : $timestamp;
+        $week = date('w', $timestamp);
+        $map = [
+            1 => '周一',
+            2 => '周二',
+            3 => '周三',
+            4 => '周四',
+            5 => '周五',
+            6 => '周六',
+            0 => '周日',
+        ];
+        if (isset($map[$week])) {
+            return $map[$week];
+        }
+        return null;
+    }
+}
+
 
 if (!function_exists('chinese_month')) {
 
@@ -59,6 +85,28 @@ if (!function_exists('chinese_month')) {
     }
 
 }
+
+if (!function_exists('chinese_human_week')) {
+
+    function chinese_human_week($timestamp = null)
+    {
+        $map = [
+            -2 => '上上周',
+            -1 => '上周',
+            0  => '本周',
+            1  => '下周',
+            2  => '下下周',
+        ];
+        $timestamp = is_null($timestamp) ? time() : $timestamp;
+        $index = date('W', $timestamp) - date('W');
+        if (isset($map[$index])) {
+            return $map[$index];
+        }
+        return null;
+    }
+
+}
+
 
 if (!function_exists('cdn')) {
 

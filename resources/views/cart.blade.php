@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','首页')
+@section('title','我要下单')
 @section('resource')
     <!--css js-->
 @endsection
@@ -15,7 +15,10 @@
             <!--订餐地址选择开始-->
             <div class="content">
                 <div class="location-box">
-                    <div class="location"><img src="{{cdn('images/location.png')}}" alt=""/><span>请选择取货地点</span></div>
+                    <div class="location">
+                        <img src="{{cdn('images/location.png')}}" alt=""/>
+                        <a href="{{url('/metro')}}">{{$place->name or '请选择取货地点'}}</a>
+                    </div>
                 </div>
                 <div class="calendar">
                     <div class="calendar-month">{{chinese_month()}}</div>
@@ -30,8 +33,15 @@
                             <li>周六</li>
                         </ul>
                         <ul>
-                            @foreach($dates as $date)
-                            <li @if($date['is_today']) class="cur" @endif>{{$date['show']}}</li>
+                            @foreach($dates as $d)
+
+                                <li @if($d['date'] == date('Ymd',$date)) class="cur" @elseif($d['date'] < date('Ymd',$date)) class="f-gray" @endif>
+                                    @if($d['date'] < date('Ymd'))
+                                        {{$d['show']}}
+                                    @else
+                                        <a href="{{url()->current()}}?date={{$d['date']}}">{{$d['show']}}</a>
+                                    @endif
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -39,14 +49,14 @@
                 <div class="pick-up-cont">
                     <div class="top">
                         <ul class="list-block">
-                            <li class="cur">本周</li>
-                            <li>周一05-19</li>
+                            <li class="cur">{{chinese_human_week($date)}}</li>
+                            <li>{{chinese_week($date)}} {{date('m-d',$date)}}</li>
                             <li>
                                 <label>取餐时间：</label>
-                                <select>
-                                    <option>7:30-9:30</option>
-                                    <option>7:30-9:30</option>
-                                    <option>7:30-9:30</option>
+                                <select name="pickuptime" id="pickuptime">
+                                    @foreach($pickuptimes as $pickuptime)
+                                    <option value="{{$pickuptime['id']}}">{{$pickuptime['start']}}-{{$pickuptime['end']}}</option>
+                                    @endforeach
                                 </select>
                             </li>
                         </ul>
@@ -54,71 +64,29 @@
                     <div class="bottom">
                         <div class="list-block media-list cart-list">
                             <ul>
+                                @foreach($products as $product)
                                 <li class="item-content">
                                     <div class="item-media">
                                         <a href="#" class="food-alert">
-                                            <img src="../static/images/food.jpg" width="80"/>
+                                            <img src="{{img_url($product['img'],80,80)}}" width="80"/>
                                         </a>
                                     </div>
                                     <div class="item-inner">
                                         <div class="item-title-row">
-                                            <div class="item-title">培根三明治</div>
+                                            <div class="item-title">{{$product['name']}}</div>
                                         </div>
-                                        <div class="item-subtitle">食材：培根、鸡蛋、面包</div>
+                                        <div class="item-subtitle">食材：{{$product['material']}}</div>
                                         <div class="item-text">
                                             <div class="pull-left">
-                                                ￥10.50 <span>15.00</span>
-                                            </div>
-                                            <div class="pull-right food-cart"><a href="javascript:;" class="food-add"></a> </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <a href="#">
-                                            <img src="../static/images/food.jpg" width="80"/>
-                                        </a>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            <div class="item-title">培根三明治</div>
-                                        </div>
-                                        <div class="item-subtitle">食材：培根、鸡蛋、面包</div>
-                                        <div class="item-text">
-                                            <div class="pull-left">
-                                                ￥10.50 <span>15.00</span>
+                                                ￥{{$product['coupon_price']}} <span>{{$product['origin_price']}}</span>
                                             </div>
                                             <div class="pull-right food-cart">
-                                                <a href="javascript:;" class="food-minus"></a>
-                                                <span>1</span>
                                                 <a href="javascript:;" class="food-add"></a>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <a href="#">
-                                            <img src="../static/images/food.jpg" width="80"/>
-                                        </a>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            <div class="item-title">培根三明治</div>
-                                        </div>
-                                        <div class="item-subtitle">食材：培根、鸡蛋、面包</div>
-                                        <div class="item-text">
-                                            <div class="pull-left">
-                                                ￥10.50 <span>15.00</span>
-                                            </div>
-                                            <div class="pull-right food-cart">
-                                                <a href="javascript:;" class="food-minus"></a>
-                                                <span>1</span>
-                                                <a href="javascript:;" class="food-add"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

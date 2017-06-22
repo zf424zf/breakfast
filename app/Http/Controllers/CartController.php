@@ -8,6 +8,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Metro\Place as PlaceModel;
+use App\Models\PickupTime as PickupTimeModel;
+use App\Models\Product\Products as ProductModel;
 
 class CartController extends Controller
 {
@@ -16,7 +19,7 @@ class CartController extends Controller
         //$this->middleware('wechat.userinfo', ['except' => '']);
     }
 
-    public function index()
+    public function index($placeId = null)
     {
         $todayIndex = date('w');
         $start = strtotime("-{$todayIndex} day");
@@ -24,11 +27,15 @@ class CartController extends Controller
         for ($i = 0; $i < 21; $i++) {
             $timestamp = $start + ($i * 86400);
             $dates[] = [
-                'show'     => date('d', $timestamp),
-                'date'     => date('Y-m-d', $timestamp),
-                'is_today' => date('Y-m-d', $timestamp) == date('Y-m-d') ? true : false,
+                'show' => date('d', $timestamp),
+                'date' => date('Ymd', $timestamp),
             ];
         }
-        return view('cart', ['dates' => $dates]);
+        $place = $placeId ? PlaceModel::find($placeId) : null;
+        //获取周
+        $date = strtotime(request('date', date('Ymd')));
+        $pickuptimes = PickupTimeModel::all()->toArray();
+        $products = ProductModel::available()->get()->toArray();
+        return view('cart', ['dates' => $dates, 'place' => $place, 'date' => $date, 'pickuptimes' => $pickuptimes, 'products' => $products]);
     }
 }

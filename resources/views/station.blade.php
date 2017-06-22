@@ -44,7 +44,7 @@
                                 <p>{{$place['address']}}</p>
                             </div>
                             <div class="choose">
-                                <a href="#" class="button button-fill button-orange">在这里取餐</a>
+                                <a href="{{url('/cart/'.$place['id'])}}" class="button button-fill button-orange">在这里取餐</a>
                             </div>
                         </li>
                         <li class="map" id="map-{{$place['id']}}" data-lat="{{$place['lat']}}" data-lng="{{$place['lng']}}"></li>

@@ -238,7 +238,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .bar-pay .cart-box{display: inline-block;float:left;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
 .bar-pay .cart-box img{display:inline-block;position: absolute;left:50%;top:1rem;width: 3rem;margin-left: -1.5rem;}
 .bar-pay .cart-box{display: inline-block;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
-.bar-pay .cart-box i{display: block;width:1.5rem;height:1.5rem;border-radius:50%;line-height:1.5rem;font-style:normal;background: #fb1515;position: absolute;right: 0;top:0;font-size: .85rem;color: #fff;text-align: center}
+.bar-pay .cart-box i{display: none;width:1.5rem;height:1.5rem;border-radius:50%;line-height:1.5rem;font-style:normal;background: #fb1515;position: absolute;right: 0;top:0;font-size: .85rem;color: #fff;text-align: center}
 .bar-pay .cart-price{display:inline-block;color: #fff}
 /*我要下单*/
 .cart-list{padding-bottom: 10rem;}
@@ -269,7 +269,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .food-detail .food-detail-footer .pull-left{font-size: 1.1rem;color: #fb9234;}
 .food-detail .food-detail-footer a{display: inline-block;float: right;height: 2.4rem;line-height:2.4rem;color:#fff;padding:0 1rem;margin-top: .8rem;background: #fb9234;border-radius: .5rem;}
 /*购物车*/
-.food-list{display:none;position: fixed;width: 100%;bottom: 4.5rem;left:0;background: #f1f1f1;z-index: 99999;padding-bottom: 5rem;}
+.food-list{display:none;position: fixed;width: 100%;bottom: 4.5rem;left:0;background: #f1f1f1;z-index: 99999;}
 .food-list h4{background: #fff;padding: .5rem .75rem;font-size: 1.2rem;color: #333;font-weight: normal}
 .food-list h4 span{border-left: 1px solid #fb9234;padding-left: .5rem;}
 .food-list h6{padding: .5rem .75rem;font-weight: normal;color: #999;}
@@ -280,6 +280,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .food-list .item-content .item-after .pull-left{color: #fb9234;margin-right: 1rem;}
 .food-list .item-content .item-after .pull-right{margin-right: .75rem;}
 .food-list .item-content .food-cart span{float:left;display: block;line-height: 1.5rem;margin: 0 .5rem;color: #fb9234}
+.cart-empty{width: 100%;height: 100%; line-height:20vw;text-align: center}
 
 /*资讯详情*/
 .news-cont{padding: .5rem .75rem;padding-bottom: 2rem;}

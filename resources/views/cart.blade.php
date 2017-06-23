@@ -59,7 +59,7 @@
                     <div class="top">
                         <ul class="list-block">
                             <li class="cur">{{chinese_human_week($date)}}</li>
-                            <li>{{chinese_week($date)}} {{date('m-d',$date)}}</li>
+                            <li>{{chinese_week(strtotime($date))}} {{date('m-d',strtotime($date))}}</li>
                             <li>
                                 <label>取餐时间：</label>
                                 <select name="pickuptime" id="pickuptime">
@@ -107,7 +107,7 @@
             <!--底部悬浮开始-->
             <nav class="bar bar-tab bar-pay cart-pay">
                 <div class="pull-left">
-                    <div class="cart-box"><i>3</i> <img src="{{cdn('images/cart.png')}}" alt=""/></div>
+                    <div class="cart-box"><i id="cart-count">0</i> <img src="{{cdn('images/cart.png')}}" alt=""/></div>
                     <div class="cart-price">
                         ￥27.5<span>已优惠0元</span>
                     </div>
@@ -141,78 +141,7 @@
             </div>
         </div>
         <!--购物车-->
-        <div class="food-list">
-            <h4><span>购物车</span></h4>
-            <h6>星期一 5-22</h6>
-            <div class="list-block">
-                <ul>
-                    <li class="item-content">
-                        <div class="item-inner">
-                            <div class="item-title">培根三明治</div>
-                            <div class="item-after">
-                                <div class="pull-left">
-                                    ￥10.50
-                                </div>
-                                <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-reduce"></a>
-                                    <span>2</span>
-                                    <a href="javascript:;" class="food-add"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="item-content">
-                        <div class="item-inner">
-                            <div class="item-title">培根三明治</div>
-                            <div class="item-after">
-                                <div class="pull-left">
-                                    ￥10.50
-                                </div>
-                                <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-reduce"></a>
-                                    <span>1</span>
-                                    <a href="javascript:;" class="food-add"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <h6>星期二 5-23</h6>
-            <div class="list-block">
-                <ul>
-                    <li class="item-content">
-                        <div class="item-inner">
-                            <div class="item-title">培根三明治</div>
-                            <div class="item-after">
-                                <div class="pull-left">
-                                    ￥10.50
-                                </div>
-                                <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-reduce"></a>
-                                    <span>2</span>
-                                    <a href="javascript:;" class="food-add"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="item-content">
-                        <div class="item-inner">
-                            <div class="item-title">培根三明治</div>
-                            <div class="item-after">
-                                <div class="pull-left">
-                                    ￥10.50
-                                </div>
-                                <div class="pull-right food-cart">
-                                    <a href="javascript:;" class="food-reduce"></a>
-                                    <span>1</span>
-                                    <a href="javascript:;" class="food-add"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="food-list" id="food-list">
         </div>
     </div>
 @endsection

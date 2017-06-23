@@ -39,6 +39,20 @@ $(function () {
                 $(this).find('.food-count,.food-reduce').hide();
             }
         })
+        $.ajax({
+            url: '/cart/list',
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            success: function (json) {
+                if (json.count) {
+                    $('#cart-count').html(json.count).show();
+                } else {
+                    $('#cart-count').hide();
+                }
+                $('#food-list').html(json.html);
+            }
+        });
     }
     $(document).on("pageInit", "#cart", function (e, id, page) {
         computeCartList();
@@ -50,9 +64,11 @@ $(function () {
         } else {
             count--;
         }
+        var productId = $(this).closest('li').data('id');
+        var date = $(this).closest('li').data('date');
         var data = {
-            'product_id': $(this).closest('li').data('id'),
-            'date': $(this).closest('li').data('date'),
+            'product_id': productId,
+            'date': date,
             'count': count
         };
         $.ajax({
@@ -61,11 +77,11 @@ $(function () {
             data: data,
             dataType: 'json',
             cache: false,
+            async: false,
             success: function (json) {
-                console.log(json);
             }
         });
-        $(this).closest('li').attr('data-count', count);
+        $('li[data-date="' + date + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
         computeCartList();
     })
     //购物车结束
@@ -95,18 +111,18 @@ $(function () {
         $(".cover").css("display", "block");
         $(".food-detail").css("display", "block");
     });
-    $(".close-btn").on("click", function () {
+    $(".close-btn,.cover").on("click", function () {
         $(".cover").css("display", "none");
         $(".food-detail").css("display", "none");
     });
     /*订餐购物车*/
-    $(".cart-box").on("click", function () {
+    $(document).on('click', '.cart-box', function () {
         $(".cover").css("display", "block");
-        $(".food-list").css("display", "block");
-    });
-    $(".cover").on("click", function () {
+        $("#food-list").css("display", "block");
+    })
+    $(document).on('click', '.cover', function () {
         $(".cover").css("display", "none");
-        $(".food-list").css("display", "none");
+        $("#food-list").css("display", "none");
     })
     $.init();
 });

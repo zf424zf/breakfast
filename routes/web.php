@@ -17,6 +17,7 @@ Route::get('metro', 'MetroController@index');
 Route::group(['prefix'     => 'cart',], function ($router) {
     Route::get('{placeId?}', 'CartController@index')->where('placeId', '\+?[1-9]\d*');
     Route::post('add', 'CartController@add');
+    Route::get('list', 'CartController@lists');
 });
 Route::get('order', 'OrderController@index');
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');

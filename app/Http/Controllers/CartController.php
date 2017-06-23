@@ -55,6 +55,30 @@ class CartController extends Controller
         ]);
     }
 
+    public function lists()
+    {
+        $datas = session(self::SESSION_KEY, []);
+        foreach ($datas as $key => $data) {
+            if ($key < date('Ymd')) {
+                unset($datas[$key]);
+            }
+        }
+        ksort($datas);
+        session([self::SESSION_KEY => $datas]);
+        $count = 0;
+        $productIds = [];
+        foreach ($datas as $data) {
+            $count += array_sum($data);
+            $productIds = array_merge($productIds, array_keys($data));
+        }
+        $productIds = array_unique($productIds);
+        $products = ProductModel::available()->whereIn('id', $productIds)->get()->keyBy('id')->toArray();
+        return [
+            'count' => $count,
+            'html'  => view('cart_list', ['products' => $products, 'datas' => $datas, 'count' => $count])->__toString(),
+        ];
+    }
+
     public function add()
     {
         if (!request('date') || request('count') === null || !request('product_id')) {

@@ -58,7 +58,7 @@
                 <div class="pick-up-cont">
                     <div class="top">
                         <ul class="list-block">
-                            <li class="cur">{{chinese_human_week($date)}}</li>
+                            <li class="cur">{{chinese_human_week(strtotime($date))}}</li>
                             <li>{{chinese_week(strtotime($date))}} {{date('m-d',strtotime($date))}}</li>
                             <li>
                                 <label>取餐时间：</label>
@@ -76,7 +76,7 @@
                                 @foreach($products as $product)
                                 <li class="item-content" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
                                     <div class="item-media">
-                                        <a href="#" class="food-alert">
+                                        <a href="javascript:;" class="food-alert">
                                             <img src="{{img_url($product['img'],80,80)}}" width="80"/>
                                         </a>
                                     </div>
@@ -118,27 +118,7 @@
         </div>
         <div class="cover"></div>
         <!--早餐详情-->
-        <div class="food-detail">
-            <div class="close-btn"><img src="{{cdn('images/close.png')}}" alt=""/></div>
-            <img src="../static/images/pic.jpg" alt=""/>
-            <div class="txt">
-                <h4>培根西红柿三明治</h4>
-                <p>食材：培根、鸡蛋、西红柿、面包</p>
-                <p>卡路里：30</p>
-                <div><span>推荐：</span>
-                    <ul>
-                        <li class="solid"></li>
-                        <li class="solid"></li>
-                        <li class="solid"></li>
-                        <li class="solid"></li>
-                        <li class="hollow"></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="food-detail-footer">
-                <div class="pull-left">￥10.50</div>
-                <a href="javascript:;">加入购物车</a>
-            </div>
+        <div class="food-detail" id="food-detail">
         </div>
         <!--购物车-->
         <div class="food-list" id="food-list">

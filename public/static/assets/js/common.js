@@ -44,6 +44,7 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             cache: false,
+            async: false,
             success: function (json) {
                 if (json.count) {
                     $('#cart-count').html(json.count).show();
@@ -84,6 +85,31 @@ $(function () {
         $('li[data-date="' + date + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
         computeCartList();
     })
+    /*早餐详情*/
+    $(document).on('click', '.food-alert', function () {
+        $('#food-detail').load('/product/' + $(this).closest('li').data('id'), function () {
+            $(".cover").css("display", "block");
+            $(".food-detail").css("display", "block");
+        })
+    })
+    $(document).on('click', '.close-btn,.cover', function () {
+        $(".cover").css("display", "none");
+        $(".food-detail").css("display", "none");
+    })
+    //添加购物车
+    $(document).on('click', '#add-to-cart', function (e) {
+        $('#cart-list li[data-id="' + $(this).attr('data-id') + '"] .food-add').click();
+        $('.close-btn').click();
+    })
+    /*订餐购物车*/
+    $(document).on('click', '.cart-box', function () {
+        $(".cover").css("display", "block");
+        $("#food-list").css("display", "block");
+    })
+    $(document).on('click', '.cover', function () {
+        $(".cover").css("display", "none");
+        $("#food-list").css("display", "none");
+    })
     //购物车结束
     $(document).on('change', '#station-select', function () {
         var query = $(this).data('metro') ? '?metro_id=' + $(this).data('metro') : '';
@@ -106,24 +132,6 @@ $(function () {
         //$('.map-box li').eq(0).trigger('click');
     });
 
-    /*早餐详情*/
-    $(".food-alert").on("click", function () {
-        $(".cover").css("display", "block");
-        $(".food-detail").css("display", "block");
-    });
-    $(".close-btn,.cover").on("click", function () {
-        $(".cover").css("display", "none");
-        $(".food-detail").css("display", "none");
-    });
-    /*订餐购物车*/
-    $(document).on('click', '.cart-box', function () {
-        $(".cover").css("display", "block");
-        $("#food-list").css("display", "block");
-    })
-    $(document).on('click', '.cover', function () {
-        $(".cover").css("display", "none");
-        $("#food-list").css("display", "none");
-    })
     $.init();
 });
 

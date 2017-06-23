@@ -98,7 +98,7 @@ if (!function_exists('chinese_human_week')) {
             2  => '下下周',
         ];
         $timestamp = is_null($timestamp) ? time() : $timestamp;
-        $index = date('W', $timestamp) - date('W');
+        $index = date('W', $timestamp + 86400) - date('W', time() + 86400);
         if (isset($map[$index])) {
             return $map[$index];
         }

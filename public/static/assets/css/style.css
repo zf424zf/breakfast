@@ -247,11 +247,11 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .cart-list .item-text{display: block}
 .cart-list .item-content .item-title{font-size: 1.15rem;color: #333;font-weight: normal;padding-bottom: 1rem;}
 .cart-list .item-content .food-cart .food-add{float:left;display: block;width: 1.5rem;height: 1.5rem;background: url("../../images/add.png") no-repeat;background-size: 100% 100%;}
-.cart-list .item-content .food-cart .food-reduce{float:left;display: block;width: 1.5rem;height: 1.5rem;background: url("../../images/minus.png") no-repeat;background-size: 100% 100%;}
+.cart-list .item-content .food-cart .food-reduce{float:left;display: none;width: 1.5rem;height: 1.5rem;background: url("../../images/minus.png") no-repeat;background-size: 100% 100%;}
 .cart-list .item-content .item-text{line-height: 1.5rem;overflow: hidden;margin-top: 1rem;}
 .cart-list .item-content .item-text .pull-left{color: #fb9234;}
 .cart-list .item-content .item-text .pull-left span{font-size: .85rem;color: #666;text-decoration: line-through;margin-left: 1rem;}
-.cart-list .item-content .food-cart span{float:left;display: block;line-height: 1.5rem;margin: 0 .5rem;}
+.cart-list .item-content .food-cart span{float:left;display: none;line-height: 1.5rem;margin: 0 .5rem;}
 /*早餐详情*/
 .food-detail{display:none;position: fixed;background: #fff;width:21rem;border-radius: .5rem;margin:auto;  left:0;  right:0;top:15%;z-index: 99999}
 .food-detail div.close-btn{text-align: right;position: absolute;top:-2.5rem;right: 0;}

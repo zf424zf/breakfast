@@ -74,7 +74,9 @@ class CartController extends Controller
     public function lists()
     {
         $datas = session(self::SESSION_KEY, []);
+        //删除过期的时间数据
         foreach ($datas as $key => $data) {
+            var_dump($key < date('Ymd'));
             if ($key < date('Ymd')) {
                 unset($datas[$key]);
             }

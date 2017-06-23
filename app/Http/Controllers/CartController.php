@@ -38,12 +38,28 @@ class CartController extends Controller
         }
         $place = $placeId ? PlaceModel::find($placeId) : null;
         //获取周
-        $date = date('Ymd', strtotime(request('date', date('Ymd'))));
+        $dateTimestamp = strtotime(request('date', date('Ymd')));
+        $date = date('Ymd', $dateTimestamp);
         if (!$date) {
             abort(404);
         }
-        $pickuptimes = PickupTimeModel::all()->toArray();
-        $products = ProductModel::available()->get()->toArray();
+        $pickuptimes = PickupTimeModel::all()->keyBy('id')->toArray();
+        $pickuptime = current($pickuptimes);
+        if (request()->cookie('pickuptime_id') && isset($pickuptimes[request()->cookie('pickuptime_id')])) {
+            $pickuptime = $pickuptimes[request()->cookie('pickuptime_id')];
+        }
+        $weekday = date('w', $dateTimestamp) + 1;
+        $products = ProductModel::available()->whereHas('saledays', function ($query) use ($weekday) {
+            $query->where('weekday', $weekday);
+        })->whereHas('pickuptimes', function ($query) use ($pickuptime) {
+            $query->where('pickuptime_id', $pickuptime['id']);
+        });
+        if ($placeId) {
+            $products->whereHas('places', function ($query) use ($placeId) {
+                $query->where('place_id', $placeId);
+            });
+        }
+        $products = $products->get()->toArray();
         $cart = isset($carts[$date]) ? $carts[$date] : [];
         return view('cart', [
             'dates'       => $dates,

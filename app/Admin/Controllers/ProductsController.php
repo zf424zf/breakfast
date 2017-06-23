@@ -113,7 +113,7 @@ class ProductsController extends Controller
             foreach ($picks as $key => $pick) {
                 $picktimes[$pick['id']] = $pick['start'] . '-' . $pick['end'];
             }
-            $form->checkbox('pickuptimes', '销售时段')->options($picktimes)->default(1);
+            $form->checkbox('pickuptimes', '销售时段')->options($picktimes)->rules('required');
             $form->multipleSelect('places', '销售地点')->options(PlaceModel::all()->pluck('name', 'id'));
             $form->currency('origin_price', '原价')->rules('required')->symbol('￥');
             $form->currency('coupon_price', '优惠价')->rules('required')->symbol('￥');

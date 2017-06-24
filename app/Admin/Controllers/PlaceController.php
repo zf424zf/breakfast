@@ -9,6 +9,7 @@ use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use App\Models\Metro\Place as PlaceModel;
+use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Metro\Station as StationModel;
 use App\Models\Metro\PlaceRelation as PlaceRelationModel;
 
@@ -105,6 +106,12 @@ class PlaceController extends Controller
             $form->text('name', '取餐地点')->rules('required');
             $form->text('address', '详细地址')->rules('required');
             $form->multipleSelect('stations','地铁站')->options(StationModel::all()->pluck('name','id'));
+            $picks = PickupTimeModel::all()->toArray();
+            $picktimes = [];
+            foreach ($picks as $key => $pick) {
+                $picktimes[$pick['id']] = $pick['start'] . '-' . $pick['end'];
+            }
+            $form->multipleSelect('pickuptimes','取货时间段')->rules('required')->options($picktimes);
             $form->map('lat','lng', '地图位置')->rules('required');
         });
     }

@@ -67,10 +67,14 @@ $(function () {
         }
         var productId = $(this).closest('li').data('id');
         var date = $(this).closest('li').data('date');
+        var placeId = $(this).closest('li').data('place');
+        var pickuptimeId = $(this).closest('li').data('pickuptime');
         var data = {
             'product_id': productId,
             'date': date,
-            'count': count
+            'count': count,
+            'pickuptime_id': pickuptimeId,
+            'place_id': placeId
         };
         $.ajax({
             url: '/cart/add',
@@ -82,8 +86,16 @@ $(function () {
             success: function (json) {
             }
         });
-        $('li[data-date="' + date + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
+        $('li[data-date="' + date + '"][data-pickuptime="' + pickuptimeId + '"][data-place="' + placeId + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
         computeCartList();
+    })
+    $(document).on('click', '#calendar a', function (e) {
+        $.fn.cookie('date', $(this).data('date'));
+        window.location.reload();
+    })
+    $(document).on('change', '#pickuptime', function (e) {
+        $.fn.cookie('pickuptime', $(this).val());
+        window.location.reload();
     })
     /*早餐详情*/
     $(document).on('click', '.food-alert', function () {

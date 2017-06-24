@@ -20,7 +20,7 @@
                         <a href="{{url('/metro')}}">{{$place->name or '请选择取货地点'}}</a>
                     </div>
                 </div>
-                <div class="calendar">
+                <div class="calendar" id="calendar">
                     <div class="calendar-month">{{chinese_month()}}</div>
                     <div class="calendar-date">
                         <ul class="week">
@@ -40,7 +40,7 @@
                                         $class = 'cur';
                                     }elseif($d['date'] < date('Ymd')){
                                         $class = 'f-gray';
-                                    }elseif(array_sum($d['selected'])){
+                                    }elseif(array_sum(array_dot($d['selected']))){
                                         $class = 'dot';
                                     }
                                 ?>
@@ -48,7 +48,7 @@
                                     @if($d['date'] < date('Ymd'))
                                         {{$d['show']}}
                                     @else
-                                        <a href="{{url()->current()}}?date={{$d['date']}}" data-no-cache="true">{{$d['show']}}</a>
+                                        <a href="javascript:;" data-date="{{$d['date']}}" data-no-cache="true">{{$d['show']}}</a>
                                     @endif
                                 </li>
                             @endforeach
@@ -63,8 +63,8 @@
                             <li>
                                 <label>取餐时间：</label>
                                 <select name="pickuptime" id="pickuptime">
-                                    @foreach($pickuptimes as $pickuptime)
-                                    <option value="{{$pickuptime['id']}}">{{$pickuptime['start']}}-{{$pickuptime['end']}}</option>
+                                    @foreach($pickuptimes as $pick)
+                                    <option value="{{$pick['id']}}" @if($pick['id'] == $pickuptime['id']) selected @endif>{{$pick['start']}}-{{$pick['end']}}</option>
                                     @endforeach
                                 </select>
                             </li>
@@ -74,7 +74,7 @@
                         <div class="list-block media-list cart-list">
                             <ul id="cart-list">
                                 @foreach($products as $product)
-                                <li class="item-content" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
+                                <li class="item-content" data-place="{{$place->id}}" data-pickuptime="{{$pickuptime['id']}}" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
                                     <div class="item-media">
                                         <a href="javascript:;" class="food-alert">
                                             <img src="{{img_url($product['img'],80,80)}}" width="80"/>

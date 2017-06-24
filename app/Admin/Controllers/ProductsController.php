@@ -118,6 +118,7 @@ class ProductsController extends Controller
             $form->currency('origin_price', '原价')->rules('required')->symbol('￥');
             $form->currency('coupon_price', '优惠价')->rules('required')->symbol('￥');
             $form->currency('early_price', '早鸟价')->rules('required')->symbol('￥');
+            $form->number('early_time', '早鸟时间')->rules('required')->help('在取货开始时间点之前的小时数,例如:取货开始时间段是7:30 早鸟时间是12小时,则享受早鸟价格的最后时间点是前一天19:30');
             $form->number('stock', '库存')->rules('required')->default(0);
             $form->number('recommend', '推荐指数')->rules('required')->default(5);
             $form->text('calori', '卡路里');

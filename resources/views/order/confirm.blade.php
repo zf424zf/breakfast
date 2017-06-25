@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','首页')
+@section('title','确认订单')
 @section('resource')
     <!--css js-->
 @endsection
@@ -159,7 +159,7 @@
             <!--底部悬浮开始-->
             <nav class="bar bar-tab bar-pay">
                 <p class="pull-left">总计<em>￥{{$amount}}</em><span>已优惠{{$couponAmount}}元</span></p>
-                <a class="pull-right external" href="#">去支付</a>
+                <a class="pull-right" data-no-cache="true" href="{{url('order/pay')}}">去支付</a>
             </nav>
             <!--底部悬浮结束-->
         </div>

@@ -25,6 +25,15 @@ class OrderController extends Controller
         return view('order.index');
     }
 
+    public function pay()
+    {
+        return view('order.pay');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 确认订单
+     */
     public function confirm()
     {
         $datas = session(CartController::SESSION_KEY, []);
@@ -59,7 +68,7 @@ class OrderController extends Controller
         foreach ($datas as $date => $dateData) {
             foreach ($dateData as $placeId => $placeData) {
                 foreach ($placeData as $pickuptimeId => $pickupData) {
-                    if($pickupData){
+                    if ($pickupData) {
                         $orderCount++;
                     }
                     foreach ($pickupData as $productId => $num) {

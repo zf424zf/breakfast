@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="pull-right food-cart">
                                                 <a href="javascript:;" class="food-reduce"></a>
-                                                <span class="food-count">1</span>
+                                                <span class="food-count">0</span>
                                                 <a href="javascript:;" class="food-add"></a>
                                             </div>
                                         </div>
@@ -109,10 +109,10 @@
                 <div class="pull-left">
                     <div class="cart-box"><i id="cart-count">0</i> <img src="{{cdn('images/cart.png')}}" alt=""/></div>
                     <div class="cart-price">
-                        ￥27.5<span>已优惠0元</span>
+                        ￥<i id="amount">0</i><span>已优惠<i id="coupon-amount">0</i>元</span>
                     </div>
                 </div>
-                <a class="pull-right external" href="#">去支付</a>
+                <a class="pull-right external" href="{{url('cart/confirm')}}">选好了</a>
             </nav>
             <!--底部悬浮结束-->
         </div>

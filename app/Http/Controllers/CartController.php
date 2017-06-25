@@ -106,9 +106,23 @@ class CartController extends Controller
         $products = ProductModel::available()->whereIn('id', $productIds)->get()->keyBy('id')->toArray();
         $pickuptimes = PickupTimeModel::all()->keyBy('id')->toArray();
         $places = PlaceModel::all()->keyBy('id')->toArray();
+        $amount = 0;
+        $originAmount = 0;
+        foreach ($datas as $date => $dateData) {
+            foreach ($dateData as $placeId => $placeData) {
+                foreach ($placeData as $pickuptimeId => $pickupData) {
+                    foreach ($pickupData as $productId => $num) {
+                        $amount += ($products[$productId]['coupon_price']) * $num;
+                        $originAmount += ($products[$productId]['origin_price']) * $num;
+                    }
+                }
+            }
+        }
         return [
-            'count' => $count,
-            'html'  => view('cart_list', [
+            'count'         => $count,
+            'amount'        => round($amount, 2),
+            'coupon_amount' => round($originAmount - $amount, 2),
+            'html'          => view('cart_list', [
                 'products'    => $products,
                 'datas'       => $datas,
                 'count'       => $count,

@@ -240,6 +240,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .bar-pay .cart-box{display: inline-block;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
 .bar-pay .cart-box i{display: none;width:1.5rem;height:1.5rem;border-radius:50%;line-height:1.5rem;font-style:normal;background: #fb1515;position: absolute;right: 0;top:0;font-size: .85rem;color: #fff;text-align: center}
 .bar-pay .cart-price{display:inline-block;color: #fff}
+.bar-pay .cart-price i{font-style: normal}
 /*我要下单*/
 .cart-list{padding-bottom: 10rem;}
 .cart-list .item-content{padding: .5rem;;border-bottom: 1px solid #f3f3f3;}

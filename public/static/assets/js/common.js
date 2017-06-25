@@ -52,6 +52,13 @@ $(function () {
                     $('#cart-count').hide();
                 }
                 $('#food-list').html(json.html);
+                $('#amount').html(json.amount)
+                if(json.coupon_amount){
+                    $('#coupon-amount').html(json.coupon_amount).closest('span').show();
+                }else{
+                    $('#coupon-amount').html(0).closest('span').hide();
+                }
+
             }
         });
     }
@@ -91,6 +98,7 @@ $(function () {
     })
     $(document).on('click', '#calendar a', function (e) {
         $.fn.cookie('date', $(this).data('date'));
+        //$.router.load(window.location.pathname , true);
         window.location.reload();
     })
     $(document).on('change', '#pickuptime', function (e) {

@@ -16,12 +16,13 @@ class IndexController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('wechat.userinfo', ['except' => '']);
+        $this->middleware('wechat.userinfo', ['except' => '']);
     }
 
     public function index()
     {
         $posts = PostsModel::select(['id', 'subject', 'cover', 'summary'])->where('category_id', self::NEWS_CATID)->orderBy('id', 'DESC')->take(10)->get()->toArray();
+        app('user')->info();
         return view('index', ['posts' => $posts]);
     }
 }

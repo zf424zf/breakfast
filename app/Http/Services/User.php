@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Http\Middleware\WechatUserinfo;
 use App\Models\Users as UsersModel;
+use App\Http\Services\Coupon as CouponService;
 
 class User
 {
@@ -57,7 +58,8 @@ class User
                     ];
                     $user = new UsersModel($userData);
                     $user->save();
-                    //@todo 发放优惠券
+                    //发放优惠券
+                    CouponService::grantNewuserCouponCard($user->id);
                 }
                 $this->user = $user;
             }

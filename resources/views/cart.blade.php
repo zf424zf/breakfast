@@ -118,7 +118,7 @@
                         ￥<i id="amount">0</i><span>已优惠<i id="coupon-amount">0</i>元</span>
                     </div>
                 </div>
-                <a class="pull-right external" href="{{url('cart/confirm')}}">选好了</a>
+                <a class="pull-right" href="{{url('order/confirm')}}" data-no-cache="true">选好了</a>
             </nav>
             <!--底部悬浮结束-->
         </div>

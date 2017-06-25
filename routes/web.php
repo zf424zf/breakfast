@@ -23,6 +23,11 @@ Route::group(['prefix'     => 'cart',], function () {
 Route::group(['prefix'     => 'product',], function () {
     Route::get('{id?}', 'ProductController@show')->where('id', '\+?[1-9]\d*');
 });
-Route::get('order', 'OrderController@index');
+
+Route::group(['prefix'     => 'order',], function () {
+    Route::get('/', 'OrderController@index');
+    Route::get('confirm', 'OrderController@confirm');
+});
+
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');
 Route::get('post/{id}', 'PostController@show')->where('id', '\+?[1-9]\d*');

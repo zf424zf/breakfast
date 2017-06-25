@@ -209,7 +209,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .order-cont .card{margin: 0;border-radius: 0;}
 .order-cont .card-content{margin: 0 .75rem;}
 .order-cont .card-content .card-content-top{overflow: hidden;height:2.5rem;line-height:2.5rem;border-bottom: 1px solid #f3f3f3;}
-.order-cont .card-content .card-content-top p span{color: #fb9234;margin-left: 1rem;}
+.order-cont .card-content .card-content-top p span{color: #fb9234;}
 .order-cont .card-content .card-content-top a.button{border: 1px solid #fb9234;color: #fb9234;padding:0 .5rem;height: 1.9rem;line-height: 1.9rem;border-radius: .2rem;margin-top: .3rem;}
 .order-cont .list-block .item-content{padding:.5rem 0;padding-left: 0;font-size: 1.1rem;color: #333}
 .order-cont .list-block .item-content.last{border-bottom: 0;}

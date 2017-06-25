@@ -20,6 +20,11 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view('order');
+        return view('order.index');
+    }
+
+    public function confirm()
+    {
+        return view('order.confirm');
     }
 }

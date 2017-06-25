@@ -70,37 +70,43 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="bottom">
-                        <div class="list-block media-list cart-list">
-                            <ul id="cart-list">
-                                @foreach($products as $product)
-                                <li class="item-content" data-place="{{$place->id}}" data-pickuptime="{{$pickuptime['id']}}" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
-                                    <div class="item-media">
-                                        <a href="javascript:;" class="food-alert">
-                                            <img src="{{img_url($product['img'],80,80)}}" width="80"/>
-                                        </a>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            <div class="item-title">{{$product['name']}}</div>
-                                        </div>
-                                        <div class="item-subtitle">食材：{{$product['material']}}</div>
-                                        <div class="item-text">
-                                            <div class="pull-left">
-                                                ￥{{$product['coupon_price']}} <span>{{$product['origin_price']}}</span>
-                                            </div>
-                                            <div class="pull-right food-cart">
-                                                <a href="javascript:;" class="food-reduce"></a>
-                                                <span class="food-count">0</span>
-                                                <a href="javascript:;" class="food-add"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                @endforeach
-                            </ul>
+                    @if($isStop)
+                        <div class="cart-empty">
+                            该取餐时间段已经停止下单了
                         </div>
-                    </div>
+                    @else
+                        <div class="bottom">
+                            <div class="list-block media-list cart-list">
+                                <ul id="cart-list">
+                                    @foreach($products as $product)
+                                        <li class="item-content" data-place="{{$place->id}}" data-pickuptime="{{$pickuptime['id']}}" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
+                                            <div class="item-media">
+                                                <a href="javascript:;" class="food-alert">
+                                                    <img src="{{img_url($product['img'],80,80)}}" width="80"/>
+                                                </a>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title-row">
+                                                    <div class="item-title">{{$product['name']}}</div>
+                                                </div>
+                                                <div class="item-subtitle">食材：{{$product['material']}}</div>
+                                                <div class="item-text">
+                                                    <div class="pull-left">
+                                                        ￥{{$product['coupon_price']}} <span>{{$product['origin_price']}}</span>
+                                                    </div>
+                                                    <div class="pull-right food-cart">
+                                                        <a href="javascript:;" class="food-reduce"></a>
+                                                        <span class="food-count">0</span>
+                                                        <a href="javascript:;" class="food-add"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <!--订餐地址结束-->

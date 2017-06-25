@@ -26,7 +26,7 @@ class CartController extends Controller
     {
         //@todo $placeId = null 时从最近订单获取placeId
         //格式化日期信息
-        $dateTimestamp = strtotime(request()->cookie('date', date('Ymd')));
+        $dateTimestamp = strtotime(request()->cookie('date', date('Ymd', time() + 86400)));
         $date = date('Ymd', $dateTimestamp);
         if (!$date) {
             abort(404);
@@ -38,6 +38,12 @@ class CartController extends Controller
         $pickuptime = current($pickuptimes);
         if (request()->cookie('pickuptime') && isset($pickuptimes[request()->cookie('pickuptime')])) {
             $pickuptime = $pickuptimes[request()->cookie('pickuptime')];
+        }
+        //判断最后下单时间
+        $isStop = false;
+        $lastPurchaseTime = strtotime($date . ' ' . $pickuptime['start']) - $pickuptime['purchase_stop'] * 3600;
+        if (time() > $lastPurchaseTime) {
+            $isStop = true;
         }
         //日历计算
         $todayIndex = date('w');
@@ -75,6 +81,7 @@ class CartController extends Controller
             'pickuptime'  => $pickuptime,
             'products'    => $products,
             'cart'        => $cart,
+            'isStop'      => $isStop,
         ]);
     }
 

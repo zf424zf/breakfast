@@ -77,7 +77,8 @@ class PickuptimeController extends Controller
     protected function form()
     {
         return Admin::form(PickTimeModel::class, function (Form $form) {
-            $form->timeRange('start','end', '选择时间')->rules('required')->help('格式  时:分')->options(['format'=>'HH:mm']);
+            $form->timeRange('start','end', '选择取货时间')->rules('required')->help('格式  时:分')->options(['format'=>'HH:mm']);
+            $form->number('purchase_stop', '下单截止小时')->rules('required')->help('在取货开始时间点之前的小时数,例如:取货开始时间段是7:30 下单截止是12小时,则享下单截止时间点是前一天19:30');
         });
     }
 }

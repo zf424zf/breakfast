@@ -110,8 +110,7 @@ class CartController extends Controller
                 foreach ($placeData as $pickuptimeId => $pickupData) {
                     foreach ($pickupData as $productId => $num) {
                         $product = ProductService::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
-                        $price = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
-                        $amount += $price * $num;
+                        $amount += $product['price'] * $num;
                         $originAmount += ($product['origin_price']) * $num;
                     }
                 }

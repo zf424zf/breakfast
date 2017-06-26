@@ -92,7 +92,7 @@
                                                 <div class="item-subtitle">食材：{{$product['material']}}</div>
                                                 <div class="item-text">
                                                     <div class="pull-left">
-                                                        ￥{{$product['is_early'] ? $product['early_price'] : $product['coupon_price']}}
+                                                        ￥{{$product['price']}}
                                                         @if($product['is_early'])(早鸟价)@endif
                                                         <span>￥{{$product['origin_price']}}</span>
                                                     </div>

@@ -154,9 +154,13 @@ $(function () {
                         $.toast(json.message);
                         createOrder();
                     }
-                    else{
+                    else {
                         //todo 跳转到支付页
+                        alert(json.order_ids)
                     }
+                },
+                error: function () {
+                    createOrder();
                 }
             });
         })

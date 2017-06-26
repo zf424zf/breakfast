@@ -50,6 +50,37 @@ class OrderController extends Controller
                 'message' => '请填写正确的联系电话',
             ];
         }
+        $datas = session(CartController::SESSION_KEY, []);
+        if (!$datas) {
+            return [
+                'error'   => 1,
+                'message' => '请先挑选您的商品',
+            ];
+        }
+
+        $contact = [
+            'name'    => request('name'),
+            'phone'   => request('phone'),
+            'company' => request('company'),
+        ];
+        $orderIds = [];
+        foreach ($datas as $date => $dateData) {
+            foreach ($dateData as $placeId => $placeData) {
+                foreach ($placeData as $pickuptimeId => $pickupData) {
+                    if ($pickupData) {
+                        try {
+                            $order = new OrderService();
+                            $order->create(app('user')->id(), $date, $placeId, $pickuptimeId, $pickupData, $contact);
+                            $orderIds[] = $order->getOrder()['order_id'];
+                        } catch (\Exception $e) {
+                            return ['error' => 1, 'message' => $e->getMessage()];
+                        }
+                    }
+                }
+            }
+        }
+        //@todo 删除购物车数据
+        return ['error' => 0, 'message' => 'ok', 'order_ids' => $orderIds];
     }
 
     /**
@@ -95,8 +126,7 @@ class OrderController extends Controller
                     }
                     foreach ($pickupData as $productId => $num) {
                         $product = ProductService::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
-                        $price = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
-                        $amount += $price * $num;
+                        $amount += $product['price'] * $num;
                         $originAmount += ($product['origin_price']) * $num;
                     }
                 }

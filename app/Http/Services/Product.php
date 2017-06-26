@@ -64,6 +64,7 @@ class Product
     {
         $earlyTime = strtotime($date . ' ' . $pickuptime['start']) - $product['early_time'] * 3600;
         $product['is_early'] = time() < $earlyTime ? true : false;
+        $product['price'] = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
         return $product;
     }
 }

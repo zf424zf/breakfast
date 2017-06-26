@@ -68,15 +68,44 @@ class Order
      * @return $this
      * 创建订单
      */
-    public function create($uid, $date, $placeId, $pickuptimeId, $productIds)
+    public function create($uid, $date, $placeId, $pickuptimeId, $productIds, array $contact)
     {
         $orderId = self::buildOrderId();
-        $products = ProductService::gets($productIds);
-
+        $products = ProductService::gets(array_keys($productIds));
+        $pickuptime = PickupTimeModel::find($pickuptimeId)->toArray();
+        foreach ($products as $key => $product) {
+            $products[$key] = ProductService::isEarlyBird($product, $date, $pickuptime);
+        }
+        $orderProducts = [];
+        foreach ($productIds as $productId => $count) {
+            $orderProducts[] = [
+                'uid'           => $uid,
+                'order_id'      => $orderId,
+                'date'          => $date,
+                'place_id'      => $placeId,
+                'pickuptime_id' => $pickuptimeId,
+                'product_id'    => $productId,
+                'price'         => $products[$productId]['price'],
+                'count'         => $count,
+                'amount'        => $products[$productId]['price'] * $count,
+            ];
+        }
+        $order = [
+            'uid'           => $uid,
+            'order_id'      => $orderId,
+            'date'          => $date,
+            'place_id'      => $placeId,
+            'pickuptime_id' => $pickuptimeId,
+            'amount'        => array_sum(array_column($orderProducts, 'amount')),
+            'phone'         => $contact['phone'],
+            'name'          => $contact['name'],
+            'company'       => $contact['company'],
+        ];
         $order = new OrderModel($order);
         $this->order = $order;
         $order->save();
-        $this->callback()->log(__FUNCTION__);
+        $order->goods()->createMany($orderProducts);
+        $this->log(__FUNCTION__);
         return $this;
     }
 

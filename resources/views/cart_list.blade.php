@@ -22,7 +22,7 @@
                                                 <?php
                                                     $product = \App\Http\Services\Product::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
                                                 ?>
-                                                ￥{{$product['is_early'] ?  $product['early_price'] : $product['coupon_price']}}
+                                                ￥{{$product['price']}}
                                             </div>
                                             <div class="pull-right food-cart">
                                                 <a href="javascript:;" class="food-reduce"></a>

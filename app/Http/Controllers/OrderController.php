@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
+use App\Http\Services\Product as ProductService;
 
 class OrderController extends Controller
 {
@@ -72,8 +73,10 @@ class OrderController extends Controller
                         $orderCount++;
                     }
                     foreach ($pickupData as $productId => $num) {
-                        $amount += ($products[$productId]['coupon_price']) * $num;
-                        $originAmount += ($products[$productId]['origin_price']) * $num;
+                        $product = ProductService::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
+                        $price = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
+                        $amount += $price * $num;
+                        $originAmount += ($product['origin_price']) * $num;
                     }
                 }
             }

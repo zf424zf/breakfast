@@ -16,7 +16,7 @@ p{margin: 0}
 .button{border-radius: .5rem;}
 .button.button-fill{background: #00a0e9}
 .button-warning.button-fill{background: #ccc}
-.button.button-big{height:3rem;line-height:3rem;font-size:1.25rem;}
+.button.button-big{height:3rem;line-height:3rem !important;font-size:1.25rem;}
 /*form reset css*/
 .list-block{margin: 0;font-size: 1rem;}
 .list-block .item-inner:after{background: none}

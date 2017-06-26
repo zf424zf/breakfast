@@ -19,7 +19,10 @@
                                         <div class="item-title">{{$products[$productId]['name']}}</div>
                                         <div class="item-after">
                                             <div class="pull-left">
-                                                ￥{{$products[$productId]['coupon_price']}}
+                                                <?php
+                                                    $product = \App\Http\Services\Product::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
+                                                ?>
+                                                ￥{{$product['is_early'] ?  $product['early_price'] : $product['coupon_price']}}
                                             </div>
                                             <div class="pull-right food-cart">
                                                 <a href="javascript:;" class="food-reduce"></a>

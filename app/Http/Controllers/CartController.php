@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
+use App\Http\Services\Product as ProductService;
 
 class CartController extends Controller
 {
@@ -59,18 +60,7 @@ class CartController extends Controller
             ];
         }
         //@todo 按日期查询订单数据  显示下单情况
-        //当前周几  筛选按日期售卖的商品
-        $weekday = date('w', $dateTimestamp) + 1;
-        $products = ProductModel::available()->whereHas('saledays', function ($query) use ($weekday) {
-            $query->where('weekday', $weekday);
-        })->whereHas('pickuptimes', function ($query) use ($pickuptime) {
-            $query->where('pickuptime_id', $pickuptime['id']);
-        });
-        //筛选按照取餐点售卖的商品
-        $products->whereHas('places', function ($query) use ($placeId) {
-            $query->where('place_id', $placeId);
-        });
-        $products = $products->get()->toArray();
+        $products = ProductService::gets([], $date, $placeId, $pickuptime['id']);
         //获取当前日期 当前取餐点  当前取餐时间段的购物车数据
         $cart = array_get($carts, $date . '.' . $placeId . '.' . $pickuptime['id'], []);
         return view('cart', [
@@ -119,8 +109,10 @@ class CartController extends Controller
             foreach ($dateData as $placeId => $placeData) {
                 foreach ($placeData as $pickuptimeId => $pickupData) {
                     foreach ($pickupData as $productId => $num) {
-                        $amount += ($products[$productId]['coupon_price']) * $num;
-                        $originAmount += ($products[$productId]['origin_price']) * $num;
+                        $product = ProductService::isEarlyBird($products[$productId], $date, $pickuptimes[$pickuptimeId]);
+                        $price = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
+                        $amount += $price * $num;
+                        $originAmount += ($product['origin_price']) * $num;
                     }
                 }
             }

@@ -9,6 +9,7 @@
 namespace App\Http\Services;
 
 use App\Models\Order\Order as OrderModel;
+use App\Models\Order\Logs as LogsModel;
 
 class Order
 {
@@ -28,13 +29,11 @@ class Order
     protected static $behaviors = [
         'CREATE'         => '订单创建',
         'MODIFY'         => '订单被修改',
-        'ADOPT'          => '订单审核通过',
-        'REFUSE'         => '订单审核失败',
         'EXPIRE'         => '订单过期，关闭',
         'CANCEL'         => '订单由用户取消',
         'PAY'            => '订单支付',
         'PAID'           => '订单支付完成',
-        'DELIVER'        => '订单发货',
+        'PICKED'         => '订单已取货',
         'FINISH'         => '订单完成',
         'REFUND'         => '用户发起退款',
         'CONFIRM_REFUND' => '退款请求被确认',
@@ -349,28 +348,6 @@ class Order
         return $refund;
     }
 
-    /**
-     * @param $clubId
-     * @param null $status
-     * @param int $page
-     * @param int $pagesize
-     * @return mixed
-     * 获取俱乐部的退款请求
-     */
-    public function clubRefund($clubId, $status = null, $page = 1, $pagesize = 20)
-    {
-        $refunds = RefundModel::where('club_id', $clubId)->orderBy('id', 'DESC');
-        if (!is_null($status)) {
-            $refunds->whereIn('status', explode(',', $status));
-        }
-        app('request')->merge(['page' => $page]);
-        $refunds = $refunds->paginate($pagesize)->toArray();
-        $orders = $this->details(array_column($refunds['data'], 'order_id'), true);
-        foreach ($refunds['data'] as $key => $data) {
-            $refunds['data'][$key]['order'] = isset($orders[$data['order_id']]) ? $orders[$data['order_id']] : [];
-        }
-        return $refunds;
-    }
 
     /**
      * @param $uid
@@ -487,22 +464,6 @@ class Order
         return $this->order;
     }
 
-    /**
-     * @return $this
-     * 订单状态回调
-     */
-    protected function callback()
-    {
-        $order = $this->getOrder();
-        if (isset(self::$interface[$order['module']])) {
-            $class = self::$interface[$order['module']];
-            $instance = new $class;
-            if ($instance instanceof PaymentInterface) {
-                $instance->setStatus($order['apply_id'], $order['status']);
-            }
-        }
-        return $this;
-    }
 
     /**
      * @param $behavior
@@ -521,7 +482,7 @@ class Order
             'log_text' => self::$behaviors[strtoupper($behavior)],
             'remark'   => $remark,
         ];
-        (new LogModel($data))->save();
+        (new LogsModel($data))->save();
         return $this;
     }
 

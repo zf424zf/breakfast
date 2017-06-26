@@ -22,7 +22,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">联系人</div>
                                     <div class="item-input">
-                                        <input type="text" placeholder="您的称呼">
+                                        <input type="text" name="name" placeholder="您的称呼">
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,9 @@
                             <div class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title label">联系电话</div>
-                                    <div class="item-input"><input type="text" placeholder="您的联系电话"></div>
+                                    <div class="item-input">
+                                        <input type="text" name="phone" placeholder="您的联系电话">
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -39,38 +41,14 @@
                             <div class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title label">所在公司</div>
-                                    <div class="item-input"><input type="text" placeholder="选填"></div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--<div class="space"></div>
-                <div class="list-block order-contact">
-                    <ul>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">取货地点</div>
-                                    <div class="item-input"><input type="text" placeholder="上海徐汇"></div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">取货时间</div>
                                     <div class="item-input">
-                                        <select>
-                                            <option>7:30-9:30</option>
-                                            <option>7:30-9:30</option>
-                                        </select>
+                                        <input type="text" name="company" placeholder="选填" >
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </div>-->
+                </div>
                 <div class="space"></div>
                 <div class="card">
                     <div class="card-header"><p>共{{$orderCount}}个订单</p></div>
@@ -140,7 +118,11 @@
                                 <div class="item-inner">
                                     <div class="item-title">优惠券抵扣</div>
                                     <div class="item-after">
-                                        无
+                                        @if($coupon)
+                                            {{$coupon['name']. '  ￥-'.$coupon['amount']}}
+                                        @else
+                                            无
+                                        @endif
                                     </div>
                                 </div>
                             </li>
@@ -159,7 +141,7 @@
             <!--底部悬浮开始-->
             <nav class="bar bar-tab bar-pay">
                 <p class="pull-left">总计<em>￥{{$amount}}</em><span>已优惠{{$couponAmount}}元</span></p>
-                <a class="pull-right" data-no-cache="true" href="{{url('order/pay')}}">去支付</a>
+                <a class="pull-right" href="javascript:;" id="create-order">去支付</a>
             </nav>
             <!--底部悬浮结束-->
         </div>

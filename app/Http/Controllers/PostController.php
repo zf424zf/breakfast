@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('wechat.userinfo', ['except' => '']);
+        $this->middleware('wechat.userinfo', ['except' => '']);
     }
 
     public function show($id)

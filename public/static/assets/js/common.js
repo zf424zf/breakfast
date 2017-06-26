@@ -53,9 +53,9 @@ $(function () {
                 }
                 $('#food-list').html(json.html);
                 $('#amount').html(json.amount)
-                if(json.coupon_amount){
+                if (json.coupon_amount) {
                     $('#coupon-amount').html(json.coupon_amount).closest('span').show();
-                }else{
+                } else {
                     $('#coupon-amount').html(0).closest('span').hide();
                 }
 
@@ -135,6 +135,33 @@ $(function () {
         var query = $(this).data('metro') ? '?metro_id=' + $(this).data('metro') : '';
         $.router.load('/station/' + $(this).val() + query, true)
     })
+    var createOrder = function () {
+        $(document).one('click', '#create-order', function () {
+            var data = {
+                name: $('input[name="name"]').val(),
+                phone: $('input[name="phone"]').val(),
+                company: $('input[name="company"]').val()
+            };
+            $.ajax({
+                url: '/order/create',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                cache: false,
+                async: false,
+                success: function (json) {
+                    if (json.error) {
+                        $.toast(json.message);
+                        createOrder();
+                    }
+                    else{
+                        //todo 跳转到支付页
+                    }
+                }
+            });
+        })
+    }
+    createOrder();
     $(document).on("pageInit", "#choose-place", function (e, id, page) {
         $('.map').each(function () {
             var center = new qq.maps.LatLng($(this).data('lat'), $(this).data('lng'));

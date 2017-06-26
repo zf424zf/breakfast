@@ -17,7 +17,7 @@ class User
     public function __construct()
     {
 
-        $this->user = $this->info();
+        $this->info();
     }
 
     /**

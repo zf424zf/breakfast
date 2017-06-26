@@ -28,6 +28,7 @@ Route::group(['prefix'     => 'order',], function () {
     Route::get('/', 'OrderController@index');
     Route::get('confirm', 'OrderController@confirm');
     Route::get('pay', 'OrderController@pay');
+    Route::post('create', 'OrderController@create');
 });
 
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');

@@ -39,7 +39,11 @@ class Coupon
      */
     public static function getMaxAmountCoupon($uid)
     {
-        return CouponModel::valid()->where('uid', $uid)->orderBy('amount', 'DESC')->first()->toArray();
+        $coupon = CouponModel::valid()->where('uid', $uid)->orderBy('amount', 'DESC')->first();
+        if($coupon){
+            $coupon = $coupon->toArray();
+        }
+        return $coupon;
     }
 
     /**

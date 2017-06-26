@@ -12,13 +12,15 @@ use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
 use App\Http\Services\Product as ProductService;
+use App\Http\Services\Coupon as CouponService;
+use App\Http\Services\Order as OrderService;
 
 class OrderController extends Controller
 {
 
     public function __construct()
     {
-        //$this->middleware('wechat.userinfo', ['except' => '']);
+        $this->middleware('wechat.userinfo', ['except' => '']);
     }
 
     public function index()
@@ -29,6 +31,22 @@ class OrderController extends Controller
     public function pay()
     {
         return view('order.pay');
+    }
+
+    public function create()
+    {
+        if (!request('name')) {
+            return [
+                'error'   => 1,
+                'message' => '请填写姓名',
+            ];
+        }
+        if (!request('phone')) {
+            return [
+                'error'   => 1,
+                'message' => '请填写联系电话',
+            ];
+        }
     }
 
     /**
@@ -81,6 +99,10 @@ class OrderController extends Controller
                 }
             }
         }
+        $coupon = CouponService::getMaxAmountCoupon(app('user')->id());
+        if ($coupon) {
+            $amount = $amount - $coupon['amount'] > 0 ? $amount - $coupon['amount'] : 0;
+        }
         return view('order.confirm', [
             'count'        => $count,
             'amount'       => round($amount, 2),
@@ -90,6 +112,7 @@ class OrderController extends Controller
             'datas'        => $datas,
             'pickuptimes'  => $pickuptimes,
             'places'       => $places,
+            'coupon'       => $coupon,
         ]);
     }
 }

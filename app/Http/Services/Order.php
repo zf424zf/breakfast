@@ -10,6 +10,10 @@ namespace App\Http\Services;
 
 use App\Models\Order\Order as OrderModel;
 use App\Models\Order\Logs as LogsModel;
+use App\Models\Metro\Place as PlaceModel;
+use App\Models\PickupTime as PickupTimeModel;
+use App\Models\Product\Products as ProductModel;
+use App\Http\Services\Product as ProductService;
 
 class Order
 {
@@ -66,22 +70,9 @@ class Order
      */
     public function create($uid, $date, $placeId, $pickuptimeId, $productIds)
     {
-        $order = OrderModel::where('module', $module)->where('apply_id', $applyId)->first();
-        if ($order) {
-            $this->order = $order;
-            return $this->modify($subject, $amount);
-        }
-        $amount = $amount <= 0 ? 0 : $amount;
-        $order = [
-            'uid'      => $uid,
-            'order_id' => self::buildOrderId(),
-            'module'   => $module,
-            'apply_id' => $applyId,
-            'subject'  => $subject,
-            'status'   => $amount == 0 ? OrderApi::PAYED : OrderApi::WAITPAY,
-            'amount'   => $amount,
-            'source'   => app('user')->source(),
-        ];
+        $orderId = self::buildOrderId();
+        $products = ProductService::gets($productIds);
+
         $order = new OrderModel($order);
         $this->order = $order;
         $order->save();

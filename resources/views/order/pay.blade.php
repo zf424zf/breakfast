@@ -20,10 +20,12 @@
                             <h4>谢谢订购</h4>
                             <p>本单30分钟内有效，请尽快支付，以免订完</p>
                         </div>
+                        @foreach($orders as $order)
                         <div class="bottom">
-                            <p class="fl">早餐订单 #1234567890# </p>
-                            <p class="fr">￥27.50</p>
+                            <p class="fl">订单 #{{$order['order_id']}}# </p>
+                            <p class="fr">￥{{$order['amount']}}</p>
                         </div>
+                        @endforeach
                     </div>
                     <div class="list-block media-list">
                         <h4>请选择支付方式</h4>

@@ -156,7 +156,7 @@ $(function () {
                     }
                     else {
                         //todo 跳转到支付页
-                        alert(json.order_ids)
+                        $.router.load('/order/pay?order_ids=' + json.order_ids.join(','), true);
                     }
                 },
                 error: function () {

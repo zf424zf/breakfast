@@ -31,7 +31,11 @@ class OrderController extends Controller
 
     public function pay()
     {
-        return view('order.pay');
+        if (!request('order_ids')) {
+            abort(404);
+        }
+        $orders = (new OrderService)->details(explode(',', request('order_ids')));
+        return view('order.pay', ['orders' => $orders]);
     }
 
     public function create(Request $request)
@@ -79,7 +83,7 @@ class OrderController extends Controller
                 }
             }
         }
-        //@todo 删除购物车数据
+        session([CartController::SESSION_KEY => []]);
         return ['error' => 0, 'message' => 'ok', 'order_ids' => $orderIds];
     }
 

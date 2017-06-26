@@ -200,28 +200,9 @@ class Order
      * @return mixed
      * 获取多个订单信息
      */
-    public static function details(array $orderIds, $more = false)
+    public static function details(array $orderIds)
     {
-        $orders = OrderModel::whereIn('order_id', $orderIds)->get()->keyBy('order_id')->toArray();
-        if ($orders && $more) {
-            $modules = [];
-            foreach ($orders as $order) {
-                $modules[$order['module']][] = $order['apply_id'];
-            }
-            $details = [];
-            foreach ($modules as $key => $module) {
-                if (isset(self::$interface[$key])) {
-                    $class = self::$interface[$key];
-                    $instance = new $class;
-                    if ($instance instanceof PaymentInterface) {
-                        $details[$key] = $instance->orderDetails($module);
-                    }
-                }
-            }
-            foreach ($orders as $key => $order) {
-                $orders[$key]['detail'] = isset($details[$order['module']][$order['apply_id']]) ? $details[$order['module']][$order['apply_id']] : [];
-            }
-        }
+        $orders = OrderModel::whereIn('order_id', $orderIds)->with('goods')->get()->keyBy('order_id')->toArray();
         $sorted = [];
         foreach ($orderIds as $orderId) {
             $sorted[$orderId] = isset($orders[$orderId]) ? $orders[$orderId] : [];

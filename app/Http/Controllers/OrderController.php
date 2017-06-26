@@ -40,6 +40,13 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
+        $datas = session(CartController::SESSION_KEY, []);
+        if (!$datas) {
+            return [
+                'error'   => 1,
+                'message' => '请先挑选您的商品',
+            ];
+        }
         $validator = app('validator')->make($request->only('name'), ['name' => 'required']);
         if ($validator->fails()) {
             return [
@@ -52,13 +59,6 @@ class OrderController extends Controller
             return [
                 'error'   => 1,
                 'message' => '请填写正确的联系电话',
-            ];
-        }
-        $datas = session(CartController::SESSION_KEY, []);
-        if (!$datas) {
-            return [
-                'error'   => 1,
-                'message' => '请先挑选您的商品',
             ];
         }
 

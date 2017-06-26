@@ -235,7 +235,8 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .bar-pay .pull-left{width: 75%;font-size: 1.2rem;color: #fff;padding-left: .75rem;}
 .bar-pay .pull-left span{font-size: 1rem;border-left: 1px solid #fff;padding: 0 .3rem;margin-left: .3rem;}
 .bar-pay .pull-left em{font-style: normal;color:#fb9235;}
-.bar-pay a.pull-right{display:block;width:25%;text-align:center;background: #00a0e9;font-size: 1.2rem;color: #fff;}
+.bar-pay a{display:block;width:25%;text-align:center;background: #00a0e9;font-size: 1.2rem;color: #fff;}
+.bar-pay a.disabled{display:block;width:25%;text-align:center;background: gray;font-size: 1.2rem;color: #fff;}
 .bar-pay .cart-box{display: inline-block;float:left;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
 .bar-pay .cart-box img{display:inline-block;position: absolute;left:50%;top:1rem;width: 3rem;margin-left: -1.5rem;}
 .bar-pay .cart-box{display: inline-block;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}

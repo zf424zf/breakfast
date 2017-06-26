@@ -48,8 +48,10 @@ $(function () {
             success: function (json) {
                 if (json.count) {
                     $('#cart-count').html(json.count).show();
+                    $('#choose-ok').removeClass('disabled').prop('href',$('#choose-ok').data('href'));
                 } else {
                     $('#cart-count').hide();
+                    $('#choose-ok').addClass('disabled').prop('href','javascript:;');
                 }
                 $('#food-list').html(json.html);
                 $('#amount').html(json.amount)

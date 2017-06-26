@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
@@ -33,18 +34,20 @@ class OrderController extends Controller
         return view('order.pay');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        if (!request('name')) {
+        $validator = app('validator')->make($request->only('name'), ['name' => 'required']);
+        if ($validator->fails()) {
             return [
                 'error'   => 1,
                 'message' => '请填写姓名',
             ];
         }
-        if (!request('phone')) {
+        $validator = app('validator')->make($request->only('phone'), ['phone' => 'required|phone']);
+        if ($validator->fails()) {
             return [
                 'error'   => 1,
-                'message' => '请填写联系电话',
+                'message' => '请填写正确的联系电话',
             ];
         }
     }

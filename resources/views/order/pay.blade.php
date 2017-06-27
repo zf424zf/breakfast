@@ -8,7 +8,7 @@
         <div class="page page-gray" data-config='<?php echo app('wechat')->js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage','chooseImage','chooseWXPay')) ?>'>
             <!--头部开始-->
             <header class="bar bar-nav">
-                <a href="#" class="icon icon-left pull-left back"></a>
+                <a href="{{url('order/confirm')}}" data-no-cache="true" class="icon icon-left pull-left"></a>
                 <h1 class="title">一起吃早餐</h1>
             </header>
             <!--头部结束-->

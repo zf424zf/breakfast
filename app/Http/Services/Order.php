@@ -68,7 +68,7 @@ class Order
      * @return $this
      * 创建订单
      */
-    public function create($uid, $date, $placeId, $pickuptimeId, $productIds, array $contact)
+    public function create($uid, $date, $placeId, $pickuptimeId, $productIds, array $contact, $batchNo)
     {
         $orderId = self::buildOrderId();
         $products = ProductService::gets(array_keys($productIds));
@@ -100,6 +100,7 @@ class Order
             'phone'         => $contact['phone'],
             'name'          => $contact['name'],
             'company'       => $contact['company'],
+            'batch_no'      => $batchNo,
         ];
         $order = new OrderModel($order);
         $this->order = $order;
@@ -179,9 +180,13 @@ class Order
      * @return mixed
      * 获取多个订单信息
      */
-    public static function details(array $orderIds)
+    public static function details(array $orderIds, $status = null)
     {
-        $orders = OrderModel::whereIn('order_id', $orderIds)->with('goods')->get()->keyBy('order_id')->toArray();
+        $orders = OrderModel::whereIn('order_id', $orderIds)->with('goods');
+        if ($status) {
+            $orders->where('status', $status);
+        }
+        $orders = $orders->get()->keyBy('order_id')->toArray();
         $sorted = [];
         foreach ($orderIds as $orderId) {
             $sorted[$orderId] = isset($orders[$orderId]) ? $orders[$orderId] : [];

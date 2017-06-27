@@ -15,8 +15,8 @@
             <!--我的订单开始-->
             <div class="content order-cont">
                 <h4>我的早餐</h4>
-                <div class="calendar">
-                    <div class="calendar-month f-small">5月</div>
+                <div class="calendar" id="order-list-calendar">
+                    <div class="calendar-month">{{chinese_month()}}</div>
                     <div class="calendar-date">
                         <ul class="week">
                             <li>周日</li>
@@ -28,27 +28,23 @@
                             <li>周六</li>
                         </ul>
                         <ul>
-                            <li>21</li>
-                            <li class="orange">22</li>
-                            <li>23</li>
-                            <li class="cur">24</li>
-                            <li class="blue">25</li>
-                            <li>26</li>
-                            <li class="dot">27</li>
-                            <li>28</li>
-                            <li>29</li>
-                            <li>30</li>
-                            <li>31</li>
-                            <li>28</li>
-                            <li>29</li>
-                            <li>30</li>
-                            <li>31</li>
-                            <li>28</li>
-                            <li>29</li>
-                            <li>30</li>
-                            <li class="f-gray">1</li>
-                            <li class="f-gray">2</li>
-                            <li class="f-gray">3</li>
+                            @foreach($dates as $d)
+                                <?php
+                                $class = '';
+                                if($d['date'] < date('Ymd')){
+                                    $class = 'f-gray';
+                                }elseif(array_sum(array_dot($d['selected']))){
+                                    $class = 'dot';
+                                }
+                                ?>
+                                <li class="{{$class}}">
+                                    @if($d['date'] < date('Ymd'))
+                                        {{$d['show']}}
+                                    @else
+                                        <a href="javascript:;" data-date="{{$d['date']}}" data-no-cache="true">{{$d['show']}}</a>
+                                    @endif
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

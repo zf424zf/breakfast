@@ -22,7 +22,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">联系人</div>
                                     <div class="item-input">
-                                        <input type="text" name="name" placeholder="您的称呼">
+                                        <input type="text" name="name" placeholder="您的称呼" value="{{$lastOrder['name'] or ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">联系电话</div>
                                     <div class="item-input">
-                                        <input type="text" name="phone" placeholder="您的联系电话">
+                                        <input type="text" name="phone" placeholder="您的联系电话" value="{{$lastOrder['phone'] or ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">所在公司</div>
                                     <div class="item-input">
-                                        <input type="text" name="company" placeholder="选填" >
+                                        <input type="text" name="company" placeholder="选填" value="{{$lastOrder['company'] or ''}}">
                                     </div>
                                 </div>
                             </div>

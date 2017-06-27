@@ -17,9 +17,12 @@ use App\Http\Services\Product as ProductService;
 use App\Http\Services\Coupon as CouponService;
 use App\Http\Services\Order as OrderService;
 use App\Http\Services\Payment as PaymentService;
+use App\Models\Order\Order as OrderModel;
 
 class OrderController extends Controller
 {
+
+    protected $uid;
 
     public function __construct()
     {
@@ -28,13 +31,28 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view('order.index');
+        //日历计算
+        $todayIndex = date('w');
+        $start = strtotime("-{$todayIndex} day");
+        $dates = [];
+        $carts = session(CartController::SESSION_KEY);
+        for ($i = 0; $i < 21; $i++) {
+            $timestamp = $start + ($i * 86400);
+            $dates[] = [
+                'show'     => date('d', $timestamp),
+                'date'     => date('Ymd', $timestamp),
+                'selected' => array_get($carts, date('Ymd', $timestamp), []),
+            ];
+        }
+        //日历计算结束
+        $orders = OrderModel::where('uid', app('user')->id())->orderBy('id', 'DESC')->get();
+        return view('order.index', ['orders' => $orders, 'dates' => $dates]);
     }
 
     public function notify()
     {
-        return app('wechat')->payment->handleNotify(function($notify, $successful){
-            if($successful){
+        return app('wechat')->payment->handleNotify(function ($notify, $successful) {
+            if ($successful) {
                 $service = new Payment($notify->out_trade_no);
                 $service->setPaid($notify->transaction_id);
             }
@@ -125,8 +143,9 @@ class OrderController extends Controller
                 foreach ($placeData as $pickuptimeId => $pickupData) {
                     if ($pickupData) {
                         try {
+                            $batchNo = time();
                             $order = new OrderService();
-                            $order->create(app('user')->id(), $date, $placeId, $pickuptimeId, $pickupData, $contact);
+                            $order->create(app('user')->id(), $date, $placeId, $pickuptimeId, $pickupData, $contact, $batchNo);
                             $orderIds[] = $order->getOrder()['order_id'];
                         } catch (\Exception $e) {
                             return ['error' => 1, 'message' => $e->getMessage()];
@@ -192,6 +211,7 @@ class OrderController extends Controller
         if ($coupon) {
             $amount = $amount - $coupon['amount'] > 0 ? $amount - $coupon['amount'] : 0;
         }
+        $lastOrder = OrderModel::where('uid', app('user')->id())->orderBy('id', 'DESC')->first();
         return view('order.confirm', [
             'count'        => $count,
             'amount'       => round($amount, 2),
@@ -202,6 +222,7 @@ class OrderController extends Controller
             'pickuptimes'  => $pickuptimes,
             'places'       => $places,
             'coupon'       => $coupon,
+            'lastOrder'    => $lastOrder,
         ]);
     }
 }

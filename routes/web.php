@@ -28,6 +28,8 @@ Route::group(['prefix'     => 'order',], function () {
     Route::get('/', 'OrderController@index');
     Route::get('confirm', 'OrderController@confirm');
     Route::get('pay', 'OrderController@pay');
+    Route::any('notify', 'OrderController@notify');
+    Route::post('pay', 'OrderController@postPay');
     Route::post('create', 'OrderController@create');
 });
 

@@ -2,6 +2,11 @@ $(function () {
     //全局监听事件
     $(document).on("pageInit", ".page", function (e, id, page) {
         $.ajaxSettings.headers = {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')};
+        //
+        if ($('#' + id).data('config')) {
+            wx.config(JSON.parse($('#' + id).data('config')));
+        }
+
     });
     $(document).on('click', '.location-list p', function () {
         $(".location-list p").removeClass("active");
@@ -48,10 +53,10 @@ $(function () {
             success: function (json) {
                 if (json.count) {
                     $('#cart-count').html(json.count).show();
-                    $('#choose-ok').removeClass('disabled').prop('href',$('#choose-ok').data('href'));
+                    $('#choose-ok').removeClass('disabled').prop('href', $('#choose-ok').data('href'));
                 } else {
                     $('#cart-count').hide();
-                    $('#choose-ok').addClass('disabled').prop('href','javascript:;');
+                    $('#choose-ok').addClass('disabled').prop('href', 'javascript:;');
                 }
                 $('#food-list').html(json.html);
                 $('#amount').html(json.amount)
@@ -137,6 +142,42 @@ $(function () {
         var query = $(this).data('metro') ? '?metro_id=' + $(this).data('metro') : '';
         $.router.load('/station/' + $(this).val() + query, true)
     })
+    var payOrder = function () {
+        $(document).one('click', '#confirm-pay', function () {
+            $.ajax({
+                url: '/order/pay',
+                type: 'POST',
+                data: {order_ids: $(this).data('orders')},
+                dataType: 'json',
+                cache: false,
+                async: false,
+                success: function (json) {
+                    if (json.error) {
+                        $.toast(json.message);
+                        payOrder();
+                    }
+                    else {
+                        wx.chooseWXPay({
+                            timestamp: json.config.timestamp,
+                            nonceStr: json.config.nonceStr,
+                            package: json.config.package,
+                            signType: json.config.signType,
+                            paySign: json.config.paySign,
+                            success: function (res) {
+                                payOrder();
+                                // 支付成功后的回调函数
+                            }
+                        })
+
+                    }
+                },
+                error: function () {
+                    payOrder();
+                }
+            });
+        })
+    }
+    payOrder();
     var createOrder = function () {
         $(document).one('click', '#create-order', function () {
             var data = {
@@ -157,7 +198,7 @@ $(function () {
                         createOrder();
                     }
                     else {
-                        //todo 跳转到支付页
+                        createOrder
                         $.router.load('/order/pay?order_ids=' + json.order_ids.join(','), true);
                     }
                 },

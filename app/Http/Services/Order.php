@@ -110,42 +110,21 @@ class Order
     }
 
     /**
-     * @param $subject
-     * @param $amount
-     * @return $this
-     * 修改订单
-     */
-    public function modify($subject, $amount)
-    {
-        $amount = $amount <= 0 ? 0 : $amount;
-        $order = $this->getOrder();
-        if (in_array($order['status'], [OrderApi::WAITAUDIT, OrderApi::WAITPAY])) {
-            $order['subject'] = $subject;
-            $order['amount'] = $amount;
-            $order['status'] = $amount == 0 ? OrderApi::PAYED : OrderApi::WAITPAY;
-            $order->save();
-            $this->callback()->log(__FUNCTION__, null, $amount);
-        }
-        return $this;
-    }
-
-    /**
      * @param $payType
      * @param $amount
      * @return $this
      * 设置订单已支付
      */
-    public function paid($payType, $amount)
+    public function paid($flowId)
     {
         $order = $this->getOrder();
-        if ($amount == $order['amount']) {
-            $order['pay_type'] = $payType;
-            $order['pay_time'] = time();
-            $order['status'] = OrderApi::PAYED;
-            $order->save();
-            $this->callback()->log(__FUNCTION__, null, $amount);
-            dispatch(new PaidNotify($order));
-        }
+        $order['pay_time'] = time();
+        $order['status'] = self::PAYED;
+        $order['pay_flow'] = $flowId;
+        $order->goods()->update(['status' => self::PAYED]);
+        $order->save();
+        $this->log(__FUNCTION__, null, $flowId);
+        //dispatch(new PaidNotify($order));
         return $this;
     }
 

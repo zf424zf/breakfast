@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\Payment;
 use Illuminate\Http\Request;
 use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
@@ -15,13 +16,14 @@ use App\Models\Product\Products as ProductModel;
 use App\Http\Services\Product as ProductService;
 use App\Http\Services\Coupon as CouponService;
 use App\Http\Services\Order as OrderService;
+use App\Http\Services\Payment as PaymentService;
 
 class OrderController extends Controller
 {
 
     public function __construct()
     {
-        $this->middleware('wechat.userinfo', ['except' => '']);
+        $this->middleware('wechat.userinfo', ['except' => 'notify']);
     }
 
     public function index()
@@ -29,13 +31,63 @@ class OrderController extends Controller
         return view('order.index');
     }
 
+    public function notify()
+    {
+        return app('wechat')->payment->handleNotify(function($notify, $successful){
+            if($successful){
+                $service = new Payment($notify->out_trade_no);
+                $service->setPaid($notify->transaction_id);
+            }
+            return true; // 或者错误消息
+        });
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 支付界面
+     */
     public function pay()
     {
         if (!request('order_ids')) {
             abort(404);
         }
         $orders = (new OrderService)->details(explode(',', request('order_ids')));
-        return view('order.pay', ['orders' => $orders]);
+        $coupon = CouponService::getMaxAmountCoupon(app('user')->id());
+        return view('order.pay', ['orders' => $orders, 'coupon' => $coupon]);
+    }
+
+    /**
+     * @return array
+     * 实际支付
+     */
+    public function postPay()
+    {
+        if (!request('order_ids')) {
+            abort(404);
+        }
+        $orderIds = explode(',', request('order_ids'));
+        $orders = (new OrderService)->details($orderIds);
+        foreach ($orders as $order) {
+            if ($order['status'] != OrderService::WAITPAY) {
+                return [
+                    'error'   => 1,
+                    'message' => $order['order_id'] . ' 处于不可支付状态',
+                ];
+            }
+        }
+        $amount = array_sum(array_column($orders, 'amount'));
+        $coupon = CouponService::getMaxAmountCoupon(app('user')->id());
+        if ($coupon) {
+            $amount = $amount - $coupon['amount'];
+        }
+        $service = new PaymentService;
+        $couponId = $coupon ? $coupon['id'] : 0;
+        $config = $service->createFlow($orderIds, app('user')->id(), $amount, $couponId)->purchase(app('user')->openid())->getJSPaymentConfig();
+        return [
+            'error'   => 0,
+            'message' => 'ok',
+            'config'  => $config,
+        ];
     }
 
     public function create(Request $request)

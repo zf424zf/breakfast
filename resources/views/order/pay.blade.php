@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page page-gray">
+        <div class="page page-gray" data-config='<?php echo app('wechat')->js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage','chooseImage','chooseWXPay'), true) ?>'>
             <!--头部开始-->
             <header class="bar bar-nav">
                 <a href="#" class="icon icon-left pull-left back"></a>
@@ -26,6 +26,24 @@
                             <p class="fr">￥{{$order['amount']}}</p>
                         </div>
                         @endforeach
+                        @if($coupon)
+                        <div class="space"></div>
+                        <div class="bottom">
+                            <p class="fl">优惠券: {{$coupon['name']}} </p>
+                            <p class="fr">-￥{{$coupon['amount']}}</p>
+                        </div>
+                        @endif
+                        <div class="space"></div>
+                        <div class="bottom">
+                            <p class="fl">支付金额:  </p>
+                            <?php
+                                $amount = array_sum(array_column($orders,'amount'));
+                                if($coupon){
+                                    $amount = $amount - $coupon['amount'] > 0 ? $amount - $coupon['amount'] : 0;
+                                }
+                            ?>
+                            <p class="fr">￥{{$amount}}</p>
+                        </div>
                     </div>
                     <div class="list-block media-list">
                         <h4>请选择支付方式</h4>
@@ -57,7 +75,7 @@
                         </ul>
                     </div>
                     <div class="content-block">
-                        <a href="#" class="button button-big button-fill">确认支付</a>
+                        <a href="javascript:;" data-orders="{{implode(',',array_column($orders,'order_id'))}}" id="confirm-pay" class="button button-big button-fill">确认支付</a>
                     </div>
                     <div class="pay-tips">
                         <div class="fl">注：</div>

@@ -2,8 +2,9 @@
 
 namespace App\Models\Order;
 
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\Model;
+use App\Models\PickupTime as PickuptimeModel;
+use App\Models\Metro\Place as PlaceModel;
 
 class Order extends Model
 {
@@ -24,6 +25,16 @@ class Order extends Model
     public function logs()
     {
         return $this->hasMany(Logs::class, 'order_id', 'order_id');
+    }
+
+    public function pickuptime()
+    {
+        return $this->hasOne(PickuptimeModel::class, 'id', 'pickuptime_id');
+    }
+
+    public function place()
+    {
+        return $this->hasOne(PlaceModel::class, 'id', 'place_id');
     }
 
 }

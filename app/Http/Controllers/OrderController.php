@@ -45,8 +45,12 @@ class OrderController extends Controller
             ];
         }
         //日历计算结束
-        $orders = OrderModel::where('uid', app('user')->id())->orderBy('id', 'DESC')->get();
-        return view('order.index', ['orders' => $orders, 'dates' => $dates]);
+        $orders = OrderModel::where('uid', app('user')->id())->with('goods.product','place','pickuptime')->orderBy('id', 'DESC')->get()->toArray();
+        $batchs = [];
+        foreach ($orders as $key => $order) {
+            $batchs[$order['batch_no']][] = $order;
+        }
+        return view('order.index', ['batchs' => $batchs, 'dates' => $dates]);
     }
 
     public function notify()

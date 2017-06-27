@@ -164,7 +164,7 @@ $(function () {
                             signType: json.config.signType,
                             paySign: json.config.paySign,
                             success: function (res) {
-                                // 支付成功后的回调函数
+                                $.router.load('/order', true);
                             }
                         })
                     }

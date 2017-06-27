@@ -52,182 +52,57 @@
                     <span>明天</span> (未预定)
                 </div>
                 <h4>我的订单</h4>
+                @foreach($batchs as $key => $orders)
                 <div class="card">
-                    <div class="card-header"><p>下单时间 2017-05-19 18:30</p><span class="f-orange">待支付</span></div>
+                    <div class="card-header">
+                        <p>下单时间 {{date('Y-m-d H:i',$key)}}</p>
+                        <span class="f-orange">{{order_status(array_first($orders)['status'])}}</span>
+                    </div>
+                    @foreach($orders as $order)
                     <div class="card-content">
                         <div class="card-content-top">
-                            <p class="pull-left">周一5-23 <span>请在当天7:30-9:30取餐</span></p>
+                            <p class="pull-left">
+                                {{chinese_week(strtotime($order['date']))}} {{date('m-d',strtotime($order['date']))}}
+                                <span>请在当天{{$order['pickuptime']['start']}} - {{$order['pickuptime']['end']}}取餐</span>
+                            </p>
                         </div>
                         <div class="list-block media-list">
                             <ul>
+                                @foreach($order['goods'] as $good)
                                 <li class="item-content">
                                     <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
+                                        <img src="{{img_url($good['product']['img'],80,80)}}" width="44" />
                                     </div>
                                     <div class="item-inner">
                                         <div class="item-title-row">
-                                            培根三明治
+                                            {{$good['product']['name']}}
                                         </div>
                                         <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
+                                            <p class="pull-left">x{{$good['count']}}</p>
+                                            <p class="pull-right">￥{{$good['price']}}</p>
                                         </div>
                                     </div>
                                 </li>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-content-top">
-                            <p class="pull-left">周二5-24<span>请在当天7:30-9:30取餐</span></p>
-                        </div>
-                        <div class="list-block media-list">
-                            <ul>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item-content last">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    @endforeach
+                    @if(array_first($orders)['status'] == 0)
                     <div class="card-footer">
                         <p class="pull-left"></p>
                         <div class="pull-right">
-                            <span>¥800</span>
+                            <span>¥{{array_sum(array_column($orders,'amount'))}}</span>
                             <a href="#" class="pull-right button">取消订单</a>
-                            <a href="#" class="button button-fill">去支付</a>
+                            <a href="{{url('order/pay?order_ids='.implode(',',array_column($orders,'order_id')))}}" class="button button-fill">去支付</a>
                         </div>
                     </div>
+                    @endif
                 </div>
-                <div class="space"></div>
-                <div class="card">
-                    <div class="card-header"><p>下单时间 2017-05-19 18:30</p><span class="f-orange">已支付</span></div>
-                    <div class="card-content">
-                        <div class="card-content-top">
-                            <p class="pull-left">周一5-23 <span>请在当天7:30-9:30取餐</span></p>
-                        </div>
-                        <div class="list-block media-list">
-                            <ul>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <p class="pull-left"></p>
-                        <div class="pull-right">
-                            <a href="#" class="button button-fill button-gray">已取货</a>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-content-top">
-                            <p class="pull-left">周一5-23 <span>请在当天7:30-9:30取餐</span></p>
-                        </div>
-                        <div class="list-block media-list">
-                            <ul>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-media">
-                                        <img src="../static/images/food.jpg" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            培根三明治
-                                        </div>
-                                        <div class="item-subtitle">
-                                            <p class="pull-left">x1</p>
-                                            <p class="pull-right">￥10.50</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <p class="pull-left"></p>
-                        <div class="pull-right">
-                            <a href="#" class="button button-fill border-orange">申请退款</a>
-                            <a href="#" class="button button-fill button-orange">取货码</a>
-                        </div>
-                    </div>
-                </div>
+                    @if(!$loop->last)
+                        <div class="space"></div>
+                    @endif
+                @endforeach
             </div>
             <!--我的订单结束-->
         </div>

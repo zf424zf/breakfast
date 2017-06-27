@@ -118,6 +118,33 @@ if (!function_exists('cdn')) {
 
 }
 
+if (!function_exists('order_status')) {
+
+    function order_status($status = null)
+    {
+        $maps = [
+            -2 => '已取消',
+            -1 => '已过期',
+            0  => '待支付',
+            1  => '已支付',
+            2  => '已取货',
+            3  => '已完成',
+            4  => '退款中',
+            5  => '退款中',
+            6  => '退款成功',
+            7  => '退款失败',
+        ];
+        if (is_null($status)) {
+            return $maps;
+        }
+        if (isset($maps[$status])) {
+            return $maps[$status];
+        }
+        return null;
+    }
+
+}
+
 if (!function_exists('img_url')) {
 
     function img_url($urls, $width = null, $height = null)

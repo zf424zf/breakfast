@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="page-group">
-        <div class="page page-gray" data-config='<?php echo app('wechat')->js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage','chooseImage','chooseWXPay'), true) ?>'>
+        <div class="page page-gray" data-config='<?php echo app('wechat')->js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage','chooseImage','chooseWXPay')) ?>'>
             <!--头部开始-->
             <header class="bar bar-nav">
                 <a href="#" class="icon icon-left pull-left back"></a>

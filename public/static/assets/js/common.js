@@ -152,9 +152,9 @@ $(function () {
                 cache: false,
                 async: false,
                 success: function (json) {
+                    payOrder();
                     if (json.error) {
                         $.toast(json.message);
-                        payOrder();
                     }
                     else {
                         wx.chooseWXPay({
@@ -164,11 +164,9 @@ $(function () {
                             signType: json.config.signType,
                             paySign: json.config.paySign,
                             success: function (res) {
-                                payOrder();
                                 // 支付成功后的回调函数
                             }
                         })
-
                     }
                 },
                 error: function () {
@@ -193,12 +191,11 @@ $(function () {
                 cache: false,
                 async: false,
                 success: function (json) {
+                    createOrder();
                     if (json.error) {
                         $.toast(json.message);
-                        createOrder();
                     }
                     else {
-                        createOrder
                         $.router.load('/order/pay?order_ids=' + json.order_ids.join(','), true);
                     }
                 },

@@ -45,7 +45,7 @@ class OrderController extends Controller
             ];
         }
         //日历计算结束
-        $orders = OrderModel::where('uid', app('user')->id())->with('goods.product','place','pickuptime')->orderBy('id', 'DESC')->get()->toArray();
+        $orders = OrderModel::where('uid', app('user')->id())->with('goods.product', 'place', 'pickuptime')->orderBy('id', 'DESC')->get()->toArray();
         $batchs = [];
         foreach ($orders as $key => $order) {
             $batchs[$order['batch_no']][] = $order;
@@ -104,11 +104,23 @@ class OrderController extends Controller
         }
         $service = new PaymentService;
         $couponId = $coupon ? $coupon['id'] : 0;
-        $config = $service->createFlow($orderIds, app('user')->id(), $amount, $couponId)->purchase(app('user')->openid())->getJSPaymentConfig();
+        $service = $service->createFlow($orderIds, app('user')->id(), $amount, $couponId);
+        if ($amount <= 0) {
+            //如果订单金额为0 不支付直接进入支付状态
+            $service->setPaid(0);
+            return [
+                'error'    => 0,
+                'need_pay' => false,
+                'message'  => 'ok',
+            ];
+        }
+
+        $config = $service->purchase(app('user')->openid())->getJSPaymentConfig();
         return [
-            'error'   => 0,
-            'message' => 'ok',
-            'config'  => $config,
+            'error'    => 0,
+            'need_pay' => true,
+            'message'  => 'ok',
+            'config'   => $config,
         ];
     }
 

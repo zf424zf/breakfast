@@ -68,7 +68,7 @@ class Payment
         if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS') {
             $this->prepayId = $result->prepay_id;
         } else {
-            throw new \Exception('下单失败');
+            throw new \Exception('下单失败:' . $result->err_code_des);
         }
         return $this;
     }

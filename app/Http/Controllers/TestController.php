@@ -21,6 +21,8 @@ class TestController extends Controller
 
     public function index()
     {
-        var_dump(app('user')->info()->toArray());
+        var_dump(app('cache')->remember('test',\Carbon\Carbon::now()->addSeconds(10),function (){
+            return 123;
+        }));
     }
 }

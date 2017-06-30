@@ -157,16 +157,21 @@ $(function () {
                         $.toast(json.message);
                     }
                     else {
-                        wx.chooseWXPay({
-                            timestamp: json.config.timestamp,
-                            nonceStr: json.config.nonceStr,
-                            package: json.config.package,
-                            signType: json.config.signType,
-                            paySign: json.config.paySign,
-                            success: function (res) {
-                                $.router.load('/order', true);
-                            }
-                        })
+                        //订单金额为0的时候不需要支付
+                        if (json.need_pay) {
+                            wx.chooseWXPay({
+                                timestamp: json.config.timestamp,
+                                nonceStr: json.config.nonceStr,
+                                package: json.config.package,
+                                signType: json.config.signType,
+                                paySign: json.config.paySign,
+                                success: function (res) {
+                                    $.router.load('/order', true);
+                                }
+                            })
+                        } else {
+                            $.router.load('/order', true);
+                        }
                     }
                 },
                 error: function () {

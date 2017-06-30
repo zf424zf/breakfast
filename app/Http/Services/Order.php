@@ -14,6 +14,8 @@ use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
 use App\Http\Services\Product as ProductService;
+use App\Jobs\Notify\ExpireNotify;
+use App\Jobs\Notify\PaidNotify;
 
 class Order
 {
@@ -125,7 +127,7 @@ class Order
         $order->goods()->update(['status' => self::PAYED]);
         $order->save();
         $this->log(__FUNCTION__, null, $flowId);
-        //dispatch(new PaidNotify($order));
+        dispatch(new PaidNotify($order));
         return $this;
     }
 
@@ -137,10 +139,10 @@ class Order
     {
         $order = $this->getOrder();
         //订单状态为等待支付状态才操作
-        if ($order['status'] == OrderApi::WAITPAY) {
-            $order['status'] = OrderApi::EXPIRED;
+        if ($order['status'] == self::WAITPAY) {
+            $order['status'] = self::EXPIRED;
             $order->save();
-            $this->callback()->log(__FUNCTION__, 0);
+            $this->log(__FUNCTION__, 0);
             dispatch(new ExpireNotify($order));
         }
         return $this;

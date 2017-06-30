@@ -64,6 +64,34 @@ class OrderController extends Controller
         });
     }
 
+    public function cancel()
+    {
+        if (!request('order_ids')) {
+            abort(404);
+        }
+        $orderIds = explode(',', request('order_ids'));
+        $orders = (new OrderService)->details($orderIds);
+        foreach ($orders as $order) {
+            if ($order['status'] != OrderService::WAITPAY) {
+                return [
+                    'error'   => 1,
+                    'message' => $order['order_id'] . ' 处于不可取消状态',
+                ];
+            }
+        }
+        foreach ($orders as $order) {
+            (new OrderService($order['order_id']))->cancel();
+        }
+        return [
+            'error'   => 0,
+            'message' => 'ok',
+        ];
+    }
+
+    public function result(){
+        return view('order.result');
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 支付界面

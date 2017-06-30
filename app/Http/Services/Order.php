@@ -147,20 +147,18 @@ class Order
     }
 
     /**
-     * @param null $uid 取消订单的人  管理员或者俱乐部或者用户自己
+     * @param null $uid 取消订单的人
      * @return $this
      * 订单取消
      */
-    public function cancel($uid = null)
+    public function cancel()
     {
-        //订单状态为等待支付或者等待审核状态才操作
+        //订单状态为等待支付
         $order = $this->getOrder();
-        if (in_array($order['status'], [OrderApi::WAITPAY, OrderApi::WAITAUDIT])) {
-            $order['status'] = OrderApi::CANCELED;
+        if (in_array($order['status'], [self::WAITPAY])) {
+            $order['status'] = self::CANCELED;
             $order->save();
-            //设置回调状态
-            $uid = is_null($uid) ? $order['uid'] : $uid;
-            $this->callback()->log(__FUNCTION__, $uid);
+            $this->log(__FUNCTION__, $order['uid']);
         }
         return $this;
     }

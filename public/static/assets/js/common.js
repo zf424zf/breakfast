@@ -166,11 +166,11 @@ $(function () {
                                 signType: json.config.signType,
                                 paySign: json.config.paySign,
                                 success: function (res) {
-                                    $.router.load('/order', true);
+                                    $.router.load('/order/result');
                                 }
                             })
                         } else {
-                            $.router.load('/order', true);
+                            $.router.load('/order/result');
                         }
                     }
                 },
@@ -227,7 +227,26 @@ $(function () {
         })
         //$('.map-box li').eq(0).trigger('click');
     });
+    $(document).on('click', '.cancel-order', function () {
+        var orderIds = $(this).data('ids');
+        $.confirm('确定取消此订单?', function () {
+            $.ajax({
+                url: '/order/cancel',
+                type: 'POST',
+                data: {order_ids: orderIds},
+                dataType: 'json',
+                cache: false,
+                success: function (json) {
+                    if (json.error) {
+                        $.alert(json.message)
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            });
+        });
 
+    })
     $.init();
 });
 

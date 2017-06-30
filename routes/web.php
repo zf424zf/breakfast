@@ -31,6 +31,8 @@ Route::group(['prefix'     => 'order',], function () {
     Route::any('notify', 'OrderController@notify');
     Route::post('pay', 'OrderController@postPay');
     Route::post('create', 'OrderController@create');
+    Route::post('cancel', 'OrderController@cancel');
+    Route::get('result', 'OrderController@result');
 });
 
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');

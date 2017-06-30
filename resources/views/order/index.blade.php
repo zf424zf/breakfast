@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','首页')
+@section('title','我的订单')
 @section('resource')
     <!--css js-->
 @endsection
@@ -8,7 +8,7 @@
         <div class="page">
             <!--头部开始-->
             <header class="bar bar-nav">
-                <a href="#" class="icon icon-left pull-left back"></a>
+                <a href="{{url('/')}}" class="icon icon-left pull-left"></a>
                 <h1 class="title">一起吃早餐</h1>
             </header>
             <!--头部结束-->
@@ -87,13 +87,22 @@
                             </ul>
                         </div>
                     </div>
+                    @if($order['status'] == 1)
+                    <div class="card-footer">
+                        <p class="pull-left"></p>
+                        <div class="pull-right">
+                            <a href="#" class="button button-fill border-orange">申请退款</a>
+                            <a href="#" class="button button-fill button-orange">取货码</a>
+                        </div>
+                    </div>
+                    @endif
                     @endforeach
                     @if(array_first($orders)['status'] == 0)
                     <div class="card-footer">
                         <p class="pull-left"></p>
                         <div class="pull-right">
                             <span>¥{{array_sum(array_column($orders,'amount'))}}</span>
-                            <a href="#" class="pull-right button">取消订单</a>
+                            <a href="javascript:;"data-ids="{{implode(',',array_column($orders,'order_id'))}}" class="pull-right button cancel-order">取消订单</a>
                             <a href="{{url('order/pay?order_ids='.implode(',',array_column($orders,'order_id')))}}" class="button button-fill">去支付</a>
                         </div>
                     </div>

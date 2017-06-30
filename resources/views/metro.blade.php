@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','首页')
+@section('title','选择位置')
 @section('resource')
     <!--css js-->
 @endsection

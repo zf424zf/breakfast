@@ -41,7 +41,7 @@
                                         }
                                     }
                                     foreach ($orderKeybyDates[$d['date']] as $order){
-                                        if($order['status'] >= 1){
+                                        if($order['status'] == 1){
                                             $class = 'orange';
                                         }
                                     }

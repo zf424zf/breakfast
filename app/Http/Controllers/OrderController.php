@@ -50,7 +50,11 @@ class OrderController extends Controller
         foreach ($orders as $key => $order) {
             $batchs[$order['batch_no']][] = $order;
         }
-        return view('order.index', ['batchs' => $batchs, 'dates' => $dates]);
+        $orderKeybyDates = [];
+        foreach ($orders as $key => $order) {
+            $orderKeybyDates[$order['date']][] = $order;
+        }
+        return view('order.index', ['batchs' => $batchs, 'dates' => $dates, 'orderKeybyDates' => $orderKeybyDates]);
     }
 
     public function notify()
@@ -88,8 +92,48 @@ class OrderController extends Controller
         ];
     }
 
-    public function result(){
+    public function result()
+    {
         return view('order.result');
+    }
+
+    public function pickup()
+    {
+        if (!request('order_id')) {
+            abort(404);
+        }
+        $order = OrderModel::where('uid', app('user')->id())
+            ->with('goods.product', 'place', 'pickuptime')
+            ->where('status', OrderService::PAYED)
+            ->where('order_id', request('order_id'))->first();
+        if (!$order) {
+            abort(404);
+        }
+        return view('order.pickup', ['order' => $order]);
+    }
+
+    public function postPickup()
+    {
+        if (!request('order_id')) {
+            abort(404);
+        }
+        (new OrderService(request('order_id')))->picked();
+        return [
+            'error'   => 0,
+            'message' => 'ok',
+        ];
+    }
+
+    public function refund()
+    {
+        if (!request('order_id')) {
+            abort(404);
+        }
+        (new OrderService(request('order_id')))->refund(app('user')->id());
+        return [
+            'error'   => 0,
+            'message' => 'ok',
+        ];
     }
 
     /**

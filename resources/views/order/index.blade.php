@@ -33,8 +33,18 @@
                                 $class = '';
                                 if($d['date'] < date('Ymd')){
                                     $class = 'f-gray';
-                                }elseif(array_sum(array_dot($d['selected']))){
-                                    $class = 'dot';
+                                }elseif(isset($orderKeybyDates[$d['date']])){
+                                    $class = '';
+                                    foreach ($orderKeybyDates[$d['date']] as $order){
+                                        if($order['status'] == 0){
+                                            $class = 'blue';
+                                        }
+                                    }
+                                    foreach ($orderKeybyDates[$d['date']] as $order){
+                                        if($order['status'] >= 1){
+                                            $class = 'orange';
+                                        }
+                                    }
                                 }
                                 ?>
                                 <li class="{{$class}}">
@@ -48,9 +58,11 @@
                         </ul>
                     </div>
                 </div>
+                @if(!isset($orderKeybyDates[date('Ymd',time() + 86400)]))
                 <div class="calendar-info">
                     <span>明天</span> (未预定)
                 </div>
+                @endif
                 <h4>我的订单</h4>
                 @foreach($batchs as $key => $orders)
                 <div class="card">
@@ -91,10 +103,18 @@
                     <div class="card-footer">
                         <p class="pull-left"></p>
                         <div class="pull-right">
-                            <a href="#" class="button button-fill border-orange">申请退款</a>
-                            <a href="#" class="button button-fill button-orange">取货码</a>
+                            <a href="javascript:;" data-id="{{$order['order_id']}}" class="button button-fill border-orange order-refund">申请退款</a>
+                            <a href="{{url('order/pickup?order_id='.$order['order_id'])}}" class="button button-fill button-orange">取货码</a>
                         </div>
                     </div>
+                    @endif
+                    @if($order['status'] == 2)
+                        <div class="card-footer">
+                            <p class="pull-left"></p>
+                            <div class="pull-right">
+                                <a href="javascript:;" class="button button-fill button-gray">已取货</a>
+                            </div>
+                        </div>
                     @endif
                     @endforeach
                     @if(array_first($orders)['status'] == 0)

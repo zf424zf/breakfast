@@ -33,6 +33,9 @@ Route::group(['prefix'     => 'order',], function () {
     Route::post('create', 'OrderController@create');
     Route::post('cancel', 'OrderController@cancel');
     Route::get('result', 'OrderController@result');
+    Route::get('pickup', 'OrderController@pickup');
+    Route::post('pickup', 'OrderController@postPickup');
+    Route::post('refund', 'OrderController@refund');
 });
 
 Route::get('station/{id}', 'MetroController@station')->where('id', '\+?[1-9]\d*');

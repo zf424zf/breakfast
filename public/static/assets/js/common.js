@@ -247,6 +247,46 @@ $(function () {
         });
 
     })
+    $(document).on('click', '#confirm-pickup', function () {
+        var orderId = $(this).data('id');
+        $.confirm('确定已取货?', function () {
+            $.ajax({
+                url: '/order/pickup',
+                type: 'POST',
+                data: {order_id: orderId},
+                dataType: 'json',
+                cache: false,
+                success: function (json) {
+                    if (json.error) {
+                        $.alert(json.message)
+                    } else {
+                        $.router.load('/order', true);
+                    }
+                }
+            });
+        });
+
+    })
+    $(document).on('click', '.order-refund', function () {
+        var orderId = $(this).data('id');
+        $.confirm('确定要申请退款吗?', function () {
+            $.ajax({
+                url: '/order/refund',
+                type: 'POST',
+                data: {order_id: orderId},
+                dataType: 'json',
+                cache: false,
+                success: function (json) {
+                    if (json.error) {
+                        $.alert(json.message)
+                    } else {
+                        window.location.reload()
+                    }
+                }
+            });
+        });
+
+    })
     $.init();
 });
 

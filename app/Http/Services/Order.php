@@ -12,7 +12,8 @@ use App\Models\Order\Order as OrderModel;
 use App\Models\Order\Logs as LogsModel;
 use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
-use App\Models\Product\Products as ProductModel;
+use App\Models\Order\Pay as PayModel;
+use App\Models\Order\Refund as RefundModel;
 use App\Http\Services\Product as ProductService;
 use App\Jobs\Notify\ExpireNotify;
 use App\Jobs\Notify\PaidNotify;
@@ -27,8 +28,8 @@ class Order
     const PAYED = 1;  //(可以退款)订单支付完成，金额为0的订单，在审核通过之后或者等待支付时应该直接进入此状态。
     const PICKED = 2;  //(可以退款)订单已经发货，用于需要邮寄的实体货物
     const FINISHED = 3;  //(可以退款)货物已签收或者订单完成
-    const REFUNDING = 4;  //订单全额退款中
-    const REFUNDING_PROCESS = 5;  //订单全额退款中,此状态已经提交给第三方支付平台处理,但未收到退款结果通知
+    const REFUNDING = 4;  //订单退款中
+    const REFUNDING_PROCESS = 5;  //订单退款中,此状态已经提交给第三方支付平台处理,但未收到退款结果通知
     const REFUNDED = 6;  //订单全额退款成功
     const REFUND_FAIL = 7;  //(可以退款)退款失败
 
@@ -165,6 +166,18 @@ class Order
         return $this;
     }
 
+    public function picked()
+    {
+        //订单状态为等待支付
+        $order = $this->getOrder();
+        if (in_array($order['status'], [self::PAYED])) {
+            $order['status'] = self::PICKED;
+            $order->save();
+            $this->log(__FUNCTION__, $order['uid']);
+        }
+        return $this;
+    }
+
     /**
      * @return mixed
      * 获取订单信息
@@ -200,75 +213,41 @@ class Order
      * @return array|mixed|null
      * 订单退款
      */
-    public function refund($uid, $memberIds = [])
+    public function refund($uid)
     {
         $order = $this->getOrder();
         //订单可以退款的状态
         $canRefundStatus = [
-            OrderApi::PAYING,
-            OrderApi::PAYED,
-            OrderApi::DELIVERED,
-            OrderApi::FINISHED,
-            OrderApi::REFUNDING_PART,
-            OrderApi::REFUNDING_PROCESS_PART,
-            OrderApi::REFUNDED_PART,
-            OrderApi::REFUND_PART_FAIL,
-            OrderApi::REFUND_FAIL,
-            OrderApi::EVALUATED,
+            self::PAYED,
+            self::PICKED,
+            self::FINISHED,
+            self::REFUND_FAIL,
         ];//可以退款的订单状态
         if (!in_array($order['status'], $canRefundStatus)) {
-            exception(self::ORDER_CANT_REFUND);
+            return false;
         }
-        $refundFlowId = null;
-        $class = new self::$interface[$order['module']];
-        if (!$class instanceof PaymentInterface) {
-            exception(self::SYSTEM_ERROR);
+        //支付流水
+        $pay = PayModel::where('flow_id', $order['pay_flow'])->where('status', Payment::PAID_STATUS)->first();
+        if (!$pay) {
+            return false;
         }
-        $refundAmount = 0;
-        $refundMemberIds = [];//退款成员ID
-        if ($order->module == Module::APPLY) {
-            //单个成员已经退款的状态
-            $refundedStatus = [
-                OrderApi::REFUNDING_PART,
-                OrderApi::REFUNDING_PROCESS_PART,
-                OrderApi::REFUNDED_PART,
-                OrderApi::REFUNDED,
-            ];
-            //单个成员可以退款的状态
-            $itemCanRefundStatus = [
-                OrderApi::PAYING,
-                OrderApi::PAYED,
-                OrderApi::DELIVERED,
-                OrderApi::FINISHED,
-                OrderApi::REFUND_PART_FAIL,
-                OrderApi::REFUND_FAIL,
-                OrderApi::EVALUATED,
-            ];
-            //退款请求为报名
-            $this->apply = $class->orderDetail($order['apply_id']);
-            $memberIds = $memberIds ? $memberIds : array_column($this->apply['members'], 'id');
-            $refundedAmount = 0;
-            $refundedMemberIds = [];//已经退款成员ID
-            foreach ($this->apply['members'] as $member) {
-                if (in_array($member['id'], $memberIds) && in_array($member['status'], $itemCanRefundStatus)) {
-                    $refundAmount += $member['price'];
-                    $refundMemberIds[] = $member['id'];
-                } elseif (in_array($member['status'], $refundedStatus)) {
-                    $refundedAmount += $member['price'];
-                    $refundedMemberIds[] = $member['id'];
-                }
-            }
-            //如果退款成员和已经退款人员个数和报名成员个人一致则为全额退款
-            $status = count($refundMemberIds) + count($refundedMemberIds) == count($this->apply['members']) ? OrderApi::REFUNDING : OrderApi::REFUNDING_PART;
+        $amount = 0;
+        //计算退款金额
+        if (!$pay['coupon_id']) {
+            $amount = $order['amount'];
         } else {
-            //正常全额退款
-            $refundAmount = $order['amount'];
-            $status = OrderApi::REFUNDING;
+
         }
-        //可退款金额为0 且 退款成员为空 不能退款
-        if ($refundAmount == 0 && count($refundMemberIds) == 0) {
-            exception(self::NO_AMOUNT_REFUND);
-        }
+        $refund = [
+            'order_id'    => $order['order_id'],
+            'pay_flow'    => isset($pay['batch_no']) ? $pay['batch_no'] : '',
+            'refund_flow' => self::buildRefundId(),
+            'amount'      => $amount,
+            'status'      => $amount > 0 ? Refund::PROCESSING : Refund::REFUNDED,
+        ];
+        (new RefundModel($refund))->save();
+        return $refund['refund_flow'];
+
         //保存退款记录
         $refundFlowId = self::saveFlow($refundAmount);
         if (!$refundFlowId) {
@@ -287,79 +266,6 @@ class Order
             $this->refunded($uid, $refundFlowId);
         }
         return $refundFlowId;
-    }
-
-    /**
-     * @param $refundFlow
-     * @return mixed
-     * 获取退款记录
-     */
-    public function getRefund($refundFlow)
-    {
-        $refund = RefundModel::where('refund_flow', $refundFlow)->first();
-        if (!$refund) {
-            exception(self::REFUND_ISNT_EXISTS);
-        }
-        return $refund;
-    }
-
-    /**
-     * @return mixed
-     * 获取订单退款记录
-     */
-    public function refundLog()
-    {
-        $order = $this->getOrder();
-        return RefundModel::where('order_id', $order['order_id'])->with('member')->orderBy('id', 'DESC')->get()->toArray();
-    }
-
-    /**
-     * @param $refundFlow
-     * @param null $amount
-     * @return mixed
-     * 确定退款请求
-     */
-    public function confirmRefund($refundFlow, $amount = null)
-    {
-        $refund = RefundModel::where('refund_flow', $refundFlow)->first();
-        if (!is_null($amount)) {
-            $amount = $amount > $refund['amount'] ? $refund['amount'] : $amount;
-            $refund['real_amount'] = $amount;
-        }
-        if (in_array($refund['status'], [RefundApi::WAIT_PROCESS, RefundApi::ADUDIT_FAIL, RefundApi::WAIT_ADUDIT])) {
-            $refund['status'] = RefundApi::WAIT_PROCESS;
-            $refund->save();
-        }
-        return $refund;
-    }
-
-
-    /**
-     * @param $uid
-     * @param $refundFlowId
-     * @return bool
-     * 设置订单正在退款中
-     */
-    public function refunding($uid, $refundFlowId)
-    {
-        $order = $this->getOrder();
-        //订单为退款中才可以操作
-        if (in_array($order['status'], [OrderApi::REFUNDING_PART, OrderApi::REFUNDING, OrderApi::REFUNDED_PART, OrderApi::REFUNDED])) {
-            $order['status'] = $order['status'] == OrderApi::REFUNDING_PART ? OrderApi::REFUNDING_PROCESS_PART : OrderApi::REFUNDING_PROCESS;
-            $order->save();
-            $class = new self::$interface[$order['module']];
-            if (!$class instanceof PaymentInterface) {
-                exception(self::SYSTEM_ERROR);
-            }
-            if ($order['module'] == Module::APPLY) {
-                $class->setRefunding($refundFlowId);
-            } else {
-                $class->setStatus($order['apply_id'], $order['status']);
-            }
-            $this->log('REFUNDING', $uid);
-            //@todo 通知退款正在处理中
-        }
-        return true;
     }
 
     /**
@@ -411,33 +317,6 @@ class Order
         return true;
     }
 
-    /**
-     * 生成退款流水
-     * @param string $orderId
-     * @param int $applyId
-     * @param array $members
-     */
-    protected function saveFlow($amount)
-    {
-        $order = $this->getOrder();
-        //支付流水
-        $pay = PayModel::where('order_id', $order['order_id'])->where('status', PaymentApi::PAYED)->first();
-        //支付流水不存在,未实际支付,金额为0 允许实际未支付
-        if (!$pay && $amount > 0) {
-            return null;
-        }
-        $refund = [
-            'club_id'     => $this->apply['club_id'],
-            'order_id'    => $order['order_id'],
-            'pay_flow'    => isset($pay['batch_no']) ? $pay['batch_no'] : '',
-            'refund_flow' => self::getRefundFlowId(),
-            'amount'      => $amount,
-            'real_amount' => $amount,
-            'status'      => $amount > 0 ? RefundApi::WAIT_ADUDIT : RefundApi::REFUND_SUCCESS,
-        ];
-        (new RefundModel($refund))->save();
-        return $refund['refund_flow'];
-    }
 
     /**
      * @param bool $instance 获取模型对象还是数组
@@ -474,5 +353,10 @@ class Order
     public static function buildOrderId()
     {
         return date('md') . uniqid() . rand(1000, 9999);
+    }
+
+    public static function buildRefundId()
+    {
+        return uniqid('R');
     }
 }

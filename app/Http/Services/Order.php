@@ -144,6 +144,7 @@ class Order
         if ($order['status'] == self::WAITPAY) {
             $order['status'] = self::EXPIRED;
             $order->save();
+            $order->goods()->update(['status' => self::EXPIRED]);
             $this->log(__FUNCTION__, 0);
             dispatch(new ExpireNotify($order));
         }
@@ -162,6 +163,7 @@ class Order
         if (in_array($order['status'], [self::WAITPAY])) {
             $order['status'] = self::CANCELED;
             $order->save();
+            $order->goods()->update(['status' => self::CANCELED]);
             $this->log(__FUNCTION__, $order['uid']);
         }
         return $this;
@@ -174,6 +176,7 @@ class Order
         if (in_array($order['status'], [self::PAYED])) {
             $order['status'] = self::PICKED;
             $order->save();
+            $order->goods()->update(['status' => self::PICKED]);
             $this->log(__FUNCTION__, $order['uid']);
         }
         return $this;
@@ -232,6 +235,7 @@ class Order
         $refund->createFlow($order)->launch();
         $order['status'] = self::REFUNDING;
         $order->save();
+        $order->goods()->update(['status' => self::REFUNDING]);
         $this->log('REFUND', $uid);
         return $this;
     }
@@ -249,6 +253,7 @@ class Order
         if (in_array($order['status'], [self::REFUNDING])) {
             $order['status'] = self::REFUNDED;
             $order->save();
+            $order->goods()->update(['status' => self::REFUNDED]);
             $this->log('REFUNDED', $order['uid']);
             //@todo 通知退款完成
         }
@@ -267,6 +272,7 @@ class Order
         if (in_array($order['status'], [self::REFUNDING])) {
             $order['status'] = self::REFUND_FAIL;
             $order->save();
+            $order->goods()->update(['status' => self::REFUND_FAIL]);
             $this->log('REFUNDFAIL', $order['uid']);
         }
         return $this;

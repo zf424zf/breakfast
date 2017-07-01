@@ -130,10 +130,10 @@ class OrderController extends Controller
             abort(404);
         }
         (new OrderService(request('order_id')))->refund(app('user')->id());
-        /*return [
+        return [
             'error'   => 0,
             'message' => 'ok',
-        ];*/
+        ];
     }
 
     /**

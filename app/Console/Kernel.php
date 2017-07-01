@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Order\Expire::class,
+        \App\Console\Commands\Order\RefundQuery::class,
     ];
 
     /**

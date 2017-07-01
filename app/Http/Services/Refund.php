@@ -102,6 +102,15 @@ class Refund
         return $this;
     }
 
+    public function query()
+    {
+        $result = app('wechat')->payment->queryRefundByRefundId($this->refund['refund_flow']);
+        if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS') {
+            $this->refunded();
+        }
+        return $result;
+    }
+
 
     public static function buildRefundId()
     {

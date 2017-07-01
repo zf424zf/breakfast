@@ -37,7 +37,7 @@ class RefundQuery extends Command
     {
         app('db')->table('order_refund')->where('status', RefundService::PROCESSING)->chunk(10, function ($refunds) {
             foreach ($refunds as $refund) {
-                RefundApi::query($refund->refund_flow);
+                (new RefundService($refund->refund_flow))->query();
             }
         });
     }

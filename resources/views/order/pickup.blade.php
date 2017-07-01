@@ -22,11 +22,13 @@
                         {{$order['place']['name']}}
                     </h4>
                     <?php
-                    $colors = ["#0093db", "#fb914a", "#5eaf6d", "#f361a0", "#987dfc", "#fbcdd6", "#a0da55"];
+                    $colors = ["#0093db", "#fb914a", "#5eaf6d", "#f361a0", "#987dfc", "#a0da55",'#ff0000','#5b0f00','#7f6000','#274e13','#0c343d','#1c4587','#073763','#20124d'];
                     ?>
                     <div class="row no-gutter">
                         @foreach($order['goods'] as $good)
-                        <div class="col-50" style="background: {{$colors[array_rand($colors,1)]}}">{{$good['product']['name']}}x{{$good['count']}}</div>
+                        <?php $key = array_rand($colors,1);?>
+                        <div class="col-50" style="background: {{$colors[$key]}}">{{$good['product']['name']}}x{{$good['count']}}</div>
+                        <?php unset($colors[$key]) ?>
                         @endforeach
                     </div>
                     <div class="bar-footer">

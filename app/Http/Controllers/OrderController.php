@@ -129,6 +129,14 @@ class OrderController extends Controller
         if (!request('order_id')) {
             abort(404);
         }
+        $order = (new OrderService(request('order_id')))->detail();
+        $pickuptime = $order['date'] . ' ' . $order['pickuptime']['start'];
+        if (strtotime($pickuptime) - setting('stop_refund_hour', 8) * 3600 < time()) {
+            return [
+                'error'   => 1,
+                'message' => '当前不允许退款',
+            ];
+        }
         try {
             (new OrderService(request('order_id')))->refund(app('user')->id());
         } catch (\Exception $e) {

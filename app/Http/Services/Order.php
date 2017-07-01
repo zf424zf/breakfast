@@ -10,10 +10,7 @@ namespace App\Http\Services;
 
 use App\Models\Order\Order as OrderModel;
 use App\Models\Order\Logs as LogsModel;
-use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
-use App\Models\Order\Pay as PayModel;
-use App\Models\Order\Refund as RefundModel;
 use App\Http\Services\Product as ProductService;
 use App\Jobs\Notify\ExpireNotify;
 use App\Jobs\Notify\PaidNotify;

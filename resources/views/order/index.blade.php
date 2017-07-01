@@ -68,7 +68,9 @@
                 <div class="card">
                     <div class="card-header">
                         <p>下单时间 {{date('Y-m-d H:i',$key)}}</p>
+                        @if(array_first($orders)['status'] <= 0)
                         <span class="f-orange">{{order_status(array_first($orders)['status'])}}</span>
+                        @endif
                     </div>
                     @foreach($orders as $order)
                     <div class="card-content">
@@ -107,12 +109,11 @@
                             <a href="{{url('order/pickup?order_id='.$order['order_id'])}}" class="button button-fill button-orange">取货码</a>
                         </div>
                     </div>
-                    @endif
-                    @if($order['status'] == 2)
+                    @elseif(in_array($order['status'],[2,3,4,5,6,7]))
                         <div class="card-footer">
                             <p class="pull-left"></p>
                             <div class="pull-right">
-                                <a href="javascript:;" class="button button-fill button-gray">已取货</a>
+                                <a href="javascript:;" class="button button-fill button-gray">{{order_status($order['status'])}}</a>
                             </div>
                         </div>
                     @endif

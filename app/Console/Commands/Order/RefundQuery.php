@@ -35,7 +35,7 @@ class RefundQuery extends Command
      */
     public function handle()
     {
-        app('db')->table('order_refund')->where('status', RefundService::PROCESSING)->orderBy('id','DESC')->chunk(10, function ($refunds) {
+        app('db')->table('orders_refund')->where('status', RefundService::PROCESSING)->orderBy('id','DESC')->chunk(10, function ($refunds) {
             foreach ($refunds as $refund) {
                 (new RefundService($refund->refund_flow))->query();
             }

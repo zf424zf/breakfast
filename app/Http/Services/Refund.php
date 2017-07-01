@@ -43,7 +43,7 @@ class Refund
         if (!$pay) {
             throw new \Exception('订单支付流水不存在');
         }
-        if ($this->refund = RefundModel::where('order_id', $order['order_id'])) {
+        if ($this->refund = RefundModel::where('order_id', $order['order_id'])->first()) {
             return $this;
         }
         $amount = $order['amount'];

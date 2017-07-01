@@ -75,6 +75,8 @@ class Refund
             return $this->refunded();
         }
         $result = app('wechat')->payment->refund($this->refund['pay_flow'], $this->refund['refund_flow'], $this->refund['pay_amount'] * 100, $this->refund['amount'] * 100);
+        var_dump($result);
+        die;
         return $this;
     }
 

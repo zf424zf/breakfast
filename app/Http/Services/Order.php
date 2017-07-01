@@ -17,6 +17,7 @@ use App\Models\Order\Refund as RefundModel;
 use App\Http\Services\Product as ProductService;
 use App\Jobs\Notify\ExpireNotify;
 use App\Jobs\Notify\PaidNotify;
+use App\Http\Services\Refund as RefundService;
 
 class Order
 {
@@ -226,95 +227,49 @@ class Order
         if (!in_array($order['status'], $canRefundStatus)) {
             return false;
         }
-        //支付流水
-        $pay = PayModel::where('flow_id', $order['pay_flow'])->where('status', Payment::PAID_STATUS)->first();
-        if (!$pay) {
-            return false;
-        }
-        $amount = 0;
-        //计算退款金额
-        if (!$pay['coupon_id']) {
-            $amount = $order['amount'];
-        } else {
 
-        }
-        $refund = [
-            'order_id'    => $order['order_id'],
-            'pay_flow'    => isset($pay['batch_no']) ? $pay['batch_no'] : '',
-            'refund_flow' => self::buildRefundId(),
-            'amount'      => $amount,
-            'status'      => $amount > 0 ? Refund::PROCESSING : Refund::REFUNDED,
-        ];
-        (new RefundModel($refund))->save();
-        return $refund['refund_flow'];
-
-        //保存退款记录
-        $refundFlowId = self::saveFlow($refundAmount);
-        if (!$refundFlowId) {
-            exception(self::PAYFLOW_NOT_EXISTS);
-        }
-        //设置退款状态
-        $class->setStatus($order['apply_id'], $status, $refundMemberIds);
-        $order->status = $status;
-        //设置订单的退款流水号
-        $class->setRefundFlowId($order['apply_id'], $refundFlowId, $refundMemberIds);
+        $refund = new RefundService;
+        $refund->createFlow($order)->launch();
+        $order['status'] = self::REFUNDING;
         $order->save();
         $this->log('REFUND', $uid);
-        //如果退款金额为0 直接退款完成
-        if ($refundAmount == 0) {
-            $this->refunding($uid, $refundFlowId);
-            $this->refunded($uid, $refundFlowId);
-        }
-        return $refundFlowId;
+        return $this;
     }
+
 
     /**
      * @param $uid
      * @param $refundFlowId
-     * @return bool
      * 设置订单退款完成
      */
-    public function refunded($uid, $refundFlowId)
+    public function refunded()
     {
         $order = $this->getOrder();
         //订单为正在退款或者部分退款完成才可以操作
-        if (in_array($order['status'], [OrderApi::REFUNDING_PROCESS, OrderApi::REFUNDING_PROCESS_PART, OrderApi::REFUNDED_PART])) {
-            $order['status'] = $order['status'] == OrderApi::REFUNDING_PROCESS ? OrderApi::REFUNDED : OrderApi::REFUNDED_PART;
+        if (in_array($order['status'], [self::REFUNDING])) {
+            $order['status'] = self::REFUNDED;
             $order->save();
-            $class = new self::$interface[$order['module']];
-            if ($order->module == Module::APPLY) {
-                $class->setRefunded($refundFlowId);
-            } else {
-                $class->setStatus($order['apply_id'], $order['status']);
-            }
-            $this->log('REFUNDED', $uid);
+            $this->log('REFUNDED', $order['uid']);
             //@todo 通知退款完成
         }
-        return true;
+        return $this;
     }
 
     /**
      * @param $uid
      * @param $refundFlowId
-     * @return bool
      * 设置退款失败
      */
-    public function refundFail($uid, $refundFlowId)
+    public function refundFail()
     {
         $order = $this->getOrder();
         //订单为退款处理中才可以操作
-        if (in_array($order['status'], [OrderApi::REFUNDING_PROCESS, OrderApi::REFUNDING_PROCESS_PART, OrderApi::REFUNDED_PART, OrderApi::REFUNDED])) {
-            $order['status'] = $order['status'] == OrderApi::REFUNDED ? OrderApi::REFUND_FAIL : OrderApi::REFUND_PART_FAIL;
+        if (in_array($order['status'], [self::REFUNDING])) {
+            $order['status'] = self::REFUND_FAIL;
             $order->save();
-            $class = new self::$interface[$order['module']];
-            if ($order->module == Module::APPLY) {
-                $class->setRefunded($refundFlowId);
-            } else {
-                $class->setStatus($order['apply_id'], $order['status']);
-            }
-            $this->log('REFUNDFAIL', $uid);
+            $this->log('REFUNDFAIL', $order['uid']);
         }
-        return true;
+        return $this;
     }
 
 

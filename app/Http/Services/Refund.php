@@ -84,7 +84,7 @@ class Refund
      */
     public function refunded()
     {
-        $this->refund['staus'] = self::REFUNDED;
+        $this->refund['status'] = self::REFUNDED;
         $this->refund->save();
         (new Order($this->refund['order_id']))->refunded();
         return $this;
@@ -96,7 +96,7 @@ class Refund
      */
     public function refundFail()
     {
-        $this->refund['staus'] = self::REFUND_FAIL;
+        $this->refund['status'] = self::REFUND_FAIL;
         $this->refund->save();
         (new Order($this->refund['order_id']))->refundFail();
         return $this;

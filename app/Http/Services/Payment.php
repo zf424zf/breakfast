@@ -34,6 +34,7 @@ class Payment
 
     public function createFlow(array $orderIds, $uid, $amount, $couponId = 0)
     {
+        $amount = max($amount, 0);
         $amount = round($amount, 2);
         $hash = md5(serialize(func_get_args()));
         $this->flow = PayModel::where('hash', $hash)->first();

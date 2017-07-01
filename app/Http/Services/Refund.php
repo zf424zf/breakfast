@@ -105,7 +105,6 @@ class Refund
     public function query()
     {
         $result = app('wechat')->payment->queryRefundByRefundNo($this->refund['refund_flow']);
-        var_dump($result);
         if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS') {
             $this->refunded();
         }

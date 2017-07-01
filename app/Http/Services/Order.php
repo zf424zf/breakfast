@@ -232,10 +232,11 @@ class Order
         }
 
         $refund = new RefundService;
-        $refund->createFlow($order)->launch();
+        $refund->createFlow($order);
         $order['status'] = self::REFUNDING;
         $order->save();
         $order->goods()->update(['status' => self::REFUNDING]);
+        $refund->launch();
         $this->log('REFUND', $uid);
         return $this;
     }

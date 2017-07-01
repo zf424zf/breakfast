@@ -54,6 +54,8 @@ class Refund
             $amount = max($amount, 0);
             $amount = round($amount, 2);
             $refundedAmount = RefundModel::where('pay_flow', $pay['pay_flow'])->sum('amount');
+            var_dump($refundedAmount);
+            die;
             if ($refundedAmount + $amount > $pay['amount']) {
                 $amount = $pay['amount'] - $refundedAmount;
             }

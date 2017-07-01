@@ -129,7 +129,14 @@ class OrderController extends Controller
         if (!request('order_id')) {
             abort(404);
         }
-        (new OrderService(request('order_id')))->refund(app('user')->id());
+        try {
+            (new OrderService(request('order_id')))->refund(app('user')->id());
+        } catch (\Exception $e) {
+            return [
+                'error'   => 1,
+                'message' => $e->getMessage(),
+            ];
+        }
         return [
             'error'   => 0,
             'message' => 'ok',

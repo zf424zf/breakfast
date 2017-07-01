@@ -58,7 +58,7 @@ class Order
         if ($orderId) {
             $this->order = OrderModel::where('order_id', $orderId)->first();
             if (!$this->order) {
-                //exception(self::ORDER_NOT_EXISTS);
+                throw new \Exception('订单不存在');
             }
         }
     }

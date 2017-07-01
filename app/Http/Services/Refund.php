@@ -41,7 +41,7 @@ class Refund
         //支付流水
         $pay = PayModel::where('flow_id', $order['pay_flow'])->where('status', Payment::PAID_STATUS)->first();
         if (!$pay) {
-            return false;
+            throw new \Exception('订单支付流水不存在');
         }
         $amount = $order['amount'];
         //计算退款金额
@@ -75,6 +75,9 @@ class Refund
             return $this->refunded();
         }
         $result = app('wechat')->payment->refund($this->refund['pay_flow'], $this->refund['refund_flow'], $this->refund['pay_amount'] * 100, $this->refund['amount'] * 100);
+        if ($result->result_code != 'SUCCESS') {
+            throw new \Exception($result->err_code_des);
+        }
         return $this;
     }
 

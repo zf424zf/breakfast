@@ -28,7 +28,9 @@ class WechatUserinfo
      */
     public function handle($request, Closure $next)
     {
-        session([self::SESSION_KEY => json_decode('{"openid":"o3-UIwDbB0cWKNAdV51mcm5b6Zf8","nickname":"Skiden","sex":1,"language":"zh_CN","city":"\u5357\u4eac","province":"\u6c5f\u82cf","country":"\u4e2d\u56fd","headimgurl":"http:\/\/wx.qlogo.cn\/mmopen\/ajNVdqHZLLA3JS8ob7a7LEc4ibcnjnpBnuB2biaHTaro00ia3RFUVL5Hibr3riaaVea3WzS7IegHZPkLV2olFtQ4eicA\/0","privilege":[]}',true)]);
+        if (app()->environment() == 'local') {
+            session([self::SESSION_KEY => json_decode('{"openid":"o3-UIwDbB0cWKNAdV51mcm5b6Zf8","nickname":"Skiden","sex":1,"language":"zh_CN","city":"\u5357\u4eac","province":"\u6c5f\u82cf","country":"\u4e2d\u56fd","headimgurl":"http:\/\/wx.qlogo.cn\/mmopen\/ajNVdqHZLLA3JS8ob7a7LEc4ibcnjnpBnuB2biaHTaro00ia3RFUVL5Hibr3riaaVea3WzS7IegHZPkLV2olFtQ4eicA\/0","privilege":[]}', true)]);
+        }
         if (!session(self::SESSION_KEY)) {
             if ($request->has('state') && $request->has('code')) {
                 session([self::SESSION_KEY => app('wechat')->oauth->user()->getOriginal()]);

@@ -91,7 +91,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .title img{width: 2rem;margin-top: .3rem;}
 
 /*底部悬浮*/
-.bar-footer{height: 5rem;border-top:1px solid #e0e0e0;background: #fff;}
+.bar-footer{height: 5rem;border-top:1px solid #e0e0e0;background: #fff;z-index: 9999;}
 .bar-footer .tab-item{height: 5rem;line-height: 7.2rem;color: #999}
 .bar-footer .tab-item.active, .bar-footer .tab-item:active{color: #fb9234}
 .bar-footer .icon-home1{background: url("../../images/icon-home.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}

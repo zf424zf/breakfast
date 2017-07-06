@@ -91,15 +91,15 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .title img{width: 2rem;margin-top: .3rem;}
 
 /*底部悬浮*/
-.bar-footer{height: 5rem;border-top:1px solid #e0e0e0;background: #fff;z-index: 9999;}
-.bar-footer .tab-item{height: 5rem;line-height: 7.2rem;color: #999}
+.bar-footer{height: 3.5rem;border-top:1px solid #e0e0e0;background: #fff;z-index: 9999;}
+.bar-footer .tab-item{height: 3.5rem;font-size:.8rem;line-height: 5.4rem;color: #999}
 .bar-footer .tab-item.active, .bar-footer .tab-item:active{color: #fb9234}
-.bar-footer .icon-home1{background: url("../../images/icon-home.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
-.bar-footer .icon-home1.active{background: url("../../images/icon-home-h.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
-.bar-footer .icon-order{background: url("../../images/icon-order.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
-.bar-footer .icon-order.active{background: url("../../images/icon-order-h.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
-.bar-footer .icon-more{background: url("../../images/icon-more.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
-.bar-footer .icon-more.active{background: url("../../images/icon-more-h.png") no-repeat center .4rem;background-size:2.5rem 2.5rem;}
+.bar-footer .icon-home1{background: url("../../images/icon-home.png") no-repeat center .15rem;background-size:2rem 2rem;}
+.bar-footer .icon-home1.active{background: url("../../images/icon-home-h.png") no-repeat center .15rem;background-size:2rem 2rem;}
+.bar-footer .icon-order{background: url("../../images/icon-order.png") no-repeat center .15rem;background-size:2rem 2rem;}
+.bar-footer .icon-order.active{background: url("../../images/icon-order-h.png") no-repeat center .15rem;background-size:2rem 2rem;}
+.bar-footer .icon-more{background: url("../../images/icon-more.png") no-repeat center .15rem;background-size:2rem 2rem;}
+.bar-footer .icon-more.active{background: url("../../images/icon-more-h.png") no-repeat center .15rem;background-size:2rem 2rem;}
 
 
 /*首页*/

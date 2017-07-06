@@ -231,13 +231,13 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .order-cont .order-contact li.item-price .item-title em{color: #333;font-style: normal}
 .order-cont .order-contact li.item-price .item-title span{margin-left: 1rem;}
 
-.bar-pay{height: 4.5rem;background: #575757;line-height: 4.5rem;}
+.bar-pay{height: 3.5rem;background: #575757;line-height: 3.5rem;}
 .bar-pay .pull-left{width: 75%;font-size: 1.2rem;color: #fff;padding-left: .75rem;}
 .bar-pay .pull-left span{font-size: 1rem;border-left: 1px solid #fff;padding: 0 .3rem;margin-left: .3rem;}
 .bar-pay .pull-left em{font-style: normal;color:#fb9235;}
 .bar-pay a{display:block;width:25%;text-align:center;background: #00a0e9;font-size: 1.2rem;color: #fff;}
 .bar-pay a.disabled{display:block;width:25%;text-align:center;background: gray;font-size: 1.2rem;color: #fff;}
-.bar-pay .cart-box{display: inline-block;float:left;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
+.bar-pay .cart-box{display: inline-block;float:left;position: relative;width: 4rem;height: 4rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
 .bar-pay .cart-box img{display:inline-block;position: absolute;left:50%;top:1rem;width: 3rem;margin-left: -1.5rem;}
 .bar-pay .cart-box{display: inline-block;position: relative;width: 5rem;height: 5rem;background: #575757;border-radius: 50%;text-align: center;top:-1rem;}
 .bar-pay .cart-box i{display: none;width:1.5rem;height:1.5rem;border-radius:50%;line-height:1.5rem;font-style:normal;background: #fb1515;position: absolute;right: 0;top:0;font-size: .85rem;color: #fff;text-align: center}
@@ -252,9 +252,9 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .cart-list .item-content .food-cart .food-add{float:left;display: block;width: 1.5rem;height: 1.5rem;background: url("../../images/add.png") no-repeat;background-size: 100% 100%;}
 .cart-list .item-content .food-cart .food-reduce{float:left;display: none;width: 1.5rem;height: 1.5rem;background: url("../../images/minus.png") no-repeat;background-size: 100% 100%;}
 .cart-list .item-content .item-text{line-height: 1.5rem;overflow: hidden;margin-top: 1rem;}
-.cart-list .item-content .item-text .pull-left{color: #fb9234;}
+.cart-list .item-content .item-text .pull-left{font-size:1rem;color: #fb9234;}
 .cart-list .item-content .item-text .pull-left span{font-size: .85rem;color: #666;text-decoration: line-through;margin-left: 1rem;}
-.cart-list .item-content .food-cart span{float:left;display: none;line-height: 1.5rem;margin: 0 .5rem;}
+.cart-list .item-content .food-cart span{float:left;display: none;line-height: 1.5rem;margin: 0 1rem;}
 /*早餐详情*/
 .food-detail{display:none;position: fixed;background: #fff;width:21rem;border-radius: .5rem;margin:auto;  left:0;  right:0;top:15%;z-index: 99999}
 .food-detail div.close-btn{text-align: right;position: absolute;top:-2.5rem;right: 0;}

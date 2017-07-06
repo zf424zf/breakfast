@@ -208,13 +208,15 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .order-cont h4{font-size:1.2rem;font-weight:normal;height:2.6rem;line-height:2.6rem;background: #f1f1f1;text-align: center}
 .order-cont .card{margin: 0;border-radius: 0;}
 .order-cont .card-content{margin: 0 .75rem;}
-.order-cont .card-content .card-content-top{overflow: hidden;height:2.5rem;line-height:2.5rem;border-bottom: 1px solid #f3f3f3;}
+.order-cont .card-content .card-content-top{overflow: hidden;font-size:.85rem;height:2.5rem;line-height:2.5rem;border-bottom: 1px solid #f3f3f3;}
 .order-cont .card-content .card-content-top p span{color: #fb9234;}
 .order-cont .card-content .card-content-top a.button{border: 1px solid #fb9234;color: #fb9234;padding:0 .5rem;height: 1.9rem;line-height: 1.9rem;border-radius: .2rem;margin-top: .3rem;}
 .order-cont .list-block .item-content{padding:.5rem 0;padding-left: 0;font-size: 1.1rem;color: #333}
 .order-cont .list-block .item-content.last{border-bottom: 0;}
 .order-cont .list-block .item-content .item-title-row{margin-bottom: .8rem;}
 .order-cont .card-footer{border-top:1px solid #f3f3f3;}
+.order-cont .list-block .item-subtitle .pull-left{font-size: .85rem;}
+.order-cont .list-block .item-subtitle .pull-right{font-size: 1rem;}
 .order-cont .card-footer .pull-right span{font-size: 1.2rem;color: #fb9234;text-align: right;float: left;line-height: 2rem;}
 .order-cont .card-footer .pull-right a.button{height: 2rem;line-height: 2rem;border-radius: .2rem;float: left;margin-left: 1rem;}
 .order-cont .card-footer .pull-right a.button-gray{background: #c3c3c3}

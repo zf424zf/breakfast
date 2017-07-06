@@ -218,7 +218,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .order-cont .list-block .item-subtitle .pull-left{font-size: .85rem;}
 .order-cont .list-block .item-subtitle .pull-right{font-size: 1rem;}
 .order-cont .card-footer .pull-right span{font-size: 1.2rem;color: #fb9234;text-align: right;float: left;line-height: 2rem;}
-.order-cont .card-footer .pull-right a.button{height: 2rem;line-height: 2rem;border-radius: .2rem;float: left;margin-left: 1rem;}
+.order-cont .card-footer .pull-right a.button{width:4.5rem;height: 2rem;line-height: 2rem;border-radius: .2rem;float: left;margin-left: 1rem;}
 .order-cont .card-footer .pull-right a.button-gray{background: #c3c3c3}
 .order-cont .card-footer .pull-right a.button-orange{background: #fb9234}
 .order-cont .card-footer .pull-right a.border-orange{border: 1px solid #fb9234;color: #fb9234;background: none;}

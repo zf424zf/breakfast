@@ -196,9 +196,9 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .pick-up .content-block a{font-size: 1.3rem;color: #fb9234;padding-bottom: 2rem;}
 
 /*早餐色块*/
-.color-lump h4{font-size: 1.6rem;text-align: center;font-weight: normal;padding: .5rem 0;}
-.color-lump .row div{font-size: 1.6rem;color: #fff;text-align: center;padding: .6rem 0;}
-.color-lump .row div.f-small{font-size: 1.4rem;}
+.color-lump h4{font-size: 1.8rem;text-align: center;font-weight: normal;padding: .5rem 0;}
+.color-lump .row div{font-size: 1.7rem;color: #fff;text-align: center;padding: .6rem 0;}
+.color-lump .row div.f-small{font-size: 1.6rem;}
 .color-lump .row div.f-black{color:#333;}
 .color-lump .bar-footer{position: fixed;bottom: 1rem;width: 50%;left:50%;margin-left: -25%;}
 .color-lump .bar-footer .button-fill{line-height: 3rem;background: #fb9234;}

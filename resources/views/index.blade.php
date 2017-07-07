@@ -30,12 +30,12 @@
                 <div class="row no-gutter">
                     <div class="col-50">
                         <a class="tab-item active" href="{{url('metro')}}">
-                            <img src="{{cdn('images/book.png')}}" alt=""/>我要订餐
+                            <span class="book"></span>我要订餐
                         </a>
                     </div>
                     <div class="col-50">
                         <a class="tab-item" href="{{url('order')}}">
-                            <img src="{{cdn('images/order.png')}}" alt=""/>我的订单
+                            <span class="book"></span>我的订单
                         </a>
                     </div>
                 </div>

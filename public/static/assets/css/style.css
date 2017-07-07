@@ -105,7 +105,8 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 /*首页*/
 .page-index .row{padding: 1rem 0;}
 .page-index .row .col-50{text-align: center;border-right: 1px solid #f2f2f2;}
-.page-index .row .col-50 img{width: 2.5rem;vertical-align: middle;margin-right: .5rem;}
+.page-index .row .col-50 span.book{display:inline-block;width: 2rem;height:2rem;vertical-align: middle;margin-right: .5rem;background: url("../../images/book.png") no-repeat center center;background-size: 2rem 2rem;}
+.page-index .row .col-50 span.order{display:inline-block;width: 2rem;height:2rem;vertical-align: middle;margin-right: .5rem;background: url("../../images/order.png") no-repeat center center;background-size: 2rem 2rem;}
 .page-index .row .col-50 a{font-size: 1.2rem;color: #333;}
 .page-index .list-block{margin-bottom: 6rem;}
 .page-index .list-block h4{padding: .8rem .75rem;background: #f1f1f1;font-size: 1.2rem;color: #333;font-weight: normal}

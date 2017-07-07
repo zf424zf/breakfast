@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-50">
                         <a class="tab-item" href="{{url('order')}}">
-                            <span class="book"></span>我的订单
+                            <span class="order"></span>我的订单
                         </a>
                     </div>
                 </div>

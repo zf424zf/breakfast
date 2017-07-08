@@ -16,8 +16,8 @@ return [
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    'app_id'            => 'wxeb68eeee1c03b14a',         // AppID
-    'secret'            => '2cc67a3caecb4cf6005261a90535c5b5',     // AppSecret
+    'app_id'            => 'wxbc4e93b34eac5caf',         // AppID
+    'secret'            => '3662c638621812ed526776fa3202e7b4',     // AppSecret
 
     'token'   => env('WECHAT_TOKEN', 'your-token'),          // Token
     'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
@@ -49,8 +49,8 @@ return [
      * 微信支付
      */
     'payment' => [
-        'merchant_id' => '1452006002',
-        'key'         => '2cc67a3caecb4cf6005261a90535c5b5',
+        'merchant_id' => '1483446902',
+        'key'         => '3662c638621812ed526776fa3202e7b4',
         'cert_path'   => config_path('cert/wechat_cert.pem'), // XXX: 绝对路径！！！！
         'key_path'    => config_path('cert/wechat_key.pem'),      // XXX: 绝对路径！！！！
         // 'device_info'     => env('WECHAT_PAYMENT_DEVICE_INFO', ''),

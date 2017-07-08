@@ -51,6 +51,8 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 /*global css*/
 .space{width: 100%;height: .5rem;background: #f1f1f1;}
 .f-orange{color: #fb9234}
+.f-blue{color:#E94204; }
+.border-blue{border: 1px solid #E94204;background: none; border-radius:5px; height: 1.85rem; line-height: 1.85rem;padding: 0 4px; margin-top: 5px;}
 .cover{display:none;position: fixed;width: 100%;height: 100%;left:0;top:0;background:#000;opacity: .6;z-index: 9999;}
 /*定位*/
 .location-box{height:2.6rem;line-height:2.6rem;background: #f1f1f1;padding: 0 .75rem;}
@@ -140,7 +142,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 /*地图定位*/
 .map-box{}
 .map-box .button{height: 2rem;line-height: 2rem;border-radius: .2rem;}
-.map-box .top{padding: 0 .75rem;height: 2.5rem;line-height: 2.5rem;background: #fff;}
+.map-box .top{padding: 0 .75rem;height: 3.5rem;line-height: 2.5rem;background: #fff;}
 .map-box .top select{border: none;height: 2.5em;line-height: 2.5em;padding:0 1vw; margin-top: 2vw;}
 .map-box .top a{font-size: 1.1rem;color: #666;}
 .map-box .map{width: 100%; height: 250px;display: none}

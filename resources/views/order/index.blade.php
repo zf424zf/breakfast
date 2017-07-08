@@ -73,14 +73,15 @@
                     <div class="card-content">
                         <div class="card-content-top">
                             <p class="pull-left">
-                                {{chinese_week(strtotime($order['date']))}}
                                 <span>
                                     请在
-                                    {{date('m-d',strtotime($order['date']))}}
+                                    {{date('m-d',strtotime($order['date']))}}当天
+                                    {{chinese_week(strtotime($order['date']))}}
                                     {{$order['pickuptime']['start']}} - {{$order['pickuptime']['end']}}取餐
+
                                 </span>
                             </p>
-                            <p class="pull-right f-orange" >
+                            <p class="pull-right f-blue border-blue" >
                                 {{order_status($order['status'])}}
                             </p>
                         </div>

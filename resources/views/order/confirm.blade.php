@@ -62,8 +62,8 @@
                                                 <div class="card-content-top">
                                                     <p class="pull-left">
                                                         <span>
-                                                            {{$pickuptimes[$pickuptimeId]['start']}}-{{$pickuptimes[$pickuptimeId]['end']}}
                                                             {{date('m-d',strtotime($date))}} {{chinese_week(strtotime($date))}}
+                                                            {{$pickuptimes[$pickuptimeId]['start']}}-{{$pickuptimes[$pickuptimeId]['end']}}
                                                             ({{$places[$placeId]['name']}})
                                                         </span>
                                                     </p>

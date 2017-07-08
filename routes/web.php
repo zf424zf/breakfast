@@ -34,6 +34,7 @@ Route::group(['prefix'     => 'order',], function () {
     Route::post('cancel', 'OrderController@cancel');
     Route::get('result', 'OrderController@result');
     Route::get('pickup', 'OrderController@pickup');
+    Route::get('pickuped', 'OrderController@pickuped');
     Route::post('pickup', 'OrderController@postPickup');
     Route::post('refund', 'OrderController@refund');
 });

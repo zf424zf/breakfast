@@ -260,7 +260,7 @@ $(function () {
                     if (json.error) {
                         $.alert(json.message)
                     } else {
-                        $.router.load('/order', true);
+                        $.router.load('/order/pickuped?order_id=' + orderId, true);
                     }
                 }
             });

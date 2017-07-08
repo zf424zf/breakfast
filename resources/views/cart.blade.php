@@ -67,6 +67,7 @@
                                     <option value="{{$pick['id']}}" @if($pick['id'] == $pickuptime['id']) selected @endif>{{$pick['start']}}-{{$pick['end']}}</option>
                                     @endforeach
                                 </select>
+                                <i class="icon icon-down" style="margin-left:-20px;font-size: 0.5rem;"></i>
                             </li>
                         </ul>
                     </div>

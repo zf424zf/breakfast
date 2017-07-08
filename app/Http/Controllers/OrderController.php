@@ -112,6 +112,20 @@ class OrderController extends Controller
         return view('order.pickup', ['order' => $order]);
     }
 
+    public function pickuped()
+    {
+        if (!request('order_id')) {
+            abort(404);
+        }
+        $order = OrderModel::where('uid', app('user')->id())
+            ->with('goods.product', 'place', 'pickuptime')
+            ->where('order_id', request('order_id'))->first();
+        if (!$order) {
+            abort(404);
+        }
+        return view('order.pickuped', ['order' => $order]);
+    }
+
     public function postPickup()
     {
         if (!request('order_id')) {

@@ -129,7 +129,7 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .location-list{clear: both}
 .location-list .top{height: 2.5rem;line-height: 2.5rem;font-size: 1.1rem;text-align: left;border-bottom: 1px solid #e0e0e0;}
 .location-list .top .col-50{padding: 0 .75rem;}
-.location-list .cont{position:relative;overflow: hidden;}
+.location-list .cont{position:relative;}
 .location-list .cont ul li{clear: both;}
 .location-list .cont ul li p{width: 47%;float: left;height:2.4rem;line-height:2.4rem;border-bottom: 1px solid #f3f3f3;margin-left: 3%;padding-left: .3rem;}
 .location-list .cont ul li p.active{color: #fb9234;}

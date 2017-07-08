@@ -35,6 +35,7 @@
                                 <option value="{{$station->id}}">{{$station->name}}</option>
                             @endif
                         </select>
+                        <i class="icon icon-down" style="margin-left:-25px;font-size: 0.5rem;"></i>
                     </div>
                     <ul>
                         @foreach($station->places as $place)

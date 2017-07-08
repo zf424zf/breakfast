@@ -233,7 +233,14 @@ class Order
         $order['status'] = self::REFUNDING;
         $order->save();
         $order->goods()->update(['status' => self::REFUNDING]);
-        $refund->launch();
+        try {
+            $refund->launch();
+        } catch (\Exception $e) {
+            $order['status'] = self::PAYED;
+            $order->save();
+            $order->goods()->update(['status' => self::PAYED]);
+            throw new \Exception($e->getMessage());
+        }
         $this->log('REFUND', $uid);
         return $this;
     }

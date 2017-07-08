@@ -26,11 +26,13 @@ $(function () {
         if ($(this).closest('li').hasClass('current')) {
             $('.map').hide();
             $('.map-box li').removeClass('current');
+            $(this).closest('li').find('.icon').removeClass('icon-up').addClass('icon-down');
         } else {
             $('.map').hide();
             $('#map-' + $(this).data('id')).show();
             $('.map-box li').removeClass('current');
             $(this).closest('li').addClass('current');
+            $(this).closest('li').find('.icon').removeClass('icon-down').addClass('icon-up');
         }
     })
     //购物车

@@ -41,7 +41,10 @@
                         @foreach($station->places as $place)
                         <li>
                             <div class="detail" data-id="{{$place['id']}}">
-                                <h4><span>{{$loop->index + 1}}</span>{{$place['name']}}</h4>
+                                <h4>
+                                    <span>{{$loop->index + 1}}</span>{{$place['name']}}
+                                    <i class="icon icon-down" style="font-size: 0.5rem;"></i>
+                                </h4>
                                 <p>{{$place['address']}}</p>
                             </div>
                             <div class="choose">

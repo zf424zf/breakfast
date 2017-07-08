@@ -67,6 +67,7 @@ class Payment
         ];
         $order = new EasyWechatOrder($attributes);
         $result = app('wechat')->payment->prepare($order);
+        info($result);
         if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS') {
             $this->prepayId = $result->prepay_id;
         } else {

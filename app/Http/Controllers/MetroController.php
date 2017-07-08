@@ -21,16 +21,24 @@ class MetroController extends Controller
 
     public function index()
     {
-        $metros = MetroModel::with('stations')->get()->toArray();
+        $metros = MetroModel::with(['stations' => function ($query) {
+            $query->orderBy('sort', 'DESC');
+        }])->orderBy('sort', 'DESC')->get()->toArray();
         return view('metro', ['metros' => $metros]);
     }
 
     public function station($stationId)
     {
-        $station = StationModel::where('id', $stationId)->with('places')->with('metros')->first();
+        $station = StationModel::where('id', $stationId)->with(['places' => function ($query) {
+            $query->orderBy('sort', 'DESC');
+        }])->with(['metros' => function ($query) {
+            $query->orderBy('sort', 'DESC');
+        }])->first();
         if (request('metro_id')) {
-            $stations = MetroModel::where('id', request('metro_id'))->with('stations')->first()->toArray();
-        }else{
+            $stations = MetroModel::where('id', request('metro_id'))->with(['stations' => function ($query) {
+                $query->orderBy('sort', 'DESC');
+            }])->first()->toArray();
+        } else {
             $stations = [];
         }
         return view('station', ['station' => $station, 'stations' => $stations]);

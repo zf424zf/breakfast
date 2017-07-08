@@ -239,7 +239,7 @@ class Order
             $order['status'] = self::PAYED;
             $order->save();
             $order->goods()->update(['status' => self::PAYED]);
-            throw new \Exception($e->getMessage());
+            throw new \Exception($e->getMessage().' 请联系管理员');
         }
         $this->log('REFUND', $uid);
         return $this;

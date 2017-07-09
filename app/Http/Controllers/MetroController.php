@@ -30,7 +30,7 @@ class MetroController extends Controller
     public function station($stationId)
     {
         $station = StationModel::where('id', $stationId)->with(['places' => function ($query) {
-            $query->orderBy('metro_station_relation.sort', 'DESC');
+            $query->orderBy('metro_place_relation.sort', 'DESC');
         }])->with(['metros' => function ($query) {
             $query->orderBy('metro.sort', 'DESC');
         }])->first();

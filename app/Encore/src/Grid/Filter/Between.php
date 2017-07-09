@@ -64,6 +64,10 @@ class Between extends AbstractFilter
 
         $this->value = array_get($inputs, $this->column);
 
+        foreach ($this->value as $key => $value) {
+            $this->value[$key] = strtotime($value);
+        }
+
         $value = array_filter($this->value, function ($val) {
             return $val !== '';
         });
@@ -116,8 +120,14 @@ EOT;
 
     public function render()
     {
+        $data = $this->variables();
+        if ($data['value']) {
+            foreach ($data['value'] as $key => $value) {
+                $data['value'][$key] = date('Y-m-d H:i:s', $value);
+            }
+        }
         if (isset($this->view)) {
-            return view($this->view, $this->variables());
+            return view($this->view, $data);
         }
 
         return parent::render();

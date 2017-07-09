@@ -21,4 +21,5 @@ Route::group([
     $router->resource('post', 'PostController');
     $router->resource('setting', 'SettingController');
     $router->resource('users', 'UsersController');
+    $router->resource('order', 'OrderController');
 });

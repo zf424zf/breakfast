@@ -5,6 +5,7 @@ namespace App\Models\Order;
 use App\Models\Model;
 use App\Models\PickupTime as PickuptimeModel;
 use App\Models\Metro\Place as PlaceModel;
+use App\Models\Users as UsersModel;
 
 class Order extends Model
 {
@@ -35,6 +36,11 @@ class Order extends Model
     public function place()
     {
         return $this->hasOne(PlaceModel::class, 'id', 'place_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(UsersModel::class, 'id', 'uid');
     }
 
 }

@@ -9,7 +9,7 @@
             <!--头部开始-->
             <header class="bar bar-nav">
                 <a href="#" class="icon icon-left pull-left back"></a>
-                <h1 class="title">一起吃早餐</h1>
+                <h1 class="title">{{setting('title')}}</h1>
             </header>
             <!--头部结束-->
             <!--资讯详情开始-->

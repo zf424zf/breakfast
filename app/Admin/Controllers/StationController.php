@@ -107,6 +107,9 @@ class StationController extends Controller
                     });
                 }, '地铁线路')->select(MetroModel::all()->pluck('name', 'id'));
             });
+            $grid->actions(function ($actions) {
+                $actions->append('<a href="' . admin_url('place_sort?station_id=' . $actions->getKey()) . '"><i class="fa fa-eye"></i></a>');
+            });
             //$grid->updated_at();
         });
     }

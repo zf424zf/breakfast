@@ -81,9 +81,7 @@ class PlaceController extends Controller
     protected function grid()
     {
         return Admin::grid(PlaceModel::class, function (Grid $grid) {
-            $grid->model()->orderBy('sort','DESC');
             $grid->id('ID')->sortable();
-            $grid->sort('排序')->editable();
             $grid->name('取餐地点')->editable();
             $grid->stations('地铁站')->display(function ($stations) {
                 return implode(',', array_column($stations, 'name'));
@@ -114,7 +112,6 @@ class PlaceController extends Controller
             }
             $form->multipleSelect('pickuptimes','取货时间段')->rules('required')->options($picktimes);
             $form->map('lat','lng', '地图位置')->rules('required');
-            $form->number('sort','排序')->help('前台展示按照倒叙排列');
         });
     }
 }

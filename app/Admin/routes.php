@@ -12,6 +12,7 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->resource('metro', 'MetroController');
     $router->resource('station_sort', 'StationSortController');
+    $router->resource('place_sort', 'PlaceSortController');
     $router->resource('station', 'StationController');
     $router->resource('place', 'PlaceController');
     $router->resource('products', 'ProductsController');

@@ -93,9 +93,6 @@ class StationController extends Controller
             $grid->metros('地铁线路')->display(function ($metros) {
                 return implode(',', array_column($metros, 'name'));
             });
-            $grid->places('取餐点')->display(function ($places) {
-                return implode(',', array_column($places, 'name'));
-            });
             $grid->created_at('创建时间');
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();

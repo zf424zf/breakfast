@@ -22,7 +22,7 @@ class MetroController extends Controller
     public function index()
     {
         $metros = MetroModel::with(['stations' => function ($query) {
-            $query->orderBy('sort', 'DESC');
+            $query->orderBy('metro_station_relation.sort', 'DESC');
         }])->orderBy('sort', 'DESC')->get()->toArray();
         return view('metro', ['metros' => $metros]);
     }

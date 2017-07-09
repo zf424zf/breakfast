@@ -66,8 +66,8 @@ class StationController extends Controller
     public function destroy($id)
     {
         if ($this->form()->destroy($id)) {
-            StationRelationModel::where('station_id',$id)->delete();
-            PlaceRelationModel::where('station_id',$id)->delete();
+            StationRelationModel::where('station_id', $id)->delete();
+            PlaceRelationModel::where('station_id', $id)->delete();
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),
@@ -88,15 +88,13 @@ class StationController extends Controller
     protected function grid()
     {
         return Admin::grid(Station::class, function (Grid $grid) {
-            $grid->model()->orderBy('sort','DESC');
             $grid->id('ID')->sortable();
-            $grid->sort('排序')->editable();
             $grid->name('站点名称')->editable();;
-            $grid->metros('地铁线路')->display(function ($metros){
-                return implode(',',array_column($metros,'name'));
+            $grid->metros('地铁线路')->display(function ($metros) {
+                return implode(',', array_column($metros, 'name'));
             });
-            $grid->places('取餐点')->display(function ($places){
-                return implode(',',array_column($places,'name'));
+            $grid->places('取餐点')->display(function ($places) {
+                return implode(',', array_column($places, 'name'));
             });
             $grid->created_at('创建时间');
             $grid->filter(function ($filter) {
@@ -107,7 +105,7 @@ class StationController extends Controller
                     $query->whereHas('metros', function ($query) use ($input) {
                         $query->where('metro_id', $input);
                     });
-                }, '地铁线路')->select(MetroModel::all()->pluck('name','id'));
+                }, '地铁线路')->select(MetroModel::all()->pluck('name', 'id'));
             });
             //$grid->updated_at();
         });
@@ -122,9 +120,12 @@ class StationController extends Controller
     {
         return Admin::form(Station::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->text('name', '站点名称')->rules('required|unique:metro_station');
-            $form->checkbox('metros','地铁线路')->options(MetroModel::all()->pluck('name','id'))->rules('required');
-            $form->number('sort','排序')->help('前台展示按照倒叙排列');
+            if (request()->route('station')) {
+                $form->text('name', '站点名称')->rules('required|unique:metro_station,name,' . request()->route('station') . ',id');//|
+            } else {
+                $form->text('name', '站点名称')->rules('required|unique:metro_station');//|
+            }
+            $form->checkbox('metros', '地铁线路')->options(MetroModel::all()->pluck('name', 'id'))->rules('required');
         });
     }
 }

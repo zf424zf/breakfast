@@ -64,7 +64,7 @@ class MetroController extends Controller
     public function destroy($id)
     {
         if ($this->form()->destroy($id)) {
-            StationRelationModel::where('metro_id',$id)->delete();
+            StationRelationModel::where('metro_id', $id)->delete();
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),
@@ -85,13 +85,14 @@ class MetroController extends Controller
     protected function grid()
     {
         return Admin::grid(MetroModel::class, function (Grid $grid) {
-            $grid->model()->orderBy('sort','DESC');
+            $grid->model()->orderBy('sort', 'DESC');
             $grid->id('ID')->sortable();
             $grid->sort('排序')->editable();
             $grid->name('线路名称')->editable();
             $grid->created_at('创建时间');
-            $grid->stations('地铁站')->display(function ($stations){
-                return implode(',',array_column($stations,'name'));
+
+            $grid->actions(function ($actions) {
+                $actions->append('<a href="' . admin_url('station_sort?metro_id=' . $actions->getKey()) . '"><i class="fa fa-eye"></i></a>');
             });
             //$grid->updated_at();
         });
@@ -108,7 +109,7 @@ class MetroController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', '线路名称')->rules('required');
-            $form->number('sort','排序')->help('前台展示按照倒叙排列');
+            $form->number('sort', '排序')->help('前台展示按照倒叙排列');
         });
     }
 }

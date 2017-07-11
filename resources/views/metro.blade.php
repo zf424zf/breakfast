@@ -15,7 +15,7 @@
             <!--地址定位开始-->
             <div class="content">
                 <div class="search-box">
-                    <div class="address">上海 <span class="icon icon-down"></span></div>
+                    <div class="address">上海 <span class="icon icon-down" style="font-size: 0.8rem;"></span></div>
                     <div class="searchbar">
                         <a class="searchbar-cancel">取消</a>
                         <div class="search-input">

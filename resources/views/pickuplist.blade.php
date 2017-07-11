@@ -30,7 +30,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <i class="icon icon-down" style="font-size: 0.5rem;margin-left: -3rem;"></i>
                             <select name="pickuptime_id">
                                 <option value="">选择取货时间段</option>
                                 @foreach($pickuptimes as $pickuptime)
@@ -41,7 +40,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <i class="icon icon-down" style="font-size: 0.5rem;margin-left: -2rem;"></i>
                         </div>
                     </form>
                     <script>

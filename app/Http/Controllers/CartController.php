@@ -144,6 +144,16 @@ class CartController extends Controller
             ];
         }
         $data = session(self::SESSION_KEY, []);
+        $product = current(ProductService::gets([], request('date'), request('place_id'), request('pickuptime_id')));
+        if (!$product['is_early'] &&
+            $product['stock'] < request('count') &&
+            request('is_add')
+        ) {
+            return [
+                'error'   => 1,
+                'message' => '库存不足,' . $product['name'] . '当前仅剩余库存' . $product['stock'],
+            ];
+        }
         if (request('count')) {
             $data[request('date')][request('place_id')][request('pickuptime_id')][request('product_id')] = request('count');
         } else {

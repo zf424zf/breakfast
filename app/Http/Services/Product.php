@@ -67,4 +67,9 @@ class Product
         $product['price'] = $product['is_early'] ? $product['early_price'] : $product['coupon_price'];
         return $product;
     }
+
+    public static function setStock($productId, $stock)
+    {
+        return ProductModel::where('id', $productId)->update(['stock' => $stock]);
+    }
 }

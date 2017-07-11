@@ -76,10 +76,13 @@ $(function () {
     });
     $(document).on('click', '.food-reduce,.food-add', function () {
         var count = parseInt($(this).closest('li').attr('data-count'));
+        var isAdd;
         if ($(this).hasClass('food-add')) {
             count++;
+            isAdd = true;
         } else {
             count--;
+            isAdd = false;
         }
         var productId = $(this).closest('li').data('id');
         var date = $(this).closest('li').data('date');
@@ -90,7 +93,8 @@ $(function () {
             'date': date,
             'count': count,
             'pickuptime_id': pickuptimeId,
-            'place_id': placeId
+            'place_id': placeId,
+            'is_add': isAdd
         };
         $.ajax({
             url: '/cart/add',
@@ -100,10 +104,15 @@ $(function () {
             cache: false,
             async: false,
             success: function (json) {
+                if (json.error) {
+                    $.toast(json.message)
+                } else {
+                    $('li[data-date="' + date + '"][data-pickuptime="' + pickuptimeId + '"][data-place="' + placeId + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
+                    computeCartList();
+                }
             }
         });
-        $('li[data-date="' + date + '"][data-pickuptime="' + pickuptimeId + '"][data-place="' + placeId + '"][data-id="' + productId + '"]').attr('data-count', count).find('.food-count').html(count);
-        computeCartList();
+
     })
     $(document).on('click', '#calendar a', function (e) {
         $.fn.cookie('date', $(this).data('date'));

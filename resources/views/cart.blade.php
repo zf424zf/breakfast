@@ -80,10 +80,11 @@
                             <div class="list-block media-list cart-list">
                                 <ul id="cart-list">
                                     @foreach($products as $product)
+                                        @if(!$product['is_early'] && $product['stock'] > 0)
                                         <li class="item-content" data-place="{{$place->id}}" data-pickuptime="{{$pickuptime['id']}}" data-date="{{$date}}" data-count="{{$cart[$product['id']] or 0}}" data-id="{{$product['id']}}">
                                             <div class="item-media">
                                                 <a href="javascript:;" class="food-alert">
-                                                    <img src="{{img_url($product['img'],80,80)}}" width="80"/>
+                                                    <img src="{{img_url($product['img'],160,160)}}" width="80"/>
                                                 </a>
                                             </div>
                                             <div class="item-inner">
@@ -105,6 +106,7 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                             </div>

@@ -34,7 +34,7 @@ class Products extends Model
      */
     public function scopeAvailable(Builder $query)
     {
-        return $query->where('stock','>', 0)->where('status',1)->orderBy('id','DESC');
+        return $query->where('status', 1)->orderBy('id', 'DESC');
     }
 
 

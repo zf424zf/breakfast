@@ -13,6 +13,7 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('metro', 'MetroController@index');
+Route::get('pickuplist', 'PickuplistController@index');
 
 Route::group(['prefix'     => 'cart',], function () {
     Route::get('{placeId?}', 'CartController@index')->where('placeId', '\+?[1-9]\d*');

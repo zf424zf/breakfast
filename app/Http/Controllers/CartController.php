@@ -12,6 +12,7 @@ use App\Models\Metro\Place as PlaceModel;
 use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
 use App\Http\Services\Product as ProductService;
+use App\Models\Order\Order as OrderModel;
 
 class CartController extends Controller
 {
@@ -26,6 +27,12 @@ class CartController extends Controller
     public function index($placeId = null)
     {
         //@todo $placeId = null 时从最近订单获取placeId
+        if (is_null($placeId)) {
+            $placeId = OrderModel::where('uid', app('user')->id())->orderBy('id', 'DSESC')->pluck('place_id')->first();
+        }
+        if (!$placeId) {
+            return redirect(url('metro'));
+        }
         //格式化日期信息
         $dateTimestamp = strtotime(request()->cookie('date', date('Ymd', time() + 86400)));
         $date = date('Ymd', $dateTimestamp);

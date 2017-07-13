@@ -29,12 +29,12 @@
                 <!--入口工具栏开始-->
                 <div class="row no-gutter">
                     <div class="col-50">
-                        <a class="tab-item active" href="{{url('cart')}}">
+                        <a class="tab-item active" href="{{url('cart')}}" data-no-cache="true">
                             <span class="book"></span>我要订餐
                         </a>
                     </div>
                     <div class="col-50">
-                        <a class="tab-item" href="{{url('order')}}">
+                        <a class="tab-item" href="{{url('order')}}" data-no-cache="true">
                             <span class="order"></span>我的订单
                         </a>
                     </div>

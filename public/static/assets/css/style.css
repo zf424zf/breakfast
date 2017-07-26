@@ -271,8 +271,8 @@ label.label-checkbox i.icon-form-checkbox:after{background: no-repeat center;bac
 .food-detail div.txt ul{display: inline-block;float: left }
 .food-detail div.txt ul li{float: left;width: 1.5rem;height: 1.5rem;}
 .food-detail div.txt span{display:block;float: left;}
-.food-detail div.txt ul li.solid{background: url("../../images/star-solid.png") no-repeat;background-size: 100% 100%;}
-.food-detail div.txt ul li.hollow{background: url("../../images/star-hollow.png") no-repeat;background-size: 100% 100%;}
+.food-detail div.txt ul li.solid{background: url("../../images/star-solid.png") no-repeat;background-size: 90% 90%; background-position: center;}
+.food-detail div.txt ul li.hollow{background: url("../../images/star-hollow.png") no-repeat;background-size: 90% 90%;background-position: center;}
 .food-detail .food-detail-footer{background: #f1f1f1;height: 4rem;line-height: 4rem;padding:0 .75rem;border-bottom-left-radius: .5rem;border-bottom-right-radius: .5rem;margin-top: 2rem;}
 .food-detail .food-detail-footer .pull-left{font-size: 1.1rem;color: #fb9234;}
 .food-detail .food-detail-footer a{display: inline-block;float: right;height: 2.4rem;line-height:2.4rem;color:#fff;padding:0 1rem;margin-top: .8rem;background: #fb9234;border-radius: .5rem;}

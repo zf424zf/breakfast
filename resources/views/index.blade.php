@@ -17,10 +17,14 @@
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="{{cdn('images/banner1.jpg')}}" alt="" style='width: 100%'>
+                            <a href="#">
+                                <img src="{{cdn('images/banner1.jpg')}}" alt="" style='width: 100%'>
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="{{cdn('images/banner2.jpg')}}" alt="" style='width: 100%'>
+                            <a href="#">
+                                <img src="{{cdn('images/banner2.jpg')}}" alt="" style='width: 100%'>
+                            </a>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -48,7 +52,8 @@
                             <li>
                                 <a href="{{url('post/'.$post['id'])}}" class="item-content">
                                     @if($post['cover'])
-                                    <div class="item-media"><img src="{{img_url($post['cover'],160,160)}}" width="80" height="80"/></div>
+                                        <div class="item-media"><img src="{{img_url($post['cover'],160,160)}}"
+                                                                     width="80" height="80"/></div>
                                     @endif
                                     <div class="item-inner">
                                         <div class="item-title-row">

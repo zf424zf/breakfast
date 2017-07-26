@@ -115,12 +115,11 @@ $(function () {
 
     })
     $(document).on('click', '#calendar a', function (e) {
-        $.fn.cookie('date', $(this).data('date'), {path: '/'});
-        //$.router.load(window.location.pathname , true);
+        $.fn.cookie('date', $(this).data('date'), {path: '/', expires: 3});
         window.location.reload();
     })
     $(document).on('change', '#pickuptime', function (e) {
-        $.fn.cookie('pickuptime', $(this).val(), {path: '/'});
+        $.fn.cookie('pickuptime', $(this).val(), {path: '/', expires: 3});
         window.location.reload();
     })
     /*早餐详情*/

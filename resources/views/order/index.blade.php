@@ -113,7 +113,11 @@
                             @if(strtotime($order['date'] . ' ' . $order['pickuptime']['start']) - setting('stop_refund_hour', 8) * 3600 > time())
                             <a href="javascript:;" data-id="{{$order['order_id']}}" class="button button-fill border-orange order-refund">申请退款</a>
                             @endif
+                            @if(strtotime($order['date'] . ' ' . $order['pickuptime']['end']) < time())
+                            <a href="javascript:;" class="button button-fill button-gray">取货码</a>
+                            @else
                             <a href="{{url('order/pickup?order_id='.$order['order_id'])}}" class="button button-fill button-orange">取货码</a>
+                            @endif
                         </div>
                     </div>
                     @endif

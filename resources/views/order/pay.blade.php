@@ -81,7 +81,7 @@
                         <div class="fl">注：</div>
                         <div class="fl">
                             <p>成功支付后，凭订单的取餐码到取货点领取。</p>
-                            <p>本订单遵从<a href="#" target="_blank">《交易约定》</a> </p>
+                            <p>本订单遵从<a href="{{url('post/7')}}" target="_blank">《交易约定》</a> </p>
                         </div>
                     </div>
                 </div>

@@ -110,10 +110,7 @@ class Order
         $this->log(__FUNCTION__);
         //减少库存
         foreach ($productIds as $productId => $count) {
-            if (!$products[$productId]['is_early']) {
-                $stock = max($products[$productId]['stock'] - $count, 0);
-                ProductService::setStock($productId, $stock);
-            }
+            ProductService::reduceStock($date, $productId, $count);
         }
 
         return $this;
@@ -151,9 +148,24 @@ class Order
             $order->save();
             $order->goods()->update(['status' => self::EXPIRED]);
             $this->log(__FUNCTION__, 0);
+            //返回库存
+            $this->backStock();
             dispatch(new ExpireNotify($order));
         }
         return $this;
+    }
+
+    /**
+     * 订单过期或者取消订单时返还库存
+     */
+    protected function backStock()
+    {
+        $order = $this->getOrder();
+        $goods = $order->goods;
+        foreach ($goods as $good) {
+            ProductService::incrementStock($good['date'], $good['product_id'], $good['count']);
+        }
+        return true;
     }
 
     /**
@@ -169,6 +181,7 @@ class Order
             $order['status'] = self::CANCELED;
             $order->save();
             $order->goods()->update(['status' => self::CANCELED]);
+            $this->backStock();
             $this->log(__FUNCTION__, $order['uid']);
         }
         return $this;

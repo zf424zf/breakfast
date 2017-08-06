@@ -116,7 +116,7 @@ class OrderController extends Controller
                 //$filter->useModal();
                 // 设置created_at字段的范围查询
                 $filter->is('uid', 'UID');
-                $filter->is('date', '取货日期');
+                $filter->is('date', '取货日期')->setPlaceholder('格式:20170809');
                 $filter->like('phone', '电话');
                 $filter->between('created_at', '下单时间')->datetime();
             });

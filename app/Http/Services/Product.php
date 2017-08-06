@@ -10,6 +10,7 @@ namespace App\Http\Services;
 
 use App\Models\Product\Products as ProductModel;
 use App\Models\PickupTime as PickuptimeModel;
+use App\Models\Stock;
 
 class Product
 {
@@ -71,5 +72,15 @@ class Product
     public static function setStock($productId, $stock)
     {
         return ProductModel::where('id', $productId)->update(['stock' => $stock]);
+    }
+
+    public static function incrementStock($date, $productId, $count)
+    {
+        return Stock::where('date', $date)->where('product_id', $productId)->increment('stock', $count);
+    }
+
+    public static function reduceStock($date, $productId, $count)
+    {
+        return Stock::where('date', $date)->where('product_id', $productId)->decrement('stock', $count);
     }
 }

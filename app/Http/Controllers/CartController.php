@@ -13,6 +13,7 @@ use App\Models\PickupTime as PickupTimeModel;
 use App\Models\Product\Products as ProductModel;
 use App\Http\Services\Product as ProductService;
 use App\Models\Order\Order as OrderModel;
+use App\Models\Stock;
 
 class CartController extends Controller
 {
@@ -151,14 +152,13 @@ class CartController extends Controller
             ];
         }
         $data = session(self::SESSION_KEY, []);
-        $product = current(ProductService::gets([request('product_id')], request('date'), request('place_id'), request('pickuptime_id')));
-        if (!$product['is_early'] &&
-            $product['stock'] < request('count') &&
-            request('is_add')
+        //$product = current(ProductService::gets([request('product_id')], request('date'), request('place_id'), request('pickuptime_id')));
+        $stock = Stock::where('date', request('date'))->where('product_id', request('product_id'))->value('stock');
+        if ($stock < request('count') && request('is_add')
         ) {
             return [
                 'error'   => 1,
-                'message' => '库存不足,' . $product['name'] . '当前仅剩余库存' . $product['stock'],
+                'message' => '库存不足, 当前仅剩余库存' . $stock,
             ];
         }
         if (request('count')) {

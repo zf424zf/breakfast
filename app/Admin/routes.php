@@ -16,6 +16,7 @@ Route::group([
     $router->resource('station', 'StationController');
     $router->resource('place', 'PlaceController');
     $router->resource('products', 'ProductsController');
+    $router->resource('stock', 'StockController');
     $router->resource('pickuptime', 'PickuptimeController');
     $router->resource('category', 'CategoryController');
     $router->resource('post', 'PostController');

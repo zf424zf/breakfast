@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\Order\Expire::class,
         \App\Console\Commands\Order\RefundQuery::class,
+        \App\Console\Commands\StockCreate::class,
     ];
 
     /**
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('order:expire')->everyMinute();
         $schedule->command('refund:query')->everyMinute();
+        $schedule->command('stock:create')->daily();
     }
 
     /**
